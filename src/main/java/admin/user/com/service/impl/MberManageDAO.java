@@ -47,7 +47,7 @@ public class MberManageDAO extends EgovComAbstractDAO{
      * @return String 등록결과
      */
     public String insertMber(MberManageVO mberManageVO){
-        return String.valueOf((int)insert("mberManageDAO.insertMber_S", mberManageVO));
+        return String.valueOf((int)insert("userManageDAO.insertMber_S", mberManageVO));
     }
 
     /**

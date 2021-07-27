@@ -44,7 +44,7 @@ public class MberManageServiceImpl extends EgovAbstractServiceImpl implements Mb
 		String emailId = idgenService.getNextStringId();
 		mberManageVO.setEmailId(emailId);
 		//패스워드 암호화
-		String pass = EgovFileScrty.encryptPassword(mberManageVO.getPassword(), EgovStringUtil.isNullToString(mberManageVO.getMberId()));//KISA 보안약점 조치 (2018-10-29, 윤창원)
+		String pass = EgovFileScrty.encryptPassword(mberManageVO.getPassword(), EgovStringUtil.isNullToString(mberManageVO.getEmailId()));//KISA 보안약점 조치 (2018-10-29, 윤창원)
 		mberManageVO.setPassword(pass);
 
 		String result = mberManageDAO.insertMber(mberManageVO);
@@ -91,7 +91,7 @@ public class MberManageServiceImpl extends EgovAbstractServiceImpl implements Mb
 	@Override
 	public void updateMber(MberManageVO mberManageVO) throws Exception {
 		//패스워드 암호화
-		String pass = EgovFileScrty.encryptPassword(mberManageVO.getPassword(), EgovStringUtil.isNullToString(mberManageVO.getMberId()));//KISA 보안약점 조치 (2018-10-29, 윤창원)
+		String pass = EgovFileScrty.encryptPassword(mberManageVO.getPassword(), EgovStringUtil.isNullToString(mberManageVO.getEmailId()));//KISA 보안약점 조치 (2018-10-29, 윤창원)
 		mberManageVO.setPassword(pass);
 		mberManageDAO.updateMber(mberManageVO);
 	}

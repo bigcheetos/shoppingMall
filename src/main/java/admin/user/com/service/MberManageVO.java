@@ -24,116 +24,38 @@ public class MberManageVO extends UserDefaultVO{
 	/** 이전비밀번호 - 비밀번호 변경시 사용*/
     private String oldPassword = "";
 
-    /**
-	 * 사용자고유아이디
-	 */
-	private String emailId="";
-	/**
-	 * 사용자 유형
-	 */
-	private String userTy;
-	/**
-	 * 주소
-	 */
-	private String adres;
-	/**
-	 * 상세주소
-	 */
-	private String detailAdres;
-	/**
-	 * 끝전화번호
-	 */
-	private String endTelno;
-	/**
-	 * 팩스번호
-	 */
-	private String mberFxnum;
-	/**
-	 * 그룹 ID
-	 */
-	private String groupId;
-	/**
-	 * 주민등록번호
-	 */
-	private String ihidnum;
-	/**
-	 * 성별코드
-	 */
-	private String sexdstnCode;
-	/**
-	 * 회원 ID
-	 */
-	private String mberId;
-	/**
-	 * 회원명
-	 */
+ 
+	/* 회원번호 */
+	private String memSeq;
+	/* 회원이름 */
 	private String memName;
-	/**
-	 * 회원상태
-	 */
-	private String mberSttus;
-	/**
-	 * 지역번호
-	 */
-	private String areaNo;
-	/**
-	 * 중간전화번호
-	 */
-	private String middleTelno;
-	/**
-	 * 핸드폰번호
-	 */
-	private String moblphonNo;
-	/**
-	 * 비밀번호
-	 */
+	/* 이메일아이디 */
+	private String emailId;
+	/* 비밀번호 */
 	private String password;
-	/**
-	 * 비밀번호 정답
-	 */
-	private String passwordCnsr;
-	/**
-	 * 비밀번호 힌트
-	 */
-	private String passwordHint;
-	/**
-	 * 가입 일자
-	 */
-	private String sbscrbDe;
-	/**
-	 * 우편번호
-	 */
-	private String zip;
-	/**
-	 * 이메일주소
-	 */
-	private String mberEmailAdres;
-	
-	private String lockAt;
-	public String getLockAt() {return lockAt;}
-	public void setLockAt(String lockAt) {this.lockAt = lockAt;}
-	
-	/**
-	 * oldPassword attribute 값을  리턴한다.
-	 * @return String
-	 */
+	/* 이메일인증키 */
+	private String emailKey;
+	/* 이메일인증여부 */
+	private String emailConfirm;
+	/* 이메일인증일 */
+	private String emailDate;
+	/* 회원등급 */
+	private String memLev;
+	/* 회원상테 */
+	private String memNumber;
+	/* 가입일시 */
+	private String regDate;
 	public String getOldPassword() {
 		return oldPassword;
 	}
-	/**
-	 * oldPassword attribute 값을 설정한다.
-	 * @param oldPassword String
-	 */
 	public void setOldPassword(String oldPassword) {
 		this.oldPassword = oldPassword;
 	}
-	
-	
-	public String getEmailId() {
-		return emailId;
+	public String getMemSeq() {
+		return memSeq;
 	}
-	public void setEmailId(String emailId) {
-		this.emailId = emailId;
+	public void setMemSeq(String memSeq) {
+		this.memSeq = memSeq;
 	}
 	public String getMemName() {
 		return memName;
@@ -141,276 +63,53 @@ public class MberManageVO extends UserDefaultVO{
 	public void setMemName(String memName) {
 		this.memName = memName;
 	}
-	/**
-	 * userTy attribute 값을  리턴한다.
-	 * @return String
-	 */
-	public String getUserTy() {
-		return userTy;
+	public String getEmailId() {
+		return emailId;
 	}
-	/**
-	 * userTy attribute 값을 설정한다.
-	 * @param userTy String
-	 */
-	public void setUserTy(String userTy) {
-		this.userTy = userTy;
+	public void setEmailId(String emailId) {
+		this.emailId = emailId;
 	}
-	/**
-	 * adres attribute 값을  리턴한다.
-	 * @return String
-	 */
-	public String getAdres() {
-		return adres;
-	}
-	/**
-	 * adres attribute 값을 설정한다.
-	 * @param adres String
-	 */
-	public void setAdres(String adres) {
-		this.adres = adres;
-	}
-	/**
-	 * detailAdres attribute 값을  리턴한다.
-	 * @return String
-	 */
-	public String getDetailAdres() {
-		return detailAdres;
-	}
-	/**
-	 * detailAdres attribute 값을 설정한다.
-	 * @param detailAdres String
-	 */
-	public void setDetailAdres(String detailAdres) {
-		this.detailAdres = detailAdres;
-	}
-	/**
-	 * endTelno attribute 값을  리턴한다.
-	 * @return String
-	 */
-	public String getEndTelno() {
-		return endTelno;
-	}
-	/**
-	 * endTelno attribute 값을 설정한다.
-	 * @param endTelno String
-	 */
-	public void setEndTelno(String endTelno) {
-		this.endTelno = endTelno;
-	}
-	/**
-	 * mberFxnum attribute 값을  리턴한다.
-	 * @return String
-	 */
-	public String getMberFxnum() {
-		return mberFxnum;
-	}
-	/**
-	 * mberFxnum attribute 값을 설정한다.
-	 * @param mberFxnum String
-	 */
-	public void setMberFxnum(String mberFxnum) {
-		this.mberFxnum = mberFxnum;
-	}
-	/**
-	 * groupId attribute 값을  리턴한다.
-	 * @return String
-	 */
-	public String getGroupId() {
-		return groupId;
-	}
-	/**
-	 * groupId attribute 값을 설정한다.
-	 * @param groupId String
-	 */
-	public void setGroupId(String groupId) {
-		this.groupId = groupId;
-	}
-	/**
-	 * ihidnum attribute 값을  리턴한다.
-	 * @return String
-	 */
-	public String getIhidnum() {
-		return ihidnum;
-	}
-	/**
-	 * ihidnum attribute 값을 설정한다.
-	 * @param ihidnum String
-	 */
-	public void setIhidnum(String ihidnum) {
-		this.ihidnum = ihidnum;
-	}
-	/**
-	 * sexdstnCode attribute 값을  리턴한다.
-	 * @return String
-	 */
-	public String getSexdstnCode() {
-		return sexdstnCode;
-	}
-	/**
-	 * sexdstnCode attribute 값을 설정한다.
-	 * @param sexdstnCode String
-	 */
-	public void setSexdstnCode(String sexdstnCode) {
-		this.sexdstnCode = sexdstnCode;
-	}
-	/**
-	 * mberId attribute 값을  리턴한다.
-	 * @return String
-	 */
-	public String getMberId() {
-		return mberId;
-	}
-	/**
-	 * mberId attribute 값을 설정한다.
-	 * @param mberId String
-	 */
-	public void setMberId(String mberId) {
-		this.mberId = mberId;
-	}
-	/**
-	 * mberNm attribute 값을  리턴한다.
-	 * @return String
-	 */
-
-	/**
-	 * mberSttus attribute 값을  리턴한다.
-	 * @return String
-	 */
-	public String getMberSttus() {
-		return mberSttus;
-	}
-	/**
-	 * mberSttus attribute 값을 설정한다.
-	 * @param mberSttus String
-	 */
-	public void setMberSttus(String mberSttus) {
-		this.mberSttus = mberSttus;
-	}
-	/**
-	 * areaNo attribute 값을  리턴한다.
-	 * @return String
-	 */
-	public String getAreaNo() {
-		return areaNo;
-	}
-	/**
-	 * areaNo attribute 값을 설정한다.
-	 * @param areaNo String
-	 */
-	public void setAreaNo(String areaNo) {
-		this.areaNo = areaNo;
-	}
-	/**
-	 * middleTelno attribute 값을  리턴한다.
-	 * @return String
-	 */
-	public String getMiddleTelno() {
-		return middleTelno;
-	}
-	/**
-	 * middleTelno attribute 값을 설정한다.
-	 * @param middleTelno String
-	 */
-	public void setMiddleTelno(String middleTelno) {
-		this.middleTelno = middleTelno;
-	}
-	/**
-	 * moblphonNo attribute 값을  리턴한다.
-	 * @return String
-	 */
-	public String getMoblphonNo() {
-		return moblphonNo;
-	}
-	/**
-	 * moblphonNo attribute 값을 설정한다.
-	 * @param moblphonNo String
-	 */
-	public void setMoblphonNo(String moblphonNo) {
-		this.moblphonNo = moblphonNo;
-	}
-	/**
-	 * password attribute 값을  리턴한다.
-	 * @return String
-	 */
 	public String getPassword() {
 		return password;
 	}
-	/**
-	 * password attribute 값을 설정한다.
-	 * @param password String
-	 */
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	/**
-	 * passwordCnsr attribute 값을  리턴한다.
-	 * @return String
-	 */
-	public String getPasswordCnsr() {
-		return passwordCnsr;
+	public String getEmailKey() {
+		return emailKey;
 	}
-	/**
-	 * passwordCnsr attribute 값을 설정한다.
-	 * @param passwordCnsr String
-	 */
-	public void setPasswordCnsr(String passwordCnsr) {
-		this.passwordCnsr = passwordCnsr;
+	public void setEmailKey(String emailKey) {
+		this.emailKey = emailKey;
 	}
-	/**
-	 * passwordHint attribute 값을  리턴한다.
-	 * @return String
-	 */
-	public String getPasswordHint() {
-		return passwordHint;
+	public String getEmailConfirm() {
+		return emailConfirm;
 	}
-	/**
-	 * passwordHint attribute 값을 설정한다.
-	 * @param passwordHint String
-	 */
-	public void setPasswordHint(String passwordHint) {
-		this.passwordHint = passwordHint;
+	public void setEmailConfirm(String emailConfirm) {
+		this.emailConfirm = emailConfirm;
 	}
-	/**
-	 * sbscrbDe attribute 값을  리턴한다.
-	 * @return String
-	 */
-	public String getSbscrbDe() {
-		return sbscrbDe;
+	public String getEmailDate() {
+		return emailDate;
 	}
-	/**
-	 * sbscrbDe attribute 값을 설정한다.
-	 * @param sbscrbDe String
-	 */
-	public void setSbscrbDe(String sbscrbDe) {
-		this.sbscrbDe = sbscrbDe;
+	public void setEmailDate(String emailDate) {
+		this.emailDate = emailDate;
 	}
-	/**
-	 * zip attribute 값을  리턴한다.
-	 * @return String
-	 */
-	public String getZip() {
-		return zip;
+	public String getMemLev() {
+		return memLev;
 	}
-	/**
-	 * zip attribute 값을 설정한다.
-	 * @param zip String
-	 */
-	public void setZip(String zip) {
-		this.zip = zip;
+	public void setMemLev(String memLev) {
+		this.memLev = memLev;
 	}
-	/**
-	 * mberEmailAdres attribute 값을  리턴한다.
-	 * @return String
-	 */
-	public String getMberEmailAdres() {
-		return mberEmailAdres;
+	public String getMemNumber() {
+		return memNumber;
 	}
-	/**
-	 * mberEmailAdres attribute 값을 설정한다.
-	 * @param mberEmailAdres String
-	 */
-	public void setMberEmailAdres(String mberEmailAdres) {
-		this.mberEmailAdres = mberEmailAdres;
+	public void setMemNumber(String memNumber) {
+		this.memNumber = memNumber;
+	}
+	public String getRegDate() {
+		return regDate;
+	}
+	public void setRegDate(String regDate) {
+		this.regDate = regDate;
 	}
 
 }

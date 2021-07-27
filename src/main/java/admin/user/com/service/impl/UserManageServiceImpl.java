@@ -174,6 +174,12 @@ public class UserManageServiceImpl extends EgovAbstractServiceImpl implements Us
 		userManageDAO.updateLockIncorrect(userManageVO);
 	}
 
+	@Override
+	public void updateUser(UserManageVO userManageVO) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 
 }
