@@ -13,6 +13,8 @@
     <meta name="description" content="Ogani Template">
     <meta name="keywords" content="Ogani, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet"> <!--CDN 링크 -->
+
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Ogani | Template</title>
 
@@ -21,7 +23,6 @@
 
     
      <link rel="stylesheet" href="/css/food/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="/css/food/font-awesome.min.css" type="text/css">
     <link rel="stylesheet" href="/css/food/elegant-icons.css" type="text/css">
     <link rel="stylesheet" href="/css/food/nice-select.css" type="text/css">
     <link rel="stylesheet" href="/css/food/jquery-ui.min.css" type="text/css">
@@ -31,7 +32,7 @@
 </head>
 
 <body>
-    <!-- Page Preloder -->
+  <%--   <!-- Page Preloder -->
     <div id="preloder">
         <div class="loader"></div>
     </div>
@@ -92,7 +93,7 @@
                 <li>Free Shipping for all Order of $99</li>
             </ul>
         </div>
-    </div>
+    </div> --%>
     <!-- Humberger End -->
 
     <!-- Header Section Begin -->
@@ -117,16 +118,20 @@
                                 <a href="#"><i class="fa fa-pinterest-p"></i></a>
                             </div>
                             <div class="header__top__right__language">
-                                <img src="/images/food/language.png" alt="">
-                                <div>English</div>
+<!--                                 <img src="/images/food/language.png" alt="">
+ -->                                <div>Korean</div>
                                 <span class="arrow_carrot-down"></span>
                                 <ul>
                                     <li><a href="#">Korean</a></li>
                                     <li><a href="#">English</a></li>
                                 </ul>
                             </div>
-                            <div class="header__top__right__auth">
-                                <a href="<c:url value='/uat/uia/LoginUsr.do'/>"><i class="fa fa-user"></i> Login</a>
+                            <div class="header__top__right__auth" style = "padding: 0px 20px 0px 20px;">
+                                <a href="<c:url value='/uat/uia/LoginUsr.do'/>"><i class="fa fa-user"></i> Login </a>
+                            </div>
+                            
+                             <div class="header__top__right__auth">
+                                <a href="<c:url value='/user/com/userSignup.do'/>"><i class="fas fa-user-plus"></i> sign up</a>
                             </div>
                         </div>
                     </div>
@@ -143,18 +148,37 @@
                 <div class="col-lg-6">
                     <nav class="header__menu">
                         <ul>
-                            <li class="active"><a href="./index.html">Home</a></li>
-                            <li><a href="./shop-grid.html">Shop</a></li>
-                            <li><a href="#">Pages</a>
+                            <li class="active"><a href="./index.html">Home</a>
+                            	<ul class="header__menu__dropdown">
+                                    <li><a href="./shoping-grid.html">소개</a></li>
+                                    <li><a href="">상품기준</a></li>
+                                    <li><a href="">이벤트/프로모션</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="./shop-grid.html">Shop</a>
+                            	 <ul class="header__menu__dropdown">
+                                    <li><a href="./shoping-grid.html">할인관</a></li>
+                                    <li><a href="">베스트</a></li>
+                                    <li><a href="">신상품</a></li>
+                                </ul>
+                            
+                            </li>
+                            <li><a href="#">My Pages</a>
                                 <ul class="header__menu__dropdown">
-                                    <li><a href="./shop-details.html">Shop Details</a></li>
-                                    <li><a href="./shoping-cart.html">Shoping Cart</a></li>
-                                    <li><a href="./checkout.html">Check Out</a></li>
-                                    <li><a href="./blog-details.html">Blog Details</a></li>
+                                    <li><a href="./shoping-cart.html">장바구니</a></li>
+                                    <li><a href="./checkout.html">주문/배송</a></li>
+                                    <li><a href="">내가 쓴글</a></li>
+                                    <li><a href="">회원 정보 수정</a></li>
                                 </ul>
                             </li>
                             <li><a href="./blog.html">Blog</a></li>
-                            <li><a href="./contact.html">Contact</a></li>
+                            <li><a href="./contact.html">Contact</a>
+                            	<ul class="header__menu__dropdown">
+                                    <li><a href="">FAQ</a></li>
+                                    <li><a href="">1:1 문의</a></li>
+                                    <li><a href="">오시는 길</a></li>
+                                </ul>
+                            </li>
                         </ul>
                     </nav>
                 </div>
@@ -186,17 +210,18 @@
                             <span>All departments</span>
                         </div>
                         <ul>
-                            <li><a href="#">Fresh Meat</a></li>
-                            <li><a href="#">Vegetables</a></li>
-                            <li><a href="#">Fruit & Nut Gifts</a></li>
-                            <li><a href="#">Fresh Berries</a></li>
-                            <li><a href="#">Ocean Foods</a></li>
-                            <li><a href="#">Butter & Eggs</a></li>
-                            <li><a href="#">Fastfood</a></li>
-                            <li><a href="#">Fresh Onion</a></li>
-                            <li><a href="#">Papayaya & Crisps</a></li>
-                            <li><a href="#">Oatmeal</a></li>
-                            <li><a href="#">Fresh Bananas</a></li>
+                            <li><a href="#">사과/배</a></li>
+                            <li><a href="#">감귤/만감류</a></li>
+                            <li><a href="#">수박/멜로/참외/토마토</a></li>
+                            <li><a href="#">딸기/키위/블루베리</a></li>
+                            <li><a href="#">포토/자두/복숭아</a></li>
+                            <li><a href="#">바나나/파인애플</a></li>
+                            <li><a href="#">오렌지/지몽/레몬</a></li>
+                            <li><a href="#">망고/열대과일</a></li>
+                            <li><a href="#">체류/석류/아보카도</a></li>
+                            <li><a href="#">체리/앵두</a></li>
+                            <li><a href="#">견과류</a></li>
+                            
                         </ul>
                     </div>
                 </div>
@@ -442,7 +467,7 @@
             <div class="row">
                 <div class="col-lg-4 col-md-6">
                     <div class="latest-product__text">
-                        <h4>Latest Products</h4>
+                        <h4>신상</h4>
                         <div class="latest-product__slider owl-carousel">
                             <div class="latest-prdouct__slider__item">
                                 <a href="#" class="latest-product__item">
@@ -507,7 +532,7 @@
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <div class="latest-product__text">
-                        <h4>Top Rated Products</h4>
+                        <h4>베스트</h4>
                         <div class="latest-product__slider owl-carousel">
                             <div class="latest-prdouct__slider__item">
                                 <a href="#" class="latest-product__item">
@@ -572,7 +597,7 @@
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <div class="latest-product__text">
-                        <h4>Review Products</h4>
+                        <h4>할인관</h4>
                         <div class="latest-product__slider owl-carousel">
                             <div class="latest-prdouct__slider__item">
                                 <a href="#" class="latest-product__item">
