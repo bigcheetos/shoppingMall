@@ -22,9 +22,9 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
         <!-- Respond.js 으로 IE8 에서 반응형 기능을 활성화하세요 (https://github.com/scottjehl/Respond) -->
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-<%--         <script type="text/javascript" src="<c:url value="/sec/rnc/validator.do"/>"></script>
- --%>		<validator:javascript formName="mberManageVO" staticJavascript="false" xhtml="true" cdata="false"/>
-    </head>
+<%--    <script type="text/javascript" src="<c:url value="/sec/rnc/validator.do"/>"></script>
+ 	<validator:javascript formName="mberManageVO" staticJavascript="false" xhtml="true" cdata="false"/>
+    --%></head>
     <body>
         <div class="container"><!-- 좌우측의 공간 확보 -->
             <!-- 헤더 들어가는 부분 -->

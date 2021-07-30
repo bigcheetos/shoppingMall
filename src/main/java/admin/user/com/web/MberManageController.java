@@ -131,12 +131,15 @@ public class MberManageController {
 	@RequestMapping("/user/com/MberInsert.do")
 	public String insertMber(@ModelAttribute("mberManageVO") MberManageVO mberManageVO, BindingResult bindingResult, Model model) throws Exception {
 
-		 
+		 System.out.println("0000000000000000");
+	
 			mberManageService.insertMber(mberManageVO);
+			
+			System.out.println("+++++++++++++++++++++");
 			//Exception 없이 진행시 등록 성공메시지
 			model.addAttribute("resultMsg", "success.common.insert");
 		
-		return "forward:/user/com/list.do";
+		return "forward:/cmm/main/mainPage.do";
 	}
 /*
 	*//**

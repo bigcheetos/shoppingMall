@@ -45,6 +45,8 @@ public class MberManageVO extends UserDefaultVO{
 	private String memNumber;
 	/* 가입일시 */
 	private String regDate;
+	
+	
 	public String getOldPassword() {
 		return oldPassword;
 	}

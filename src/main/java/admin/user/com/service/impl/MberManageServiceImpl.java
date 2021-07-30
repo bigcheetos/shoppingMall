@@ -40,14 +40,13 @@ public class MberManageServiceImpl extends EgovAbstractServiceImpl implements Mb
 	 */
 	@Override
 	public String insertMber(MberManageVO mberManageVO) throws Exception  {
-		//고유아이디 셋팅
-		String emailId = idgenService.getNextStringId();
-		mberManageVO.setEmailId(emailId);
+		System.out.println("111111111111111");
 		//패스워드 암호화
 		String pass = EgovFileScrty.encryptPassword(mberManageVO.getPassword(), EgovStringUtil.isNullToString(mberManageVO.getEmailId()));//KISA 보안약점 조치 (2018-10-29, 윤창원)
 		mberManageVO.setPassword(pass);
-
+		System.out.println("222222222222222222222");
 		String result = mberManageDAO.insertMber(mberManageVO);
+		
 		return result;
 	}
 

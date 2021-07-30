@@ -47,9 +47,11 @@ public class MberManageDAO extends EgovComAbstractDAO{
      * @return String 등록결과
      */
     public String insertMber(MberManageVO mberManageVO){
-        return String.valueOf((int)insert("userManageDAO.insertMber_S", mberManageVO));
+    	System.out.println("3333333333333333");
+        return String.valueOf((int)insert("userManageDAO.insertMber", mberManageVO));
+    	
     }
-
+    
     /**
      * 기 등록된 사용자 중 검색조건에 맞는일반회원의 정보를 데이터베이스에서 읽어와 화면에 출력
      * @param mberId 상세조회대상 일반회원아이디

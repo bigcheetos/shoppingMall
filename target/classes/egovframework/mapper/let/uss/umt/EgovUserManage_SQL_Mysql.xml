@@ -4,6 +4,19 @@
 
 <mapper namespace="userManageDAO">
 
+	<resultMap id="signUp" type="admin.user.com.service.MberManageVO">
+		<result property="memSeq" column="mem_seq"/>
+		<result property="memName" column="mem_name"/>
+		<result property="emailId" column="emailId"/>
+		<result property="password" column="password"/>
+		<result property="emailKey" column="email_key"/>
+		<result property="emailConfirm" column="email_confirm"/>
+		<result property="emailDate" column="email_date"/>
+		<result property="memLev" column="mem_lev"/>
+		<result property="memNumber" column="mem_number"/>
+		<result property="regDate" column="regDate"/>				
+	</resultMap>
+
     
 
      <!-- <select id="userManageDAO.selectUserList_S" parameterClass="userSearchVO" resultClass="egovMap">

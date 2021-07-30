@@ -198,8 +198,8 @@ function goRegiUsr() {
     </div>  
     <!-- //container 끝 -->
     <!-- footer 시작 -->
-    <div id="footer"><c:import url="/EgovPageLink.do?link=main/inc/EgovIncFooter" /></div>
-    <!-- //footer 끝 -->
+<%--     <div id="footer"><c:import url="/EgovPageLink.do?link=main/inc/EgovIncFooter" /></div>
+ --%>    <!-- //footer 끝 -->
 </div>
 <!-- //전체 레이어 끝 -->
 </body>
