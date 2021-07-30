@@ -1,5 +1,6 @@
 package egovframework.let.main.web;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import egovframework.com.cmm.ComDefaultVO;
@@ -79,5 +80,56 @@ public class EgovMainController {
 
 		return "food/FoodMain";
 	}
+	
+	/**
+	 * 홈 > 소개 조회
+	 */
+	@RequestMapping(value = "/cmm/main/home/intro.do")
+	public String getMgtHomeIntro(HttpServletRequest request, ModelMap model)
+	  throws Exception{
 
+		return "food/home/Intro";
+	}
+	
+    /**
+     * 홈 > 소개 상품기준
+     */
+    @RequestMapping(value = "cmm/main/home/standard.do")
+    public String getMgtHomeStandard(HttpServletRequest request, ModelMap model)
+      throws Exception{
+    		
+    	// 확인 후 다시
+            return "food/FoodMain";
+    }
+    
+    /**
+     * 홈 > 소개 이벤트/프로모션
+     */
+    @RequestMapping(value = "cmm/main/home/event.do")
+    public String getMgtHomeEvent(HttpServletRequest request, ModelMap model)
+      throws Exception{
+    		// EventVO에 담길 내용
+    		// DB table eventboard와 연결
+    		// 
+    		
+    		// DB에 찾을 수 있는 것
+    		// 이벤트 순번(event_seq)
+    		// 이벤트 제목(event_title)
+    		// 이미지 주소(event_img)
+    		// 이벤트 등록일(event_period)
+    		
+    		// DB에 찾을 수 없는 것
+    		// 이벤트 상태(event_status)
+    		// 이벤트 댓글수(event_count)
+    		// 이벤트 조회수(event_views)
+    		
+    		
+    		// 이벤트 댓글 테이블 필요(seq, content, id, date)
+    		
+//			Map<String, EventVO> map = new HashMap<>();
+//    		
+//    		model.addAttribute("eventList", map);
+    		
+            return "food/home/Event";
+    }
 }
