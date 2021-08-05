@@ -102,14 +102,14 @@
                     </div>
                 </div>
                 <div class="form-group" id="divEmail">
-                    <label for="inputEmail" class="col-lg-2 control-label">이메일</label>
+                    <label for="emailId" class="col-lg-2 control-label">이메일</label>
                     <div class="col-lg-10">
                         <form:input type="text" class="form-control onlyAlphabetAndNumber" path="emailId" data-rule-required="true" />
                     	<div><form:errors path="emailId" cssClass="error" /></div>                
                     </div>
                 </div>
                 <div class="form-group" id="divPassword">
-                    <label for="inputPassword" class="col-lg-2 control-label">패스워드</label>
+                    <label for="password" class="col-lg-2 control-label">패스워드</label>
                     <div class="col-lg-10">
 						<form:password path="password" class="form-control" id="password" size="50" data-rule-required="true" maxlength="20" />
                     </div>

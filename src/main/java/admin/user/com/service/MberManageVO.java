@@ -45,8 +45,16 @@ public class MberManageVO extends UserDefaultVO{
 	private String memNumber;
 	/* 가입일시 */
 	private String regDate;
+	/* 회원상태코드 */
+	private String memStatus;
 	
 	
+	public String getMemStatus() {
+		return memStatus;
+	}
+	public void setMemStatus(String memStatus) {
+		this.memStatus = memStatus;
+	}
 	public String getOldPassword() {
 		return oldPassword;
 	}

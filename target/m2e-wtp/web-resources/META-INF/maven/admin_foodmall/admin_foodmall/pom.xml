@@ -177,7 +177,23 @@
 			<version>1.16</version> 
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/junit/junit -->
+		<dependency>
+		    <groupId>junit</groupId>
+		    <artifactId>junit</artifactId>
+		    <version>4.13.2</version>
+		    <scope>test</scope>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-test -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-test</artifactId>
+		    <version>5.3.9</version>
+		    <scope>test</scope>
+		</dependency>
 
+		
 		<!-- mysql driver -->
 		 
         <dependency>

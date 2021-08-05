@@ -85,10 +85,10 @@ FROM(
     <insert id="insertMber">
 		/* userManageDAO.insertMber */
 		INSERT INTO MEMBER (
-			EMAILID, 
-			PASSWORD, 
-			MEM_GUBUN,
-			REG_DATE
+			emailId, 
+			password, 
+			MEM_LEV,
+			regDate
 		) VALUES (
 			#{emailId}, 
 			#{password]}, 
@@ -97,7 +97,7 @@ FROM(
 		)
 	</insert>
     
-    <insert id="userManageDAO.insertUser_S">
+    <!-- <insert id="userManageDAO.insertUser_S">
         <![CDATA[
             INSERT INTO LETTNEMPLYRINFO 
                 (   ESNTL_ID             ,
@@ -163,7 +163,7 @@ FROM(
             DELETE FROM LETTNEMPLYRINFO 
             WHERE ESNTL_ID=#delId#
         ]]>
-    </delete>
+    </delete> -->
     
    <!--  <select id="userManageDAO.selectUser_S" resultClass="userVO">
         <![CDATA[

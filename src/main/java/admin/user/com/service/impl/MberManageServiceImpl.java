@@ -42,9 +42,10 @@ public class MberManageServiceImpl extends EgovAbstractServiceImpl implements Mb
 	public String insertMber(MberManageVO mberManageVO) throws Exception  {
 		System.out.println("111111111111111");
 		//패스워드 암호화
-		String pass = EgovFileScrty.encryptPassword(mberManageVO.getPassword(), EgovStringUtil.isNullToString(mberManageVO.getEmailId()));//KISA 보안약점 조치 (2018-10-29, 윤창원)
+		String pass = EgovFileScrty.encryptPassword(mberManageVO.getPassword(), EgovStringUtil.isNullToString(mberManageVO.getEmailId()));
 		mberManageVO.setPassword(pass);
 		System.out.println("222222222222222222222");
+		System.out.println(mberManageVO.getPassword());
 		String result = mberManageDAO.insertMber(mberManageVO);
 		
 		return result;

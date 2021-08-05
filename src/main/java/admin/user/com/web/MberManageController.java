@@ -131,7 +131,7 @@ public class MberManageController {
 	@RequestMapping("/user/com/MberInsert.do")
 	public String insertMber(@ModelAttribute("mberManageVO") MberManageVO mberManageVO, BindingResult bindingResult, Model model) throws Exception {
 
-		 System.out.println("0000000000000000");
+		 System.out.println(mberManageVO.getEmailId());
 	
 			mberManageService.insertMber(mberManageVO);
 			
