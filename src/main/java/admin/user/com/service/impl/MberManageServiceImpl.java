@@ -72,6 +72,11 @@ public class MberManageServiceImpl extends EgovAbstractServiceImpl implements Mb
 	public List<MberManageVO> selectMberList(UserDefaultVO userSearchVO) {
 		return mberManageDAO.selectMberList(userSearchVO);
 	}
+	
+	public MberManageVO selectMemberList(MberManageVO mberManageVO) {
+		
+		return  mberManageDAO.selectMemberList(mberManageVO);
+	}
 
     /**
      * 일반회원 총 갯수를 조회한다.

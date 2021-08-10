@@ -12,6 +12,8 @@ public interface MberManageService {
 	 */
 	public String insertMber(MberManageVO mberManageVO) throws Exception;
 
+	public MberManageVO selectMemberList(MberManageVO mberManageVO);
+
 	/**
 	 * 기 등록된 사용자 중 검색조건에 맞는 일반회원의 정보를 데이터베이스에서 읽어와 화면에 출력
 	 * @param mberId 상세조회대상 일반회원아이디
@@ -80,5 +82,6 @@ public interface MberManageService {
 	 * @throws Exception
 	 */
 	public void updateLockIncorrect(MberManageVO mberManageVO) throws Exception;
+
 
 }

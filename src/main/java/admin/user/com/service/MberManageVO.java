@@ -33,6 +33,8 @@ public class MberManageVO extends UserDefaultVO{
 	private String emailId;
 	/* 비밀번호 */
 	private String password;
+	
+	private String PwCheck;
 	/* 이메일인증키 */
 	private String emailKey;
 	/* 이메일인증여부 */
@@ -48,7 +50,21 @@ public class MberManageVO extends UserDefaultVO{
 	/* 회원상태코드 */
 	private String memStatus;
 	
+	private String memGubun;
 	
+	
+	public String getMemGubun() {
+		return memGubun;
+	}
+	public void setMemGubun(String memGubun) {
+		this.memGubun = memGubun;
+	}
+	public String getPwCheck() {
+		return PwCheck;
+	}
+	public void setPwCheck(String pwCheck) {
+		PwCheck = pwCheck;
+	}
 	public String getMemStatus() {
 		return memStatus;
 	}

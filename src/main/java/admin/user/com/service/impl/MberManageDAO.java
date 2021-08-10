@@ -23,6 +23,15 @@ public class MberManageDAO extends EgovComAbstractDAO{
 	public List<MberManageVO> selectMberList(UserDefaultVO userSearchVO){
         return (List<MberManageVO>) list("mberManageDAO.selectMberList", userSearchVO);
     }
+    public String insertMber(MberManageVO mberManageVO){
+    	System.out.println("3333333333333333");
+        return String.valueOf((int)insert("userManageDAO.insertMber", mberManageVO));
+    	
+    }
+    public MberManageVO selectMemberList(MberManageVO mberManageVO) {
+
+		return selectOne("userManageDAO.selectMemberList", mberManageVO);
+	}
 
     /**
      * 일반회원 총 갯수를 조회한다.
@@ -41,16 +50,7 @@ public class MberManageDAO extends EgovComAbstractDAO{
         delete("mberManageDAO.deleteMber_S", delId);
     }
 
-    /**
-     * 일반회원의 기본정보를 화면에서 입력하여 항목의 정합성을 체크하고 데이터베이스에 저장
-     * @param mberManageVO 일반회원 등록정보
-     * @return String 등록결과
-     */
-    public String insertMber(MberManageVO mberManageVO){
-    	System.out.println("3333333333333333");
-        return String.valueOf((int)insert("userManageDAO.insertMber", mberManageVO));
-    	
-    }
+   
     
     /**
      * 기 등록된 사용자 중 검색조건에 맞는일반회원의 정보를 데이터베이스에서 읽어와 화면에 출력
