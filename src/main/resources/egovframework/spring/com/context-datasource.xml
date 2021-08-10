@@ -19,10 +19,6 @@
      <alias name="dataSource-${Globals.DbType}" alias="dataSource" />
     <alias name="dataSource-${Globals.DbType}" alias="egov.dataSource" /> 
    
-    
-    
-	
-	 
 	<!-- mysql -->
     <bean id="dataSource-mysql" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="${Globals.DriverClassName}"/>

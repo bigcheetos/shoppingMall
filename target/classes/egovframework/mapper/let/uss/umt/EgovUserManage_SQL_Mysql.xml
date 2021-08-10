@@ -92,7 +92,7 @@ FROM(
 		) VALUES (
 			#{emailId}, 
 			#{password]}, 
-			"m",
+			'm',
 			sysdate()
 		)
 	</insert>
