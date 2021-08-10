@@ -1,0 +1,87 @@
+.news-list .news-content .text-wrap .title/*
+  Css Name : base.css
+  Description : 베이스 CSS
+  Modification Information
+
+      수정일        수정자          수정내용
+    ----------     --------    ---------------------------
+    2021.08.09		김진영			최초 생성
+
+    author   : 개발팀 김진영
+    since    : 2021.08.09
+*/
+
+@CHARSET "UTF-8";
+
+@import url( "/css/font/notosanskr.css" );
+@import url( "/css/font/notoserifkr.css" );
+
+/*************************************************
+ * RESET
+ *************************************************/
+*{font-family: "Noto Sans KR", sans-serif;}
+
+html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,abbr,address,
+cite,code,del,dfn,em,img,ins,kbd,q,samp,small,strong,sub,sup,var,b,i,dl,dt,dd,ol,ul,li,
+form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,
+canvas,details,figcaption,figure,footer,header,hgroup,menu,nav,section,summary,time,
+mark,audio,video{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:middle;background:transparent;}
+nav,dl,ul,ol,menu,li{list-style:none;}
+
+body{font-family:'Nanum Barun Gothic','Nanum Gothic','돋움',Dotum,Helvetica,sans-serif;font-size:12px;color:#333;line-height:1.4;-webkit-text-size-adjust:none;}
+input,select,textarea,button{font-size:100%;vertical-align:middle;}
+button{border:0 none;background-color:transparent;cursor:pointer;}
+blockquote,q{quotes:none;}
+blockquote:before,blockquote:after,q:before,q:after{content:'';content:none;}
+
+a{margin:0;padding:0;font-size:100%;vertical-align:middle;background:transparent;text-decoration:none;color:#333;}
+a:active,a:hover{text-decoration:none;}
+hr{display:block;height:1px;border:0;border-top:1px solid #cccccc;margin:0;padding:0;}
+table{border-collapse:collapse;border-spacing:0;}
+address,caption,cite,code,dfn,em,var {font-style: normal; font-weight: normal}
+article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block;}
+
+input[type='text'],input[type='password'],input[type='submit'],input[type='search']{-webkit-appearance: none;border-radius:0;}
+input:checked[type='checkbox']{background-color:#666;-webkit-appearance:checkbox;}
+button,input[type='button'],input[type='submit'],input[type='reset'],input[type='file']{-webkit-appearance:button;border-radius:0;padding:0;border:0;}
+input[type='search']::-webkit-search-cancel-button{-webkit-appearance:none;}
+
+mark{background-color:#ff9;color:#000;font-style:italic;font-weight:bold;}
+del{text-decoration:line-through;}
+abbr[title],dfn[title]{border-bottom:1px dotted;cursor:help;}
+
+h1{font-size:24px;line-height:normal;font-weight:800;color:#333;}
+h2{font-size:20px;line-height:normal;font-weight:700;color:#333;}
+h3{font-size:16px;line-height:normal;font-weight:700;color:#333;}
+h4,h5,h6{font-size:16px;line-height:normal;font-weight:700;color:#333;}
+
+/*크롬에서 textarea 크기조절 막기*/
+textarea{resize: none;}
+
+/* 모달창 로그인을 사용하는 경우 설정 */
+html, body {height:100%;}
+
+p, span, em, strong {vertical-align: baseline;}
+table * {box-sizing: border-box;}
+
+/*************************************************
+ * SCROLLBAR
+ *************************************************/
+/* 
+::-webkit-scrollbar{width:8px;height:8px;border:3px solid #fff;}
+::-webkit-scrollbar-button:start:decrement,::-webkit-scrollbar-button:end:increment{display:none;height:10px;background:#efefef;}
+::-webkit-scrollbar-track{background:#efefef;-webkit-border-radius:10px;border-radius:10px;-webkit-box-shadow:inset 0 0 4px rgba(0,0,0,0.2);}
+::-webkit-scrollbar-thumb{height:50px;width:50px;background:rgba(0,0,0,0.2);-webkit-border-radius:8px;border-radius:8px;-webkit-box-shadow:inset 0 0 4px rgba(0,0,0,0.1);}
+ */
+
+/*************************************************
+ * CLASS DEFINITION
+ *************************************************/
+.invisible{display:block;overflow:hidden;text-indent:-9999px;font-size:0;}
+.hidden{display:none;}
+
+/* clearfix */
+.clfix:after{content:".";display:block;height:0px;clear:both;visibility:hidden;}
+.clfix{display:block;}
+.clfix{*zoom:1;} /*for IE 5.5-7*/
+* html .clfix{height:1%;} /* Hides from IE-mac */

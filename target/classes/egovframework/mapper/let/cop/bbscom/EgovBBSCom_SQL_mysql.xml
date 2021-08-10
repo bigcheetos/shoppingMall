@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="BBSComDAO">
+	
+	<select id="selectAtchFile" parameterType="egovframework.let.cop.bbscom.service.AtchFileVO" resultMap="atchFileResultMap" >
+			SELECT 
+				ATCH_FILE_SEQ,
+				BBS_SEQ,
+				ATCH_FILE_PATH,
+				ATCH_FILE_NAME,
+				ATCH_FILE_TYPE,
+				ATCH_FILE_REG_DATE
+			FROM
+				ATCHFILE
+			WHERE
+				ATCH_FILE_SEQ = #{atchFileSeq}
+			AND BBS_SEQ 	  = #{bbsSeq}			
+	</select>
+	
+	<select id="selectReplyListByReplyVO" parameterType="egovframework.let.cop.bbscom.service.ArticleVO" resultMap="replyResultMap" >
+			SELECT 
+				REPLY_SEQ,
+				BBS_SEQ,
+				ARTICLE_SEQ,
+				REPLY_CONTENT,
+				MEM_SEQ,
+				REPLY_DATE
+			FROM
+				REPLY
+			WHERE
+				BBS_SEQ 	= #{bbsSeq}
+			AND ARTICLE_SEQ = #{articleSeq}
+	</select>
+	
+	<select id="selectReplyCountListByReplyVO" parameterType="egovframework.let.cop.bbscom.service.ArticleVO" resultType="String" >
+			SELECT 
+				COUNT(1)
+			FROM
+				REPLY
+			WHERE
+				BBS_SEQ 	= #{bbsSeq}
+			AND ARTICLE_SEQ = #{articleSeq}
+	</select>
+	
+	<select id="selectTagListByReplyVO" parameterType="egovframework.let.cop.bbscom.service.ArticleVO" resultMap="tagResultMap" >
+			SELECT 
+				A.TAG_SEQ,
+			    A.TAG_NAME
+			FROM
+				TAG AS A
+			JOIN
+				TAG_ARTICLE AS B
+			ON
+				A.TAG_SEQ = B.TAG_SEQ
+			WHERE
+				B.ARTICLE_SEQ = #{articleSeq}
+			AND B.BBS_SEQ 	  = #{bbsSeq}
+	</select>
+	
+	<resultMap id="atchFileResultMap" type="egovframework.let.cop.bbscom.service.AtchFileVO">
+		<result property="atchFileSeq" column="ATCH_FILE_SEQ"/>
+		<result property="bbsSeq" column="BBS_SEQ"/>
+		<result property="atchFilePath" column="ATCH_FILE_PATH"/>
+		<result property="atchFileName" column="ATCH_FILE_NAME"/>
+		<result property="atchFileType" column="ATCH_FILE_TYPE"/>
+		<result property="atchFileRegDate" column="ATCH_FILE_REG_DATE"/>
+	</resultMap>
+	
+	<resultMap id="replyResultMap" type="egovframework.let.cop.bbscom.service.ReplyVO">
+		<result property="replySeq" column="REPLY_SEQ"/>
+		<result property="bbsSeq" column="BBS_SEQ"/>
+		<result property="articleSeq" column="ARTICLE_SEQ"/>
+		<result property="replyContent" column="REPLY_CONTENT"/>
+		<result property="memSeq" column="MEM_SEQ"/>
+		<result property="replyDate" column="REPLY_DATE"/>
+	</resultMap>
+	
+	<resultMap id="tagResultMap" type="egovframework.let.cop.bbscom.service.TagVO">
+		<result property="tagSeq" column="TAG_SEQ"/>
+		<result property="tagName" column="TAG_NAME"/>
+	</resultMap>
+</mapper>
