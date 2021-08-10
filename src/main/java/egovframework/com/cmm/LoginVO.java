@@ -25,13 +25,11 @@ public class LoginVO implements Serializable{
 	private static final long serialVersionUID = -8274004534207618049L;
 	
 	/** 아이디 */
-	private String id;
+	private String emailId;
 	/** 이름 */
 	private String name;
 	/** 주민등록번호 */
 	private String ihidNum;
-	/** 이메일주소 */
-	private String email;
 	/** 비밀번호 */
 	private String password;
 	/** 비밀번호 힌트 */
@@ -52,19 +50,13 @@ public class LoginVO implements Serializable{
 	private String ip;
 	/** GPKI인증 DN */
 	private String dn;
-	/**
-	 * id attribute 를 리턴한다.
-	 * @return String
-	 */
-	public String getId() {
-		return id;
+
+
+	public String getEmailId() {
+		return emailId;
 	}
-	/**
-	 * id attribute 값을 설정한다.
-	 * @param id String
-	 */
-	public void setId(String id) {
-		this.id = id;
+	public void setEmailId(String emailId) {
+		this.emailId = emailId;
 	}
 	/**
 	 * name attribute 를 리턴한다.
@@ -95,19 +87,8 @@ public class LoginVO implements Serializable{
 		this.ihidNum = ihidNum;
 	}
 	/**
-	 * email attribute 를 리턴한다.
-	 * @return String
-	 */
-	public String getEmail() {
-		return email;
-	}
-	/**
-	 * email attribute 값을 설정한다.
-	 * @param email String
-	 */
-	public void setEmail(String email) {
-		this.email = email;
-	}
+
+
 	/**
 	 * password attribute 를 리턴한다.
 	 * @return String

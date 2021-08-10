@@ -91,7 +91,7 @@ FROM(
 			regDate
 		) VALUES (
 			#{emailId}, 
-			#{password]}, 
+			#{password}, 
 			'm',
 			sysdate()
 		)

@@ -8,10 +8,8 @@
 
 	<!-- 로그인 처리를 위한 resultMap -->
 	<resultMap id="login" type="egovframework.com.cmm.LoginVO">
-		<result property="id" column="id"/>
+		<result property="emailId" column="emailId"/>
 		<result property="name" column="name"/>
-		<result property="ihidNum" column="ihidNum"/>
-		<result property="email" column="email"/>
 		<result property="password" column="password"/>
 		<result property="memLev" column="mem_lev"/>
 		<result property="orgnztId" column="orgnztId"/>
@@ -21,8 +19,8 @@
 	
 	
 	<!-- 아이디 찾기를 위한 resultMap -->
-	<resultMap id="id" type="egovframework.com.cmm.LoginVO">
-		<result property="id" column="id" />
+	<resultMap id="emailId" type="egovframework.com.cmm.LoginVO">
+		<result property="emailId" column="emailId" />
 	</resultMap> 
 	
 	<!-- 비밀번호 처리를 위한 resultMap --> 
@@ -32,19 +30,19 @@
 	
 	<!-- 일반 로그인  관리자-->
 	<select id="actionLogin" resultMap="login">
-	
-		<if test="@egovframework.com.cmm.MybatisCheck@notEmpty(memLev)">
+	  SELECT 
+            	  emailId 
+     			, name
+     			, password
+     			
+              FROM member
+            WHERE emailId = #{emailId}
+   			  AND password = #{password}
+               	
+		<!-- <if test="@egovframework.com.cmm.MybatisCheck@notEmpty(memLev)">
 
-            SELECT 
-            	  AD_ID AS id
-     			, AD_NAME AS name
-     			, AD_PW AS password
-     			, AD_SEQ AS uniqId
-              FROM admin
-            WHERE AD_ID = #{id}
-   			  AND AD_PW = #{password}
-               AND mem_lev = '0'	
-          </if>
+          
+          </if> -->
 	</select>
 	
 	<!-- 인증서 로그인

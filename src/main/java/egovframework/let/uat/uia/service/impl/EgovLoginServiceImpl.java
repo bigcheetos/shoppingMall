@@ -29,14 +29,14 @@ public class EgovLoginServiceImpl extends EgovAbstractServiceImpl implements Ego
 	public LoginVO actionLogin(LoginVO vo) throws Exception {
 
 		// 1. 입력한 비밀번호를 암호화한다.
-		String enpassword = EgovFileScrty.encryptPassword(vo.getPassword(), vo.getId());
+		String enpassword = EgovFileScrty.encryptPassword(vo.getPassword(), vo.getEmailId());
 		vo.setPassword(enpassword);
 
 		// 2. 아이디와 암호화된 비밀번호가 DB와 일치하는지 확인한다.
 		LoginVO loginVO = loginDAO.actionLogin(vo);
 
 		// 3. 결과를 리턴한다.
-		if (loginVO != null && !loginVO.getId().equals("") && !loginVO.getPassword().equals("")) {
+		if (loginVO != null && !loginVO.getEmailId().equals("") && !loginVO.getPassword().equals("")) {
 			return loginVO;
 		} else {
 			loginVO = new LoginVO();
@@ -58,7 +58,7 @@ public class EgovLoginServiceImpl extends EgovAbstractServiceImpl implements Ego
 		LoginVO loginVO = loginDAO.searchId(vo);
 
 		// 2. 결과를 리턴한다.
-		if (loginVO != null && !loginVO.getId().equals("")) {
+		if (loginVO != null && !loginVO.getEmailId().equals("")) {
 			return loginVO;
 		} else {
 			loginVO = new LoginVO();
@@ -98,8 +98,8 @@ public class EgovLoginServiceImpl extends EgovAbstractServiceImpl implements Ego
 
 		// 3. 임시 비밀번호를 암호화하여 DB에 저장한다.
 		LoginVO pwVO = new LoginVO();
-		String enpassword = EgovFileScrty.encryptPassword(newpassword, vo.getId());
-		pwVO.setId(vo.getId());
+		String enpassword = EgovFileScrty.encryptPassword(newpassword, vo.getEmailId());
+		pwVO.setEmailId(vo.getEmailId());
 		pwVO.setPassword(enpassword);
 		//pwVO.setUserSe(vo.getUserSe());
 		loginDAO.updatePassword(pwVO);

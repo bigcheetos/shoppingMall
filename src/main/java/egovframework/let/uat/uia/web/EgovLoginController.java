@@ -59,7 +59,7 @@ public class EgovLoginController {
 	 */
 	@RequestMapping(value = "/uat/uia/actionLogin.do")
 	public String actionLogin(@ModelAttribute("loginVO") LoginVO loginVO, HttpServletRequest request, ModelMap model) throws Exception {
-		System.out.println(loginVO.getId()); 
+		System.out.println(loginVO.getEmailId()); 
 		System.out.println(loginVO.getPassword()); 
 		System.out.println(loginVO.getMemLev()); 
 		
@@ -68,7 +68,7 @@ public class EgovLoginController {
 
 		boolean loginPolicyYn = true;
 
-		if (resultVO != null && resultVO.getId() != null && !resultVO.getId().equals("") && loginPolicyYn) {
+		if (resultVO != null && resultVO.getEmailId() != null && !resultVO.getEmailId().equals("") && loginPolicyYn) {
 
 			request.getSession().setAttribute("LoginVO", resultVO);
 			
@@ -81,7 +81,7 @@ public class EgovLoginController {
 			
 		}else {
 			
-			System.out.println(resultVO.getId()); 
+			System.out.println(resultVO.getEmailId()); 
 			System.out.println(resultVO.getPassword()); 
 			System.out.println(resultVO.getMemLev());
 			model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
