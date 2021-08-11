@@ -57,7 +57,7 @@ public class MberManageController {
 	 * @param model 화면모델
 	 * @return uss/umt/EgovMberManage
 	 * @throws Exception
-	 */
+	 *//*
 	@IncludedInfo(name = "일반회원관리", order = 470, gid = 50)
 	@RequestMapping(value = "/uss/umt/EgovMberManage.do")
 	public String selectMberList(@ModelAttribute("userSearchVO") UserDefaultVO userSearchVO, ModelMap model) throws Exception {
@@ -70,11 +70,11 @@ public class MberManageController {
 			return "index";
 		}
 
-		/** EgovPropertyService */
+		*//** EgovPropertyService *//*
 		userSearchVO.setPageUnit(propertiesService.getInt("pageUnit"));
 		userSearchVO.setPageSize(propertiesService.getInt("pageSize"));
 
-		/** pageing */
+		*//** pageing *//*
 		PaginationInfo paginationInfo = new PaginationInfo();
 		paginationInfo.setCurrentPageNo(userSearchVO.getPageIndex());
 		paginationInfo.setRecordCountPerPage(userSearchVO.getPageUnit());
@@ -98,7 +98,7 @@ public class MberManageController {
 		model.addAttribute("entrprsMberSttus_result", mberSttus_result);//기업회원상태코드목록
 
 		return "egovframework/com/uss/umt/EgovMberManage";
-	}
+	}*/
 
 	
 	@RequestMapping(value = "user/com/userSignup.do")
@@ -107,7 +107,7 @@ public class MberManageController {
 		return "user/UserTypeView";
 	}
 
-	@RequestMapping(value = "user/userSbscrbRegist.do")
+	@RequestMapping(value = "user/com/userSbscrbRegist.do")
 	public String userSbscrbRegist(@ModelAttribute("mberManageVO") MberManageVO mberManageVO, @RequestParam String memGubun, ModelMap model) throws Exception {		
 		model.addAttribute("mberManageVO", new MberManageVO());
 		mberManageVO.setMemGubun(memGubun);
@@ -120,13 +120,20 @@ public class MberManageController {
 
 	@RequestMapping("user/com/userInsertRegist.do")
 	public String insertMber(@ModelAttribute("mberManageVO") MberManageVO regReq, Errors errors, BindingResult bindingResult, Model model) throws Exception {
-			
+    	model.addAttribute("memGubun",regReq.getMemGubun());
+
+		System.out.println(regReq.getMemGubun());
+		
 			 new RegisterRequestValidator().validate(regReq, errors);
+
 		        if(errors.hasErrors()) {
 		    		return "user/UserSbscrbRegist";
 		        }
+	        	System.out.println("11111111111111");
+
 		        try {
-		        	
+		        	System.out.println("222222222222222222");
+
 		        	mberManageService.insertMber(regReq);
 		        } catch (AlreadyExistingEmailException e) {
 		            errors.rejectValue("emailId", "duplicate", "이미 가입된 이메일입니다.");
@@ -142,7 +149,8 @@ public class MberManageController {
 	public String userRegistSucces(@ModelAttribute("mberManageVO") MberManageVO mberManageVO, ModelMap model) throws Exception{
 		model.addAttribute("emailId",mberManageVO.getEmailId());
 		MberManageVO member = mberManageService.selectMemberList(mberManageVO);
-		
+		//List<?> member = mberManageService.selectMberList(mberManageVO);
+
 		model.addAttribute("resultList", member);
 		return "user/UserSuccesView";
  

@@ -38,7 +38,7 @@
     
 	<select id="selectMemberList" parameterType="admin.user.com.service.MberManageVO" resultMap="memberList">     
           SELECT
-              *
+              mem_name
           FROM
               MEMBER
 		  WHERE

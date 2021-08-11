@@ -128,10 +128,10 @@ function fn_member_regist(){
    							</td>
                         </tr>
                         <tr>
-                            <th><label for="PwCheck">비밀번호 재확인</th>
+                            <th><label for="pwCheck">비밀번호 재확인</th>
                             <td>
-                            <form:password path="PwCheck" class="form-control" placeholder="다시한번 입력해 주세요"/> 
-                          	<div><form:errors path="PwCheck"/></div>                              							                           
+                            <form:password path="pwCheck" class="form-control" placeholder="다시한번 입력해 주세요"/> 
+                          	<div><form:errors path="pwCheck"/></div>                              							                           
                             </td>
                         </tr>
                         <tr>

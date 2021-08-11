@@ -1,15 +1,4 @@
-<%--
-  Class Name : UserTypeRegist.jsp
-  Description : 회원유형선택화면
-  Modification Information
- 
-    수정일        	수정자     수정내용
-    ------------    --------    ---------------------------
-    2020.02.19          		최초생성
- 
-    author   : 뉴원 개발팀
-    since    : 2020.02.19 
---%>
+
 
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -71,13 +60,11 @@
 								<em class="d-block"><spring:message code="user.subscribe.text01" text="올인원 멤버" /></em>
 								<h3><spring:message code="user.subscribe.userType1" text="일반 회원" /></h3>
 <%-- 								<a href="<c:url value='/user/userSbscrbRegist.do'/>"  class="btn-red mx-auto d-block" ><spring:message code="user.subscribe" text="회원가입" /></a>
- --%>							<a href="/user/userSbscrbRegist.do?memGubun=M" id="beneficiary"class="btn-red mx-auto d-block" style="max-width: 150px"><spring:message code="user.subscribe" text="회원가입" /></a>								
+ --%>							<a href="/user/com/userSbscrbRegist.do?memGubun=M" id="beneficiary"class="btn-red mx-auto d-block" style="max-width: 150px"><spring:message code="user.subscribe" text="회원가입" /></a>								
 							</div>
 						</li>
 						<li>
 							<div class="member-type-select-wrap"> 
-								<img src="<c:url value='/images/ico_select_donor.gif' />"/>
-								<em class="d-block"><spring:message code="user.subscribe.text02" text="기업 회원" /></em>
 								<h3><spring:message code="user.subscribe.userType2" text="기업 회원" /></h3>
 <%-- 								<a href="<c:url value='/user/userSbscrbRegist.do'/>" class="btn-red mx-auto d-block" style="max-width: 150px"><spring:message code="user.subscribe" text="회원가입" /></a>
  --%>

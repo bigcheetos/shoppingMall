@@ -38,13 +38,12 @@ public class RegisterRequestValidator implements Validator{
             }
         }
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "memName", "required", "필수 정보 입니다.");
-        ValidationUtils.rejectIfEmpty(errors, "memPw", "required", "필수 정보 입니다.");
-        ValidationUtils.rejectIfEmpty(errors, "memPwCheck", "required", "필수 정보 입니다.");
-        
+        ValidationUtils.rejectIfEmpty(errors, "password", "required", "필수 정보 입니다.");
+        ValidationUtils.rejectIfEmpty(errors, "pwCheck", "required", "필수 정보 입니다.");
         
         if(!regReq.getPassword().isEmpty()) {
             if(!regReq.getPassword().equals(regReq.getPwCheck())) {
-                errors.rejectValue("memPwCheck", "nomatch", "비밀번호가 일치하지 않습니다.");
+                errors.rejectValue("pwCheck", "nomatch", "비밀번호가 일치하지 않습니다.");
             }
         }
         
@@ -55,15 +54,15 @@ public class RegisterRequestValidator implements Validator{
         Matcher matcher2 = Pattern.compile(pwPattern).matcher(regReq.getPassword());
          
         if(!matcher.matches()){
-            errors.rejectValue("memPw", "bad", "8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.");
+            errors.rejectValue("password", "bad", "8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.");
         }
          
         if(matcher2.find()){
-        	errors.rejectValue("memPw", "bad", "연속되는 문자는 사용할 수 없습니다.");
+        	errors.rejectValue("password", "bad", "연속되는 문자는 사용할 수 없습니다.");
         }
          
         if(regReq.getPassword().contains(" ")){
-        	errors.rejectValue("memPw", "bad", "띄어쓰기 없이 입력해 주세요.");
+        	errors.rejectValue("password", "bad", "띄어쓰기 없이 입력해 주세요.");
         }
 
 

@@ -40,7 +40,7 @@ public class AuthenticInterceptor extends WebContentInterceptor {
 
 		LoginVO loginVO = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 
-		if (loginVO.getId() != null) {
+		if (loginVO.getEmailId() != null) {
 			return true;
 		} else {
 			ModelAndView modelAndView = new ModelAndView("redirect:/uat/uia/LoginUsr.do");

@@ -20,12 +20,11 @@ public class MberManageDAO extends EgovComAbstractDAO{
      * @return List<MberManageVO> 기업회원 목록정보
      */
     @SuppressWarnings("unchecked")
-	public List<MberManageVO> selectMberList(UserDefaultVO userSearchVO){
-        return (List<MberManageVO>) list("mberManageDAO.selectMberList", userSearchVO);
+	public List<MberManageVO> selectMberList(MberManageVO mberManageVO){
+        return (List<MberManageVO>) list("userManageDAO.selectMberList", mberManageVO);
     }
-    public String insertMber(MberManageVO mberManageVO){
-    	System.out.println("3333333333333333");
-        return String.valueOf((int)insert("userManageDAO.insertMber", mberManageVO));
+    public void insertMber(MberManageVO mberManageVO){
+        insert("userManageDAO.insertMber", mberManageVO);
     	
     }
     public MberManageVO selectMemberList(MberManageVO mberManageVO) {
@@ -39,7 +38,7 @@ public class MberManageDAO extends EgovComAbstractDAO{
      * @return int 일반회원총갯수
      */
     public int selectMberListTotCnt(UserDefaultVO userSearchVO) {
-        return (Integer)selectOne("mberManageDAO.selectMberListTotCnt", userSearchVO);
+        return (Integer)selectOne("userManageDAO.selectMberListTotCnt", userSearchVO);
     }
 
     /**
