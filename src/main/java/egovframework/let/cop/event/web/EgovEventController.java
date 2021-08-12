@@ -2,6 +2,7 @@ package egovframework.let.cop.event.web;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -74,17 +75,21 @@ public class EgovEventController {
     }
     
     @RequestMapping("/cmm/main/home/event.do")
-    public String selectEventArticles(HttpServletRequest request, ModelMap model) throws Exception {
+    public String viewEventArticles(HttpServletRequest request, ModelMap model) throws Exception {
     	
     	List<EventVO> eventList = eventService.getEventAllList();
     	ArrayList<String> imgPathList = new ArrayList<>();
     	ArrayList<String> linkList = new ArrayList<>();
     	ArrayList<String> statusBadgeList = new ArrayList<>();
     	
+    	ArrayList<String> replyCountList = new ArrayList<>();
+    	
+    	
     	for(EventVO event : eventList) {
     		AtchFileVO atchFileVO = bbsComService.getAtchFileByAtchFileVO(new AtchFileVO.Builder(event.getAtchFileSeq(),event.getBbsSeq()).build());
-    		imgPathList.add(atchFileVO.getAtchFilePath() + "." + atchFileVO.getAtchFileType());
     		
+    		imgPathList.add(atchFileVO.getAtchFilePath() + "." + atchFileVO.getAtchFileType());
+    		replyCountList.add(bbsComService.getReplyCountByArticleVO(new ArticleVO(event.getBbsSeq(),event.getEventSeq())));
     		// event content test데이터가 없기 때문에 임시용
     		linkList.add(event.getEventContent().length()>8?"/cmm/main/home/event_detail.do?eventSeq="+event.getEventSeq():"#");
     		
@@ -95,6 +100,9 @@ public class EgovEventController {
     		event.setEventStatus(event.getEventStatus().equals("Y")?"진행중":"종료됨");
     	}
     	
+    	eventList.forEach(event -> System.out.println(event));;
+    	
+    	model.addAttribute("replyCountList", replyCountList);
     	model.addAttribute("eventList",eventList);
     	model.addAttribute("linkList", linkList);
     	model.addAttribute("imgPathList", imgPathList);
@@ -104,7 +112,7 @@ public class EgovEventController {
     }
     
     @RequestMapping("/cmm/main/home/event_detail.do")
-    public String selectEventDetail(HttpServletRequest request, ModelMap model) throws Exception {
+    public String viewEventDetail(HttpServletRequest request, ModelMap model) throws Exception {
     	
     	EventVO requestedEventVO = new EventVO();
     	requestedEventVO.setEventSeq(Integer.parseInt(request.getParameter("eventSeq")));
@@ -115,9 +123,10 @@ public class EgovEventController {
     	
     	ArticleVO articleVO = new ArticleVO(event.getBbsSeq(), event.getAtchFileSeq());
     	List<TagVO> tagList = bbsComService.getTagListByArticleVO(articleVO);
-    	List<ReplyVO> replyList = bbsComService.getReplyListByArticleVO(articleVO);
     	ArrayList<String> imgPathList = new ArrayList<>();
     	ArrayList<String> linkList = new ArrayList<>();
+    	
+    	String replyCount = bbsComService.getReplyCountByArticleVO(articleVO);
     	
     	for(String imgContext : event.getEventContent().replaceAll("\\(|\\)","").split("\\+")) {
     		String[] contextArray = imgContext.replaceAll("(||)","").split(",");
@@ -126,8 +135,8 @@ public class EgovEventController {
     		linkList.add(contextArray[2].equals("''")?"#":contextArray[2]);
     	}
     	
+    	model.addAttribute("replyCount", replyCount);
     	model.addAttribute("tagList", tagList);
-    	model.addAttribute("replyList", replyList);
     	model.addAttribute("event", event);
     	model.addAttribute("imgPathList", imgPathList);
     	model.addAttribute("linkList",linkList);

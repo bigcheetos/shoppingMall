@@ -176,7 +176,7 @@
 				</colgroup>
 				<tbody>
 					<tr>
-						<td class="title">${event.eventTitle }</td>
+						<td class="title">${event.eventTitle }<span class="count">[${replyCount }]</span></td>
 						<td class="sub clfix">
 							<p class="date">${event.eventDate }</p>
 							<div class="sns clfix">
@@ -226,11 +226,11 @@
 			<div id="divBasicomments">
 				<div class="input-box">
 					<div>
-						<textarea class="ripple_input" name="commentContent" id="commentContent" onclick="check_login()"
+						<textarea class="ripple_input" name="commentContent" id="commentContent"
 						 onfocus="" placeholder="글을 남기시려면 로그인 하십시오."
 						 style="resize: none; overflow:hidden; width:90%; box-sizing:border-box; border: 1px solid #e4e4e4; 
 						 height:60px; padding:10px; font-size:14px"></textarea>
-						<button onclick="check_login()" style="float: right; width:90px; height:60px; line-height:60px; 
+						<button onclick="comment_button_onclick();" style="float: right; width:90px; height:60px; line-height:60px; 
 						text-align: center; background:#333333; color:#ffffff">등록</button>
 					</div>
 				</div>
@@ -245,8 +245,8 @@
 				            <col width="40%">
 				            <col width="30%">
 			          	</colgroup>
-			          	<tbody>
-			          		<c:forEach var="reply" items="${replyList }" varStatus="status">
+			          	<tbody id="riply-list-tbody">
+			          		<%-- <c:forEach var="reply" items="${replyList }" varStatus="status">
 							<tr>
 								<td class="reply_td1">${reply.replyContent }
 			          			</td>
@@ -255,7 +255,7 @@
 			          			<td class="reply_td3">${reply.replyDate }
 			          			</td>
 			          		</tr>	
-							</c:forEach>
+							</c:forEach> --%>
 						</tbody>
 					</table>
 				</div>
@@ -269,19 +269,96 @@
     
     <!-- Footer Section End -->
 <script>
-
+	var eventSeq = ${event.eventSeq};
 	
-	var tagList = "[egovframework.let.cop.bbscom.service.TagVO@7a3e7738[tagSeq=1,tagName=냉면], egovframework.let.cop.bbscom.service.TagVO@2a39cd8b[tagSeq=2,tagName=떡볶이], egovframework.let.cop.bbscom.service.TagVO@6562babe[tagSeq=3,tagName=복숭아], egovframework.let.cop.bbscom.service.TagVO@5a9651cd[tagSeq=4,tagName=쇼핑], egovframework.let.cop.bbscom.service.TagVO@53187a10[tagSeq=5,tagName=쇼핑대축제], egovframework.let.cop.bbscom.service.TagVO@37a9a06d[tagSeq=6,tagName=오징어], egovframework.let.cop.bbscom.service.TagVO@476e5b6c[tagSeq=7,tagName=이벤트], egovframework.let.cop.bbscom.service.TagVO@2f1e7275[tagSeq=8,tagName=창화당], egovframework.let.cop.bbscom.service.TagVO@3fc6457c[tagSeq=9,tagName=채끝], egovframework.let.cop.bbscom.service.TagVO@45162021[tagSeq=10,tagName=쿠폰], egovframework.let.cop.bbscom.service.TagVO@7096a6d4[tagSeq=11,tagName=탄산수], egovframework.let.cop.bbscom.service.TagVO@2cc7ff69[tagSeq=12,tagName=특가], egovframework.let.cop.bbscom.service.TagVO@2127a228[tagSeq=13,tagName=채끝], egovframework.let.cop.bbscom.service.TagVO@55c48905[tagSeq=14,tagName=풀무원], egovframework.let.cop.bbscom.service.TagVO@10a1256f[tagSeq=15,tagName=한우]]";
-	var replyList = "[egovframework.let.cop.bbscom.service.ReplyVO@30ebca5[replySeq=1,bbsSeq=1,articleSeq=1,replyContent=수신동의완료,memSeq=1,replyDate=2021-08-06 15:27:13], egovframework.let.cop.bbscom.service.ReplyVO@1fa4680e[replySeq=2,bbsSeq=1,articleSeq=1,replyContent=sms 수신동의 완료, 좋은 정보 받아볼게요!,memSeq=2,replyDate=2021-08-06 15:27:52]]"
-	
-	console.log("tagList"+tagList);
-
-	console.log("replyList"+replyList);
-
-	function check_login() {
-		confirm("글을 남기시려면 로그인 하셔야 합니다. 로그인하시겠습니까?");
+	// 댓글 목록 읽어오기
+	function readReplyList() {
+		var xhr = new XMLHttpRequest();
+		xhr.responseType = 'json';
+		
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState === 4) {
+				if(xhr.status === 200) {
+					console.log("통신 성공");
+					var response = xhr.response;
+					console.log(response);
+					
+					refreshReply();
+					appendReplyList(response);
+				} else 	{
+					//console.log("통신 실패");
+					console.log("댓글 불러오기 실패");
+				}
+			}
+		};
+			
+		xhr.open("POST", "/cmm/main/home/eventDetailGetReplyList.do?eventSeq="+eventSeq, true);
+		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		xhr.send();
 	}
-
+	
+	// 댓글 등록
+	function registerReply(commentContent) {
+		var xhr = new XMLHttpRequest(); 
+		
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState === 4) {
+				if(xhr.status === 200) {
+					console.log("통신 성공");
+					
+					readReplyList();
+				} else 	{
+					//console.log("통신 실패");
+					console.log("댓글등록실패!");
+				}
+			}
+		};
+			
+		xhr.open("POST", "/cmm/main/home/eventDetailRegisterReply.do?eventSeq="+eventSeq+"&replyContent="+commentContent.value, true);
+		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		xhr.send();
+	}
+	
+	// 댓글 동적 생성
+	function appendReplyList(response) {
+		var appendText = "";
+		
+		for(i in response) {
+			appendText += "<tr><td class='reply_td1'>"+response[i].replyContent
+						+ "</td><td class='reply_td2'>"+response[i].memSeq
+						+ "</td><td class='reply_td3'>"+response[i].replyDate
+						+ "</td></tr>"
+		}
+		
+		document.getElementById("riply-list-tbody").insertAdjacentHTML("beforeend", appendText);
+	}
+	
+	// 댓글 리프레쉬
+	function refreshReply() {
+		var replyTbody = document.getElementById("riply-list-tbody");
+		while(replyTbody.hasChildNodes()) {
+			replyTbody.removeChild(replyTbody.firstChild);
+		}
+	}
+	
+	// 댓글 달기 버튼 클릭시
+	function comment_button_onclick() {
+		
+		var commentContent = document.getElementById('commentContent')
+		if(commentContent.value.length != 0) {
+			if(confirm("댓글을 등록하시겠습니까?")) {
+				registerReply(commentContent);
+				document.getElementById("commentContent").value='';
+			}
+		} else {
+			this.alert("댓글에 등록된 내용이 없습니다.");
+		}
+	}
+	
+	// 이벤트 디테일 열릴 때
+	window.onload = function() {
+		readReplyList();
+	}
 </script>
     <!-- Js Plugins -->
     <script src="/js/jquery-3.3.1.min.js"></script>

@@ -125,7 +125,7 @@
 						        <img class="imgsize150" alt="상품 이미지" style="width:248px;height:298px;" src="${imgPathList[status.index] }"/>
 							</div>
 							<div class="text-wrap">
-								<p class="title">${event.eventTitle }<span class="count">${replyList.count }</span></p>
+								<p class="title">${event.eventTitle }<span class="count">[${replyCountList[status.index] }]</span></p>
 								<p class="date" style="float:left;">${event.eventDate }</p>
 								<p class="date" style="float:right;">조회수 ${event.eventRdcnt }</p>
 						    </div>

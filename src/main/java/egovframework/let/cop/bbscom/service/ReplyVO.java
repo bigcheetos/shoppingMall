@@ -35,6 +35,55 @@ public class ReplyVO implements Serializable {
 	private int memSeq;
 	private String replyDate;
 	
+	public static class Builder {
+		private final int bbsSeq;
+		private final int articleSeq;
+		
+		private int replySeq;
+		private String replyContent;
+		private int memSeq;
+		private String replyDate;
+		
+		public Builder(int bbsSeq, int articleSeq) {
+			this.bbsSeq 	= bbsSeq;
+			this.articleSeq = articleSeq;
+		}
+		
+		public Builder replySeq(int replySeq) {
+			this.replySeq = replySeq;
+			return this;
+		}
+		public Builder replyContent(String replyContent) {
+			this.replyContent = replyContent;
+			return this;
+		}
+		public Builder memSeq(int memSeq) {
+			this.memSeq = memSeq;
+			return this;
+		}
+		public Builder replyDate(String replyDate) {
+			this.replyDate = replyDate;
+			return this;
+		}
+		
+		public ReplyVO build() {
+			return new ReplyVO(this);
+		}
+	}
+	
+	public ReplyVO() {
+		
+	}
+	
+	private ReplyVO(Builder builder) {
+		replySeq 	= builder.replySeq;
+		bbsSeq 		= builder.bbsSeq;
+		articleSeq  = builder.articleSeq;
+		replyContent= builder.replyContent;
+		memSeq 		= builder.memSeq;
+		replyDate 	= builder.replyDate;
+	}
+	
 	public int getReplySeq() { return replySeq; }
  	public void setReplySeq(int replySeq) { this.replySeq = replySeq; }
 	public int getBbsSeq() { return bbsSeq; }

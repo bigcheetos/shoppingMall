@@ -32,7 +32,7 @@
 			AND ARTICLE_SEQ = #{articleSeq}
 	</select>
 	
-	<select id="selectReplyCountListByReplyVO" parameterType="egovframework.let.cop.bbscom.service.ArticleVO" resultType="String" >
+	<select id="selectReplyCountByArticleVO" parameterType="egovframework.let.cop.bbscom.service.ArticleVO" resultType="String" >
 			SELECT 
 				COUNT(1)
 			FROM
@@ -56,6 +56,26 @@
 				B.ARTICLE_SEQ = #{articleSeq}
 			AND B.BBS_SEQ 	  = #{bbsSeq}
 	</select>
+	
+	<select id="selectReplyMaxSequence" resultType="String" >
+			SELECT 
+				MAX(REPLY_SEQ)
+			FROM
+				REPLY
+	</select>
+	
+	<insert id="insertReplyByReplyVO">
+			INSERT INTO
+				REPLY
+			VALUES
+				(#{replySeq},
+				#{bbsSeq}, 
+				#{articleSeq}, 
+				#{replyContent}, 
+				#{memSeq}, 
+				NOW(), 
+				"Y")
+	</insert>
 	
 	<resultMap id="atchFileResultMap" type="egovframework.let.cop.bbscom.service.AtchFileVO">
 		<result property="atchFileSeq" column="ATCH_FILE_SEQ"/>

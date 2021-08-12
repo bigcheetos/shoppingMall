@@ -18,7 +18,7 @@ public class BBSComDAO extends EgovComAbstractDAO {
      * 첨부파일 목록을 조회 한다.
      *
      * @param atchFileVO
-     * @return
+     * @return AtchFileVO
      * @throws Exception
      */
 	public AtchFileVO selectAtchFileByAtchFileVO(AtchFileVO atchFileVO) throws Exception {
@@ -29,7 +29,7 @@ public class BBSComDAO extends EgovComAbstractDAO {
      * 리플 목록을 조회 한다.
      *
      * @param articleVO
-     * @return
+     * @return List<ReplyVO>
      * @throws Exception
      */
 	public List<ReplyVO> selectReplyListByArticleVO(ArticleVO articleVO) throws Exception {
@@ -49,18 +49,18 @@ public class BBSComDAO extends EgovComAbstractDAO {
      * 리플 수를 조회 한다.
      *
      * @param articleVO
-     * @return
+     * @return List<String>
      * @throws Exception
      */
-	public List<String> selectReplyCountListByArticleVO(ArticleVO articleVO) throws Exception {
-		return selectList("BBSComDAO.selectReplyCountListByReplyVO", articleVO);
+	public String selectReplyCountByArticleVO(ArticleVO articleVO) throws Exception {
+		return selectOne("BBSComDAO.selectReplyCountByArticleVO", articleVO);
 	}
 	
 	/**
      * 태그 목록을 조회 한다.
      *
      * @param articleVO
-     * @return
+     * @return List<TagVO>
      * @throws Exception
      */
 	public List<TagVO> selectTagListByArticleVO(ArticleVO articleVO) throws Exception {
@@ -74,5 +74,29 @@ public class BBSComDAO extends EgovComAbstractDAO {
 		}
 		
 		return selectTagList;
+	}
+	
+	/**
+     * 리플을 조회 한다.
+     *
+     * @param replyVO
+     * @return String
+     * @throws Exception
+     */
+	public String selectReplyMaxSequence() {
+		// TODO Auto-generated method stub
+		return selectOne("BBSComDAO.selectReplyMaxSequence");
+	}
+	
+	/**
+     * 리플을 저장 한다.
+     *
+     * @param replyVO
+     * @return 
+     * @throws Exception
+     */
+	public void insertReplyByReplyVO(ReplyVO replyVO) {
+		// TODO Auto-generated method stub
+		insert("BBSComDAO.insertReplyByReplyVO", replyVO);
 	}
 }

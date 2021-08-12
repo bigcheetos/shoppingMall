@@ -59,9 +59,37 @@ public class EgovBBSComServiceImpl extends EgovAbstractServiceImpl implements Eg
      * @see egovframework.let.cop.bbscom.service.EgovBBSComService
      */
 	@Override
-	public List<String> getReplyCountListByArticleVO(ArticleVO articleVO) throws Exception {
+	public String getReplyCountByArticleVO(ArticleVO articleVO) throws Exception {
 		// TODO Auto-generated method stub
-		return bbsComDAO.selectReplyCountListByArticleVO(articleVO);
+		return bbsComDAO.selectReplyCountByArticleVO(articleVO);
+	}
+	
+	/**
+     * 댓글 테이블의 시퀀스를 조회 한다.
+     *
+     * @see egovframework.let.cop.bbscom.service.EgovBBSComService#getReplyListByArticleVO(egovframework.let.cop.bbscom.service.ReplyVO)
+     */
+	@Override
+	public String getReplyMaxSequence() throws Exception {
+		// TODO Auto-generated method stub
+		
+		return bbsComDAO.selectReplyMaxSequence();
+	}
+	
+	/**
+     * 댓글을 저장 한다.
+     *
+     * @see egovframework.let.cop.bbscom.service.EgovBBSComService#getReplyListByArticleVO(egovframework.let.cop.bbscom.service.ReplyVO)
+     */
+	@Override
+	public void saveReplyByReplyVO(ReplyVO replyVO) throws Exception {
+		// TODO Auto-generated method stub
+		
+		int nextReplySeq = Integer.parseInt(getReplyMaxSequence()) + 1;
+		
+		replyVO.setReplySeq(nextReplySeq);
+		
+		bbsComDAO.insertReplyByReplyVO(replyVO);
 	}
 
 }

@@ -50,11 +50,24 @@ public interface EgovBBSComService {
 	public List<ReplyVO> getReplyListByArticleVO(ArticleVO articleVO) throws Exception;
 	
 	/**
-	 * 조건에 맞는 리플수 목록을 조회 한다.
+	 * 조건에 맞는 리플수를 조회 한다.
 	 * @return List<String>
 	 * 
 	 * @param articleVO
 	 * @exception Exception Exception
 	 */
-	public List<String> getReplyCountListByArticleVO(ArticleVO articleVO) throws Exception;
+	public String getReplyCountByArticleVO(ArticleVO articleVO) throws Exception;
+	
+	
+	public String getReplyMaxSequence() throws Exception;
+	
+	/**
+	 * 리플을 하나 저장 한다.
+	 * @return 
+	 * 
+	 * @param replyVO
+	 * @exception Exception Exception
+	 */
+	public void saveReplyByReplyVO(ReplyVO replyVO) throws Exception;
+
 }
