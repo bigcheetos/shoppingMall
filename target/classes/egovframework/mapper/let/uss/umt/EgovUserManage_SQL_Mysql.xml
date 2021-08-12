@@ -38,7 +38,8 @@
     
 	<select id="selectMemberList" parameterType="admin.user.com.service.MberManageVO" resultMap="memberList">     
           SELECT
-              mem_name
+              mem_name,
+              emailId
           FROM
               MEMBER
 		  WHERE

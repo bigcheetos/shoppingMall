@@ -129,13 +129,10 @@ public class MberManageController {
 		        if(errors.hasErrors()) {
 		    		return "user/UserSbscrbRegist";
 		        }
-	        	System.out.println("11111111111111");
-
 		        try {
-		        	System.out.println("222222222222222222");
-
 		        	mberManageService.insertMber(regReq);
 		        } catch (AlreadyExistingEmailException e) {
+		        	
 		            errors.rejectValue("emailId", "duplicate", "이미 가입된 이메일입니다.");
 		    		return "user/UserSbscrbRegist";
 		        }

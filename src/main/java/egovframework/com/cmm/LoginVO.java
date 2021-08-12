@@ -27,7 +27,7 @@ public class LoginVO implements Serializable{
 	/** 아이디 */
 	private String emailId;
 	/** 이름 */
-	private String name;
+	private String memName;
 	/** 주민등록번호 */
 	private String ihidNum;
 	/** 비밀번호 */
@@ -38,10 +38,8 @@ public class LoginVO implements Serializable{
 	private String passwordCnsr;
 	/** 사용자구분 */
 	private String memLev;
-	/** 조직(부서)ID */
-	private String orgnztId;
-	/** 조직(부서)명 */
-	private String orgnztNm;
+
+	private String memGubun;
 	/** 고유아이디 */
 	private String uniqId;
 	/** 로그인 후 이동할 페이지 */
@@ -58,20 +56,8 @@ public class LoginVO implements Serializable{
 	public void setEmailId(String emailId) {
 		this.emailId = emailId;
 	}
-	/**
-	 * name attribute 를 리턴한다.
-	 * @return String
-	 */
-	public String getName() {
-		return name;
-	}
-	/**
-	 * name attribute 값을 설정한다.
-	 * @param name String
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
+
+
 	/**
 	 * ihidNum attribute 를 리턴한다.
 	 * @return String
@@ -131,28 +117,14 @@ public class LoginVO implements Serializable{
 	public void setPasswordCnsr(String passwordCnsr) {
 		this.passwordCnsr = passwordCnsr;
 	}
-	/**
 
-	/**
-	 * orgnztId attribute 를 리턴한다.
-	 * @return String
-	 */
-	public String getOrgnztId() {
-		return orgnztId;
-	}
 	public String getMemLev() {
 		return memLev;
 	}
 	public void setMemLev(String memLev) {
 		this.memLev = memLev;
 	}
-	/**
-	 * orgnztId attribute 값을 설정한다.
-	 * @param orgnztId String
-	 */
-	public void setOrgnztId(String orgnztId) {
-		this.orgnztId = orgnztId;
-	}
+
 	/**
 	 * uniqId attribute 를 리턴한다.
 	 * @return String
@@ -209,17 +181,18 @@ public class LoginVO implements Serializable{
 	public void setDn(String dn) {
 		this.dn = dn;
 	}
-	/**
-	 * @return the orgnztNm
-	 */
-	public String getOrgnztNm() {
-		return orgnztNm;
+	public String getMemName() {
+		return memName;
 	}
-	/**
-	 * @param orgnztNm the orgnztNm to set
-	 */
-	public void setOrgnztNm(String orgnztNm) {
-		this.orgnztNm = orgnztNm;
+	public void setMemName(String memName) {
+		this.memName = memName;
 	}
+	public String getMemGubun() {
+		return memGubun;
+	}
+	public void setMemGubun(String memGubun) {
+		this.memGubun = memGubun;
+	}
+
 	
 }

@@ -14,35 +14,35 @@
 <link href="<c:url value='/'/>css/common.css" rel="stylesheet" type="text/css" >
 <link href="<c:url value='/'/>css/login.css" rel="stylesheet" type="text/css" >
 <script type="text/javascript">
-function checkLogin(memLev) {
+function checkLogin(memGubun) {
     // 일반회원
-    if (memLev == "1") {
+    if (memGubun == "M") {
         document.loginForm.rdoSlct0[0].checked = true;
         document.loginForm.rdoSlct0[1].checked = false;
         document.loginForm.rdoSlct0[2].checked = false;
-        document.loginForm.memLev.value = "1";
+        document.loginForm.memGubun.value = "M";
     // 기업회원
-    } else if (memLev == "ENT") {
+    } else if (memGubun == "B") {
         document.loginForm.rdoSlct0[0].checked = false;
         document.loginForm.rdoSlct0[1].checked = true;
         document.loginForm.rdoSlct0[2].checked = false;
-        document.loginForm.memLev.value = "ENT";
+        document.loginForm.memGubun.value = "B";
     // 업무사용자
-    } else if (memLev == "0") {
+    } else if (memGubun == "A") {
         document.loginForm.rdoSlct0[0].checked = false;
         document.loginForm.rdoSlct0[1].checked = false;
         document.loginForm.rdoSlct0[2].checked = true;
-        document.loginForm.memLev.value = "0";
+        document.loginForm.memGubun.value = "A";
     }
 }
 function actionLogin() {
-	var id =document.loginForm.id.value;
+	var emailId =document.loginForm.emailId.value;
     var password =document.loginForm.password.value;
-    var memLev = document.loginForm.memLev.value;
+    var memGubun = document.loginForm.memGubun.value;
 
-    console.log(id,password,memLev);
+    console.log(emailId,password,memGubun);
     
-    if (document.loginForm.id.value =="") {
+    if (document.loginForm.emailId.value =="") {
         alert("아이디를 입력하세요");
         return false;
     } else if (document.loginForm.password.value =="") {
@@ -51,7 +51,7 @@ function actionLogin() {
     } else {
         document.loginForm.action="<c:url value='/uat/uia/actionLogin.do'/>";
         
-        //document.loginForm.j_username.value = document.loginForm.memLev.value + document.loginForm.username.value;
+        //document.loginForm.j_username.value = document.loginForm.memGubun.value + document.loginForm.username.value;
         //document.loginForm.action="<c:url value='/j_spring_security_check'/>";
         document.loginForm.submit();
     }
@@ -109,18 +109,18 @@ function goRegiUsr() {
 		return false;
 	}
  --%>
-    var memLev = document.loginForm.memLev.value;
+    var memGubun = document.loginForm.memGubun.value;
  
     // 일반회원
-    if (memLev == "1") {
+    if (memGubun == "M") {
         document.loginForm.action="<c:url value='/uss/umt/EgovStplatCnfirmMber.do'/>";
         document.loginForm.submit();
     // 기업회원
-    } else if (memLev == "2") {
+    } else if (memGubun == "B") {
         document.loginForm.action="<c:url value='/uss/umt/EgovStplatCnfirmEntrprs.do'/>";
         document.loginForm.submit();
     // 업무사용자
-    } else if (memLev == "0") {
+    } else if (memGubun == "A") {
     	
     }
 }
@@ -158,8 +158,8 @@ function goRegiUsr() {
                             <div class="user_login_ultop">
                                 <ul>
                                     <li>
-                                        <label for="id"><img alt="login" src="<c:url value='/'/>images/login/img_idtext.gif" /></label>
-                                        <input type="text" class="input_style" title="아이디를 입력하세요." id="id" name="id" maxlength="10"/>
+                                        <label for="emailId"><img alt="login" src="<c:url value='/'/>images/login/img_idtext.gif" /></label>
+                                        <input type="text" class="input_style" title="아이디를 입력하세요." id="emailId" name="emailId" maxlength="10"/>
                                     </li>
                                     <li>
                                         <label for="password"><img alt="password" src="<c:url value='/'/>images/login/img_pwtext.gif" /></label>
@@ -173,7 +173,7 @@ function goRegiUsr() {
                                 <input type="image" alt="로그인 버튼" class="btn_style" onclick="javascript:actionLogin()" src="<c:url value='/'/>images/login/btn_login.gif"  />
                             </div>
                             <input type="hidden" name="message" value="${message}" />
-				            <input type="hidden" name="memLev"  value="0"/>
+				            <input type="hidden" name="memGubun"  value="0"/>
 				            <!-- <input type="hidden" name="j_username" />-->
                             </form:form>
                             <div class="text_area">

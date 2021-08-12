@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 
+import admin.user.com.service.MberManageVO;
+
 
 @Controller
 public class EgovLoginController {
@@ -59,11 +61,7 @@ public class EgovLoginController {
 	 */
 	@RequestMapping(value = "/uat/uia/actionLogin.do")
 	public String actionLogin(@ModelAttribute("loginVO") LoginVO loginVO, HttpServletRequest request, ModelMap model) throws Exception {
-		System.out.println(loginVO.getEmailId()); 
-		System.out.println(loginVO.getPassword()); 
-		System.out.println(loginVO.getMemLev()); 
-		
-		// 1. 일반 로그인 처리
+
 		LoginVO resultVO = loginService.actionLogin(loginVO);
 
 		boolean loginPolicyYn = true;
@@ -72,33 +70,25 @@ public class EgovLoginController {
 
 			request.getSession().setAttribute("LoginVO", resultVO);
 			
-			if(resultVO.getMemLev().equals("0")) {
-				return "forward:/cmm/forwardPage.do";
-
-			}else {
-				return "forward:/cmm/main/mainPage.do";
-			}
-			
 		}else {
 			
-			System.out.println(resultVO.getEmailId()); 
-			System.out.println(resultVO.getPassword()); 
-			System.out.println(resultVO.getMemLev());
 			model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
 			return "cmm/uat/uia/LoginUsr";
 		}
-
+		return "forward:/uat/uia/actionMain.do";
 	}
 
 	/**
 	 * 로그인 후 메인화면으로 들어간다
 	 * @param
+	 * @return 
 	 * @return 로그인 페이지
 	 * @exception Exception
 	 */
 	@RequestMapping(value = "/uat/uia/actionMain.do")
-	public String actionMain(ModelMap model) throws Exception {
-
+	public String actionMain(@ModelAttribute("loginVO") LoginVO loginVO, ModelMap model) throws Exception {
+    	model.addAttribute("memGubun",loginVO.getMemGubun());
+		
 		// 1. 사용자 인증 처리
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
 		if (!isAuthenticated) {
@@ -107,7 +97,16 @@ public class EgovLoginController {
 		}
 
 		// 2. 메인 페이지 이동
-		return "forward:/cmm/main/mainPage.do";
+		
+		if(loginVO.getMemGubun().equals("M")) {
+			return "forward:/main/mainPage.do";
+
+		}else if(loginVO.getMemGubun().equals("A")) {
+			return "forward:/cmm/main/adminMain.do";
+		}
+		
+		return "forward:/main/mainPage.do";
+
 	}
 
 	/**
