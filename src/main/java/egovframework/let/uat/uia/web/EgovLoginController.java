@@ -90,11 +90,11 @@ public class EgovLoginController {
     	model.addAttribute("memGubun",loginVO.getMemGubun());
 		
 		// 1. 사용자 인증 처리
-		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
+		/*Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
 		if (!isAuthenticated) {
 			model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
 			return "cmm/uat/uia/LoginUsr";
-		}
+		}*/
 
 		// 2. 메인 페이지 이동
 		System.out.println(loginVO.getEmailId());
