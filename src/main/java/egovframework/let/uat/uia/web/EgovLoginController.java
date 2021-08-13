@@ -93,19 +93,20 @@ public class EgovLoginController {
 		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
 		if (!isAuthenticated) {
 			model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
-			return "cmm/uat/uia/EgovLoginUsr";
+			return "cmm/uat/uia/LoginUsr";
 		}
 
 		// 2. 메인 페이지 이동
+		System.out.println(loginVO.getEmailId());
 		
 		if(loginVO.getMemGubun().equals("M")) {
-			return "forward:/main/mainPage.do";
+			return "forward:/cmm/main/mainPage.do";
 
 		}else if(loginVO.getMemGubun().equals("A")) {
 			return "forward:/cmm/main/adminMain.do";
-		}
+		}else
 		
-		return "forward:/main/mainPage.do";
+		return "forward:/cmm/main/mainPage.do";
 
 	}
 

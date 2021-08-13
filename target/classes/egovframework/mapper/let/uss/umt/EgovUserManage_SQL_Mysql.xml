@@ -38,14 +38,21 @@
     
 	<select id="selectMemberList" parameterType="admin.user.com.service.MberManageVO" resultMap="memberList">     
           SELECT
-              mem_name,
-              emailId
+              *
           FROM
               MEMBER
 		  WHERE
 		  	emailId = #{emailId}      
     </select>
-    
+     <select id="selectByEmail" parameterType="admin.user.com.service.MberManageVO" resultMap="memberList">     
+          SELECT
+              emailId,
+              mem_name
+          FROM
+              MEMBER
+          WHERE
+              emailId = #{emailId}           
+    </select>
 
      <!-- <select id="userManageDAO.selectUserList_S" parameterClass="userSearchVO" resultClass="egovMap">
 SELECT 

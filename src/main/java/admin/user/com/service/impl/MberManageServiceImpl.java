@@ -6,11 +6,13 @@ import egovframework.let.utl.fcc.service.EgovStringUtil;
 import egovframework.let.utl.sim.service.EgovFileScrty;
 import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 import egovframework.rte.fdl.idgnr.EgovIdGnrService;
+import egovframework.rte.fdl.property.EgovPropertyService;
 
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import admin.com.exception.AlreadyExistingEmailException;
 import admin.user.com.service.MberManageService;
 import admin.user.com.service.MberManageVO;
 import admin.user.com.service.UserDefaultVO;
@@ -26,7 +28,9 @@ public class MberManageServiceImpl extends EgovAbstractServiceImpl implements Mb
 	/** mberManageDAO */
 	@Resource(name="mberManageDAO")
 	private MberManageDAO mberManageDAO;
-
+	 
+	@Resource(name = "propertiesService")
+	 protected EgovPropertyService propertyService;
 
 	/** egovUsrCnfrmIdGnrService */
 	@Resource(name="egovUsrCnfrmIdGnrService")
@@ -39,11 +43,15 @@ public class MberManageServiceImpl extends EgovAbstractServiceImpl implements Mb
 	 * @throws Exception
 	 */
 	@Override
-	public void insertMber(MberManageVO mberManageVO) throws Exception  {
+	public void insertMber(MberManageVO regReq) throws Exception  {
+		MberManageVO emailId = mberManageDAO.selectByEmail(regReq.getEmailId());
+		if(emailId!=null) {
+            throw new AlreadyExistingEmailException(regReq.getEmailId()+" is duplicate email.");
+        }
 		//패스워드 암호화
-		String pass = EgovFileScrty.encryptPassword(mberManageVO.getPassword(), EgovStringUtil.isNullToString(mberManageVO.getEmailId()));
-		mberManageVO.setPassword(pass);
-		 mberManageDAO.insertMber(mberManageVO);
+		String pass = EgovFileScrty.encryptPassword(regReq.getPassword(), EgovStringUtil.isNullToString(regReq.getEmailId()));
+		regReq.setPassword(pass);
+		 mberManageDAO.insertMber(regReq);
 		
 		
 	}

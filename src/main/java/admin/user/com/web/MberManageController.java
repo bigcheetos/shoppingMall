@@ -121,9 +121,7 @@ public class MberManageController {
 	@RequestMapping("user/com/userInsertRegist.do")
 	public String insertMber(@ModelAttribute("mberManageVO") MberManageVO regReq, Errors errors, BindingResult bindingResult, Model model) throws Exception {
     	model.addAttribute("memGubun",regReq.getMemGubun());
-
-		System.out.println(regReq.getMemGubun());
-		
+	
 			 new RegisterRequestValidator().validate(regReq, errors);
 
 		        if(errors.hasErrors()) {
@@ -132,7 +130,6 @@ public class MberManageController {
 		        try {
 		        	mberManageService.insertMber(regReq);
 		        } catch (AlreadyExistingEmailException e) {
-		        	
 		            errors.rejectValue("emailId", "duplicate", "이미 가입된 이메일입니다.");
 		    		return "user/UserSbscrbRegist";
 		        }

@@ -132,13 +132,13 @@ function goRegiUsr() {
 <!-- 전체 레이어 시작 -->
 <div id="wrap">
     <!-- header 시작 -->
-    <div id="header_mainsize"><c:import url="/EgovPageLink.do?link=main/inc/EgovIncHeader" /></div>
-    <div id="topnavi"><c:import url="/EgovPageLink.do?link=main/inc/EgovIncTopnav" /></div>
+ <%--    <div id="header_mainsize"><c:import url="/EgovPageLink.do?link=main/inc/EgovIncHeader" /></div>
+    <div id="topnavi"><c:import url="/EgovPageLink.do?link=main/inc/EgovIncTopnav" /></div> --%>
     <!-- //header 끝 -->
     <!-- container 시작 -->
     <div id="container">
         <!-- 좌측메뉴 시작 -->
-        <div id="leftmenu"><c:import url="/EgovPageLink.do?link=main/inc/EgovIncLeftmenu" /></div>
+        <%-- <div id="leftmenu"><c:import url="/EgovPageLink.do?link=main/inc/EgovIncLeftmenu" /></div> --%>
         <!-- //좌측메뉴 끝 -->
             <!-- content 시작 --> 
             <div id="content">
@@ -159,7 +159,7 @@ function goRegiUsr() {
                                 <ul>
                                     <li>
                                         <label for="emailId"><img alt="login" src="<c:url value='/'/>images/login/img_idtext.gif" /></label>
-                                        <input type="text" class="input_style" title="아이디를 입력하세요." id="emailId" name="emailId" maxlength="10"/>
+                                        <input type="text" class="input_style" title="아이디를 입력하세요." id="emailId" name="emailId" />
                                     </li>
                                     <li>
                                         <label for="password"><img alt="password" src="<c:url value='/'/>images/login/img_pwtext.gif" /></label>

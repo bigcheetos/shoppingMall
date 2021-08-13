@@ -36,7 +36,7 @@
         <li class="righttop_bgright">&nbsp;</li>
     </ul>
     <% }else { %>
-    <c:set var="loginName" value="<%= loginVO.getName()%>"/>
+    <c:set var="loginName" value="<%= loginVO.getMemName()%>"/>
     <div id="header_loginname">
         <a href="#LINK" onclick="alert('개인정보 확인 등의 링크 제공'); return false;"><c:out value="${loginName}"/> 님</a>
     </div>

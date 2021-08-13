@@ -23,15 +23,17 @@ public class MberManageDAO extends EgovComAbstractDAO{
 	public List<MberManageVO> selectMberList(MberManageVO mberManageVO){
         return (List<MberManageVO>) list("userManageDAO.selectMberList", mberManageVO);
     }
-    public void insertMber(MberManageVO mberManageVO){
-        insert("userManageDAO.insertMber", mberManageVO);
+    public void insertMber(MberManageVO regReq){
+        insert("userManageDAO.insertMber", regReq);
     	
     }
     public MberManageVO selectMemberList(MberManageVO mberManageVO) {
 
 		return selectOne("userManageDAO.selectMemberList", mberManageVO);
 	}
-
+    public MberManageVO selectByEmail(String emailId){
+		return (MberManageVO)selectOne("userManageDAO.selectByEmail", emailId);
+	}
     /**
      * 일반회원 총 갯수를 조회한다.
      * @param userSearchVO 검색조건
