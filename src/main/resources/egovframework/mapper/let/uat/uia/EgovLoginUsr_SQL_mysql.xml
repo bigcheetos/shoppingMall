@@ -9,11 +9,11 @@
 	<!-- 로그인 처리를 위한 resultMap -->
 	<resultMap id="login" type="egovframework.com.cmm.LoginVO">
 		<result property="emailId" column="emailId"/>
-		<result property="memName" column="mem_name"/>
+		<result property="memName" column="memName"/>
 		<result property="password" column="password"/>
-		<result property="memLev" column="mem_lev"/>
-		<result property="memGubun" column="mem_gubun"/>
-		<result property="uniqId" column="uniqId"/>		
+		<result property="memLev" column="memLev"/>
+		<result property="memGubun" column="memGubun"/>
+		<result property="memSeq" column="memSeq"/>		
 	</resultMap>
 	
 	
@@ -28,21 +28,19 @@
 		<result property="password" column="password" />
 	</resultMap>
 	
-	<!-- 일반 로그인  관리자-->
-	<select id="actionLogin" resultMap="login">
+	
+	<select id="actionLogin"  resultMap="login">
+	/* loginDAO.actionLogin */
 	  SELECT 
-            	  emailId 
-     			, mem_name
-     			, password
-     			, mem_gubun
+           emailId as emailId
+			, MEM_NAME as memName
+			, password as password
+			, MEM_SEQ as memSeq	
+			, MEM_GUBUN as memGubun
               FROM member
             WHERE emailId = #{emailId}
    			  AND password = #{password}
-               	
-		<!-- <if test="@egovframework.com.cmm.MybatisCheck@notEmpty(memLev)">
-
-          
-          </if> -->
+               			
 	</select>
 	
 	<!-- 인증서 로그인

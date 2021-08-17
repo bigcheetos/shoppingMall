@@ -63,19 +63,18 @@ public class EgovLoginController {
 	public String actionLogin(@ModelAttribute("loginVO") LoginVO loginVO, HttpServletRequest request, ModelMap model) throws Exception {
 
 		LoginVO resultVO = loginService.actionLogin(loginVO);
+		System.out.println(resultVO.getEmailId());
 
-		boolean loginPolicyYn = true;
-
-		if (resultVO != null && resultVO.getEmailId() != null && !resultVO.getEmailId().equals("") && loginPolicyYn) {
-
+		if (resultVO != null && resultVO.getEmailId() != null && !resultVO.getEmailId().equals("")) {
 			request.getSession().setAttribute("LoginVO", resultVO);
-			
+			return "forward:/uat/uia/actionMain.do";
 		}else {
+			System.out.println("000000000000000");
 			
 			model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
 			return "cmm/uat/uia/LoginUsr";
 		}
-		return "forward:/uat/uia/actionMain.do";
+		
 	}
 
 	/**
@@ -87,27 +86,24 @@ public class EgovLoginController {
 	 */
 	@RequestMapping(value = "/uat/uia/actionMain.do")
 	public String actionMain(@ModelAttribute("loginVO") LoginVO loginVO, ModelMap model) throws Exception {
-    	model.addAttribute("memGubun",loginVO.getMemGubun());
-		
-		// 1. 사용자 인증 처리
-		/*Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
-		if (!isAuthenticated) {
-			model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
-			return "cmm/uat/uia/LoginUsr";
-		}*/
 
-		// 2. 메인 페이지 이동
 		System.out.println(loginVO.getEmailId());
 		
 		if(loginVO.getMemGubun().equals("M")) {
+			loginVO.setMemName(loginVO.getMemName());
 			return "forward:/cmm/main/mainPage.do";
 
 		}else if(loginVO.getMemGubun().equals("A")) {
-			return "forward:/cmm/main/adminMain.do";
-		}else
-		
-		return "forward:/cmm/main/mainPage.do";
+			loginVO.setMemName(loginVO.getMemName());
 
+	    	model.addAttribute("memGubun",loginVO.getEmailId());
+
+			return "forward:/cmm/main/adminMain.do";
+		}else {
+			model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
+			return "cmm/uat/uia/LoginUsr";
+		}
+		
 	}
 
 	/**

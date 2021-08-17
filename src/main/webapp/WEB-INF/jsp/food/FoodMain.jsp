@@ -4,6 +4,8 @@
 <%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ page import ="egovframework.com.cmm.LoginVO" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <html>
@@ -99,6 +101,7 @@
     <!-- Header Section Begin -->
     <header class="header">
         <div class="header__top">
+        
             <div class="container">
                 <div class="row">
                     <div class="col-lg-6 col-md-6">
@@ -126,6 +129,10 @@
                                     <li><a href="#">English</a></li>
                                 </ul>
                             </div>
+                            <%
+						       LoginVO loginVO = (LoginVO)session.getAttribute("LoginVO"); 
+						       if(loginVO == null){ 
+						    	%>
                             <div class="header__top__right__auth" style = "padding: 0px 20px 0px 20px;">
                                 <a href="<c:url value='/uat/uia/LoginUsr.do'/>"><i class="fa fa-user"></i> Login </a>
                             </div>
@@ -133,7 +140,20 @@
                              <div class="header__top__right__auth">
                                 <a href="<c:url value='/user/com/userSignup.do'/>"><i class="fas fa-user-plus"></i> sign up</a>
                             </div>
+                            <% }else { %>
+						    <c:set var="loginName" value="<%= loginVO.getMemName()%>"/>
+						    <div id="header_loginname">
+						        <a href="#LINK" onclick="alert('개인정보 확인 등의 링크 제공'); return false;"><c:out value="${loginName}"/> 님</a>
+						    </div>
+<!-- 						    <div class="header_loginconnection"> 관리자로 로그인하셨습니다.</div>
+ -->						    <!-- <ul class="login_bg_area">
+						        <li class="righttop_bgleft">&nbsp;</li> -->
+						        <li class="righttop_bgmiddle"><a href="<c:url value='/uat/uia/actionLogout.do'/>">로그아웃</a></li>
+						    </ul>
+						       
+                         
                         </div>
+                        <% } %> 
                     </div>
                 </div>
             </div>

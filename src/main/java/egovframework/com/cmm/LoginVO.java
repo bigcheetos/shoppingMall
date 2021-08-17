@@ -29,7 +29,7 @@ public class LoginVO implements Serializable{
 	/** 이름 */
 	private String memName;
 	/** 주민등록번호 */
-	private String ihidNum;
+	private String memSeq;
 	/** 비밀번호 */
 	private String password;
 	/** 비밀번호 힌트 */
@@ -50,6 +50,12 @@ public class LoginVO implements Serializable{
 	private String dn;
 
 
+	public String getMemSeq() {
+		return memSeq;
+	}
+	public void setMemSeq(String memSeq) {
+		this.memSeq = memSeq;
+	}
 	public String getEmailId() {
 		return emailId;
 	}
@@ -58,21 +64,6 @@ public class LoginVO implements Serializable{
 	}
 
 
-	/**
-	 * ihidNum attribute 를 리턴한다.
-	 * @return String
-	 */
-	public String getIhidNum() {
-		return ihidNum;
-	}
-	/**
-	 * ihidNum attribute 값을 설정한다.
-	 * @param ihidNum String
-	 */
-	public void setIhidNum(String ihidNum) {
-		this.ihidNum = ihidNum;
-	}
-	/**
 
 
 	/**

@@ -131,8 +131,8 @@
 		<!-- //code layer -->		
 	</div>
 	<!-- footer 시작 -->
-	<div id="footer"><c:import url="/EgovPageLink.do?link=main/inc/EgovIncFooter" /></div>
-	<!-- //footer 끝 -->
+<%-- 	<div id="footer"><c:import url="/EgovPageLink.do?link=main/inc/EgovIncFooter" /></div>
+ --%>	<!-- //footer 끝 -->
 <!-- //전체 레이어 끝 -->
 </div>
 </body>
