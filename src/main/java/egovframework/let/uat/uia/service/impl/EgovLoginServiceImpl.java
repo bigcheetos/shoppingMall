@@ -12,6 +12,8 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.mysql.cj.log.Log;
+
 
 @Service("loginService")
 public class EgovLoginServiceImpl extends EgovAbstractServiceImpl implements EgovLoginService {
@@ -39,7 +41,6 @@ public class EgovLoginServiceImpl extends EgovAbstractServiceImpl implements Ego
 			loginVO = new LoginVO();
 		}
 		System.out.println(loginVO.getEmailId());
-
 		return loginVO;
 	}
 

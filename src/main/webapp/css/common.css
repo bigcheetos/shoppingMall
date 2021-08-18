@@ -441,7 +441,7 @@ select {
 .mainbtm_text2{left: 440px; position: absolute; top: 40px; width: 212px;} 
 .img_div01{position: absolute;left: 360px; top: 15px; width: 212px;} 
  
-#main_btm_area{clear:both;float:left;position:absolute;top:458px;left:470px;background: url("../images/index/bg_bottom.gif") no-repeat left top; width:716px;height: 112px;}
+#main_btm_area{clear:both;float:left;position:absolute;top:458px;background: url("../images/index/bg_bottom.gif") no-repeat left top; width:716px;height: 112px;}
 #main_btm_area ul{list-style-type:none;padding-top:15px;padding-left:10px;}
 #main_btm_area ul li{display:inline-block;}
 .mainbtm_vline{left: 330px; position: absolute; top: 12px; width: 212px;}
