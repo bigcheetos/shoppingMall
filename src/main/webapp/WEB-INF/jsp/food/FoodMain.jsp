@@ -7,7 +7,9 @@
 <!DOCTYPE html>
 
 <html>
+<style>
 
+</style>
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="Ogani Template">
@@ -45,18 +47,21 @@
                             <i class="fa fa-bars"></i>
                             <span>All departments</span>
                         </div>
-                        <ul>
-                            <li><a href="#">사과/배</a></li>
-                            <li><a href="#">감귤/만감류</a></li>
-                            <li><a href="#">수박/멜로/참외/토마토</a></li>
-                            <li><a href="#">딸기/키위/블루베리</a></li>
-                            <li><a href="#">포토/자두/복숭아</a></li>
-                            <li><a href="#">바나나/파인애플</a></li>
-                            <li><a href="#">오렌지/지몽/레몬</a></li>
-                            <li><a href="#">망고/열대과일</a></li>
-                            <li><a href="#">체류/석류/아보카도</a></li>
-                            <li><a href="#">체리/앵두</a></li>
-                            <li><a href="#">견과류</a></li>
+                        <ul class="sub_category_menu">
+                            <c:forEach var="parentCategory" items="${parentCategoryList }" varStatus="status">
+                            	<li><a href="#">${parentCategory.categoryName }</a>
+                            		<%-- <div>
+                            		<ul>
+                            		<c:forEach var="childCategory" items="${childCategoryList }" varStatus="childStatus">
+                            			<c:if test="${childCategory.categoryParentSeq == parentCategory.categorySeq }">
+                            			<li><a href="#">${childCategory.categoryName }</a>
+                            			</li>
+                            			</c:if>
+                            		</c:forEach>
+                            		</ul>
+                           			</div> --%>
+                            	</li>
+                            </c:forEach>
                             
                         </ul>
                     </div>
@@ -576,7 +581,9 @@
     <script src="/js/owl.carousel.min.js"></script>
     <script src="/js/main.js"></script>
 
+<script>
 
+</script>
 
 </body>
 

@@ -216,6 +216,7 @@
 					<c:forEach var="tag" items="${tagList }" varStatus="status">
 						<!-- href에 tag랑 연결된 검색 창 구현 (http://~?tagSeq=${tag.tagSeq }) -->
 						<a rel="tag" href="#">${tag.tagName }</a>
+						<c:if test="${not status.last}">, </c:if>
 					</c:forEach>
 				</span>
 			</div>

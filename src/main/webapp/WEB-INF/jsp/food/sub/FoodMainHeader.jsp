@@ -58,9 +58,9 @@
                                 <li><a href="/cmm/main/home/event.do">이벤트/프로모션</a></li>
                             </ul>
                         </li>
-                        <li><a href="./shop-grid.html">Shop</a>
+                        <li><a href="/cmm/main/shop/discount_shop.do">Shop</a>
                         	 <ul class="header__menu__dropdown">
-                                <li><a href="./shoping-grid.html">할인관</a></li>
+                                <li><a href="/cmm/main/shop/discount_shop.do">할인관</a></li>
                                 <li><a href="">베스트</a></li>
                                 <li><a href="">신상품</a></li>
                             </ul>
