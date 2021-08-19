@@ -16,7 +16,7 @@
 	    <Logger name="jdbc.sqltiming" level="DEBUG" additivity="false">
 	        <AppenderRef ref="console" />
 	    </Logger>
-	    <Logger name="org.springframework" level="INFO" additivity="false">
+	    <Logger name="org.springframework" level="DEBUG" additivity="false">
 	        <AppenderRef ref="console" />
 	    </Logger>
 	    <Logger name="jdbc.sqltiming" level="DEBUG" additivity="false">
@@ -34,6 +34,11 @@
 	    <Logger name="jdbc.resultsettable" level="DEBUG" additivity="false">
 	        <AppenderRef ref="console" />
 	    </Logger>
+	    <!-- Application Loggers -->
+	    <logger name="com.cristoval.web">
+	        <level value="trace" />
+	    </logger>
+
 	    
 	    
         <Root level="ERROR">

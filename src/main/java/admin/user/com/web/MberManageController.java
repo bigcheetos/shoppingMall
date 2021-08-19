@@ -10,11 +10,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springmodules.validation.commons.DefaultBeanValidator;
 
+import admin.com.exception.AlreadyExistingEmailException;
 import admin.user.com.service.MberManageService;
 import admin.user.com.service.MberManageVO;
 import admin.user.com.service.UserDefaultVO;
@@ -55,7 +57,7 @@ public class MberManageController {
 	 * @param model 화면모델
 	 * @return uss/umt/EgovMberManage
 	 * @throws Exception
-	 */
+	 *//*
 	@IncludedInfo(name = "일반회원관리", order = 470, gid = 50)
 	@RequestMapping(value = "/uss/umt/EgovMberManage.do")
 	public String selectMberList(@ModelAttribute("userSearchVO") UserDefaultVO userSearchVO, ModelMap model) throws Exception {
@@ -68,11 +70,11 @@ public class MberManageController {
 			return "index";
 		}
 
-		/** EgovPropertyService */
+		*//** EgovPropertyService *//*
 		userSearchVO.setPageUnit(propertiesService.getInt("pageUnit"));
 		userSearchVO.setPageSize(propertiesService.getInt("pageSize"));
 
-		/** pageing */
+		*//** pageing *//*
 		PaginationInfo paginationInfo = new PaginationInfo();
 		paginationInfo.setCurrentPageNo(userSearchVO.getPageIndex());
 		paginationInfo.setRecordCountPerPage(userSearchVO.getPageUnit());
@@ -96,50 +98,56 @@ public class MberManageController {
 		model.addAttribute("entrprsMberSttus_result", mberSttus_result);//기업회원상태코드목록
 
 		return "egovframework/com/uss/umt/EgovMberManage";
-	}
+	}*/
 
-	/**
-	 * 일반회원등록화면으로 이동한다.
-	 * @param userSearchVO 검색조건정보
-	 * @param mberManageVO 일반회원초기화정보
-	 * @param model 화면모델
-	 * @return uss/umt/EgovMberInsert
-	 * @throws Exception
-	 */
-	@RequestMapping("/user/com/userSignup.do")
-	public String insertMberView(@ModelAttribute("userSearchVO") UserDefaultVO userSearchVO, @ModelAttribute("mberManageVO") MberManageVO mberManageVO, Model model)
-			throws Exception {
-
-		/*// 미인증 사용자에 대한 보안처리
-		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
-		if (!isAuthenticated) {
-			return "";
-		}*/
-
-
-		return "food/user/UserSignUp";
-	}
-
-	/**
-	 * 일반회원등록처리후 목록화면으로 이동한다.
-	 * @param mberManageVO 일반회원등록정보
-	 * @param bindingResult 입력값검증용 bindingResult
-	 * @param model 화면모델
-	 * @return forward:/uss/umt/EgovMberManage.do
-	 * @throws Exception
-	 */
-	@RequestMapping("/user/com/MberInsert.do")
-	public String insertMber(@ModelAttribute("mberManageVO") MberManageVO mberManageVO, BindingResult bindingResult, Model model) throws Exception {
-
-		 System.out.println("0000000000000000");
 	
-			mberManageService.insertMber(mberManageVO);
-			
-			System.out.println("+++++++++++++++++++++");
+	@RequestMapping(value = "user/com/userSignup.do")
+	public String userTypeView() throws Exception {
+		
+		return "user/UserTypeView";
+	}
+
+	@RequestMapping(value = "user/com/userSbscrbRegist.do")
+	public String userSbscrbRegist(@ModelAttribute("mberManageVO") MberManageVO mberManageVO, @RequestParam String memGubun, ModelMap model) throws Exception {		
+		model.addAttribute("mberManageVO", new MberManageVO());
+		mberManageVO.setMemGubun(memGubun);
+		model.addAttribute("memGubun", memGubun);
+
+		
+		return "user/UserSbscrbRegist";
+	}
+	
+
+	@RequestMapping("user/com/userInsertRegist.do")
+	public String insertMber(@ModelAttribute("mberManageVO") MberManageVO regReq, Errors errors, BindingResult bindingResult, Model model) throws Exception {
+    	model.addAttribute("memGubun",regReq.getMemGubun());
+	
+			 new RegisterRequestValidator().validate(regReq, errors);
+
+		        if(errors.hasErrors()) {
+		    		return "user/UserSbscrbRegist";
+		        }
+		        try {
+		        	mberManageService.insertMber(regReq);
+		        } catch (AlreadyExistingEmailException e) {
+		            errors.rejectValue("emailId", "duplicate", "이미 가입된 이메일입니다.");
+		    		return "user/UserSbscrbRegist";
+		        }
 			//Exception 없이 진행시 등록 성공메시지
 			model.addAttribute("resultMsg", "success.common.insert");
 		
-		return "forward:/cmm/main/mainPage.do";
+		return "forward:/user/com/userRegistSucces.do";
+	}
+	
+	@RequestMapping(value = "user/com/userRegistSucces.do")
+	public String userRegistSucces(@ModelAttribute("mberManageVO") MberManageVO mberManageVO, ModelMap model) throws Exception{
+		model.addAttribute("emailId",mberManageVO.getEmailId());
+		MberManageVO member = mberManageService.selectMemberList(mberManageVO);
+		//List<?> member = mberManageService.selectMberList(mberManageVO);
+
+		model.addAttribute("resultList", member);
+		return "user/UserSuccesView";
+ 
 	}
 /*
 	*//**

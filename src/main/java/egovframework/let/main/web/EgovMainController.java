@@ -43,10 +43,10 @@ public class EgovMainController {
 	 * @param commandMap
 	 * @exception Exception Exception
 	 */
-	@RequestMapping(value = "/cmm/forwardPage.do")
+	@RequestMapping(value = "cmm/main/adminMain.do")
 	public String forwardPageWithMenuNo(HttpServletRequest request, @RequestParam Map<String, Object> commandMap)
 	  throws Exception{
-		return "sample_menu/intro";
+		return "main/AdminMainView";
 	}
 
 	/**
