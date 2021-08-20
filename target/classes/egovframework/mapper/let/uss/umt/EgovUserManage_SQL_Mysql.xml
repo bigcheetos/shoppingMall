@@ -4,7 +4,55 @@
 
 <mapper namespace="userManageDAO">
 
+	<resultMap id="memberList" type="admin.user.com.service.MberManageVO">
+		<result property="memSeq" column="mem_seq"/>
+		<result property="memName" column="mem_name"/>
+		<result property="emailId" column="emailId"/>
+		<result property="password" column="password"/>
+		<result property="pwCheck" column="pwCheck"/>
+		<result property="emailKey" column="email_key"/>
+		<result property="emailConfirm" column="email_confirm"/>
+		<result property="emailDate" column="email_date"/>
+		<result property="memLev" column="mem_lev"/>
+		<result property="memGubun" column="mem_gubun"/>
+		<result property="memNumber" column="mem_number"/>
+		<result property="regDate" column="regDate"/>				
+	</resultMap>
+
+    <insert id="insertMber">
+		/* userManageDAO.insertMber */
+		INSERT INTO MEMBER (
+			mem_name,
+			emailId, 
+			password, 
+			mem_gubun,
+			regDate
+		) VALUES (
+			#{memName},
+			#{emailId}, 
+			#{password}, 
+			#{memGubun},
+			sysdate()
+		)
+	</insert>
     
+	<select id="selectMemberList" parameterType="admin.user.com.service.MberManageVO" resultMap="memberList">     
+          SELECT
+              *
+          FROM
+              MEMBER
+		  WHERE
+		  	emailId = #{emailId}      
+    </select>
+     <select id="selectByEmail" parameterType="admin.user.com.service.MberManageVO" resultMap="memberList">     
+          SELECT
+              emailId,
+              mem_name
+          FROM
+              MEMBER
+          WHERE
+              emailId = #{emailId}           
+    </select>
 
      <!-- <select id="userManageDAO.selectUserList_S" parameterClass="userSearchVO" resultClass="egovMap">
 SELECT 
@@ -69,88 +117,13 @@ FROM(
             </isEqual>
     </select> -->
     
-    <insert id="insertMber">
-		/* userManageDAO.insertMber */
-		INSERT INTO MEMBER (
-			EMAILID, 
-			PASSWORD, 
-			MEM_GUBUN,
-			REG_DATE
-		) VALUES (
-			#{emailId}, 
-			#{password]}, 
-			"m",
-			sysdate()
-		)
-	</insert>
     
-    <insert id="userManageDAO.insertUser_S">
-        <![CDATA[
-            INSERT INTO LETTNEMPLYRINFO 
-                (   ESNTL_ID             ,
-                    EMPLYR_ID           ,
-                    USER_NM           ,
-                    PASSWORD            ,
-                    PASSWORD_HINT       ,
-                    PASSWORD_CNSR       ,
-                    EMPL_NO             ,
-                    IHIDNUM             ,
-                    SEXDSTN_CODE        ,
-                    BRTH                ,
-                    AREA_NO             ,
-                    HOMEMIDDLE_TELNO    ,
-                    HOMEEND_TELNO       ,
-                    FXNUM               ,
-                    HOMEADRES           ,
-                    DETAIL_ADRES        ,
-                    ZIP                 ,
-                    OFFM_TELNO          ,
-                    MOBLPHON_NO         ,
-                    EMAIL_ADRES         ,
-                    OFCPS_NM            ,
-                    GROUP_ID            ,
-                    ORGNZT_ID           ,
-                    INSTT_CODE          ,
-                    EMPLYR_STTUS_CODE   ,
-                    SBSCRB_DE           ,
-                    SUB_DN              )
-            VALUES (
-                    #uniqId#            ,
-                    #emplyrId#          ,
-                    #emplyrNm#          ,
-                    #password#          ,
-                    #passwordHint#      ,
-                    #passwordCnsr#      ,                   
-                    #emplNo#            ,
-                    #ihidnum#           ,
-                    #sexdstnCode#       ,
-                    #brth#              ,
-                    #areaNo#            ,
-                    #homemiddleTelno#   ,
-                    #homeendTelno#      ,
-                    #fxnum#             ,
-                    #homeadres#         ,
-                    #detailAdres#       ,
-                    #zip#               ,
-                    #offmTelno#         ,
-                    #moblphonNo#        ,
-                    #emailAdres#        ,
-                    #ofcpsNm#           ,
-                    #groupId#           ,
-                    #orgnztId#          ,
-                    #insttCode#         ,
-                    #emplyrSttusCode#   ,
-                    sysdate()           ,
-                    #subDn#             )
-        ]]>
-    </insert>
-    
-    <delete id="userManageDAO.deleteUser_S">
+   <!--  <delete id="userManageDAO.deleteUser_S">
         <![CDATA[
             DELETE FROM LETTNEMPLYRINFO 
             WHERE ESNTL_ID=#delId#
         ]]>
-    </delete>
+    </delete>  -->
     
    <!--  <select id="userManageDAO.selectUser_S" resultClass="userVO">
         <![CDATA[
@@ -188,7 +161,7 @@ FROM(
         ]]>
     </select> -->
     
-    <update id="userManageDAO.updateUser_S">
+    <!-- <update id="userManageDAO.updateUser_S">
         <![CDATA[
             UPDATE LETTNEMPLYRINFO 
             SET EMPLYR_ID           = #emplyrId#        , 
@@ -217,9 +190,9 @@ FROM(
                 SUB_DN              = #subDn#
             WHERE ESNTL_ID = #uniqId#
         ]]>
-    </update>
+    </update> -->
     
-    <insert id="userManageDAO.insertUserHistory_S">
+   <!--  <insert id="userManageDAO.insertUserHistory_S">
         <![CDATA[
             INSERT INTO LETTHEMPLYRINFOCHANGEDTLS 
                 (   EMPLYR_ID           ,
@@ -266,7 +239,7 @@ FROM(
             FROM LETTNEMPLYRINFO
             WHERE ESNTL_ID = #uniqId#
         ]]>
-    </insert>
+    </insert> -->
     
     <!-- <select id="userManageDAO.checkIdDplct_S" resultClass="int">
         <![CDATA[
@@ -288,22 +261,15 @@ FROM(
         ]]>
     </select>
      -->
-    <update id="userManageDAO.updatePassword_S">
+    <!-- <update id="userManageDAO.updatePassword_S">
         <![CDATA[
             UPDATE LETTNEMPLYRINFO 
             SET 
                    PASSWORD   =  #password#
             WHERE  ESNTL_ID  = #uniqId#
         ]]>
-    </update>
+    </update> -->
     
-   <!--  <select id="userManageDAO.selectPassword_S" resultClass="userVO">
-        <![CDATA[
-            SELECT
-                    PASSWORD          password 
-            FROM    LETTNEMPLYRINFO
-            WHERE   ESNTL_ID=#uniqId#
-        ]]>
-    </select> -->
+
     
 </mapper>
