@@ -4,9 +4,7 @@
 <%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@ page import ="egovframework.com.cmm.LoginVO" %>
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 
 <html>
 
@@ -18,13 +16,14 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet"> <!--CDN 링크 -->
 
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Ogani | Template</title>
+    <title>Ogani</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
 
+	<link rel="stylesheet" href="/css/food/common.css" type="text/css">
     
-     <link rel="stylesheet" href="/css/food/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/food/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="/css/food/elegant-icons.css" type="text/css">
     <link rel="stylesheet" href="/css/food/nice-select.css" type="text/css">
     <link rel="stylesheet" href="/css/food/jquery-ui.min.css" type="text/css">
@@ -34,70 +33,6 @@
 </head>
 
 <body>
-  <%--   <!-- Page Preloder -->
-    <div id="preloder">
-        <div class="loader"></div>
-    </div>
-
-    <!-- Humberger Begin -->
-    <div class="humberger__menu__overlay"></div>
-    <div class="humberger__menu__wrapper">
-        <div class="humberger__menu__logo">
-            <a href="#"><img src="/images/food/logo.png" alt=""></a>
-        </div>
-        <div class="humberger__menu__cart">
-            <ul>
-                <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-                <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
-            </ul>
-            <div class="header__cart__price">item: <span>$150.00</span></div>
-        </div>
-        <div class="humberger__menu__widget">
-            <div class="header__top__right__language">
-                <img src="/images/food/language.png" alt="">
-                <div>English</div>
-                <span class="arrow_carrot-down"></span>
-                <ul>
-                    <li><a href="#">Spanis</a></li>
-                    <li><a href="#">English</a></li>
-                </ul>
-            </div>
-            <div class="header__top__right__auth">
-                <a href="<c:url value='/uat/uia/LoginUsr.do'/>"><i class="fa fa-user"></i> Login</a>
-            </div>
-        </div>
-        <nav class="humberger__menu__nav mobile-menu">
-            <ul>
-                <li class="active"><a href="./index.html">Home</a></li>
-                <li><a href="./shop-grid.html">Shop</a></li>
-                <li><a href="#">Pages</a>
-                    <ul class="header__menu__dropdown">
-                        <li><a href="./shop-details.html">Shop Details</a></li>
-                        <li><a href="./shoping-cart.html">Shoping Cart</a></li>
-                        <li><a href="./checkout.html">Check Out</a></li>
-                        <li><a href="./blog-details.html">Blog Details</a></li>
-                    </ul>
-                </li>
-                <li><a href="./blog.html">Blog</a></li>
-                <li><a href="./contact.html">Contact</a></li>
-            </ul>
-        </nav>
-        <div id="mobile-menu-wrap"></div>
-        <div class="header__top__right__social">
-            <a href="#"><i class="fa fa-facebook"></i></a>
-            <a href="#"><i class="fa fa-twitter"></i></a>
-            <a href="#"><i class="fa fa-linkedin"></i></a>
-            <a href="#"><i class="fa fa-pinterest-p"></i></a>
-        </div>
-        <div class="humberger__menu__contact">
-            <ul>
-                <li><i class="fa fa-envelope"></i> hello@colorlib.com</li>
-                <li>Free Shipping for all Order of $99</li>
-            </ul>
-        </div>
-    </div> --%>
-    <!-- Humberger End -->
-
     <!-- Header Section Begin -->
     <jsp:include page="/WEB-INF/jsp/food/sub/FoodMainHeader.jsp"/> 
     <!-- Header Section End -->
@@ -112,21 +47,18 @@
                             <i class="fa fa-bars"></i>
                             <span>All departments</span>
                         </div>
-                        <ul class="sub_category_menu">
-                            <c:forEach var="parentCategory" items="${parentCategoryList }" varStatus="status">
-                            	<li><a href="#">${parentCategory.categoryName }</a>
-                            		<%-- <div>
-                            		<ul>
-                            		<c:forEach var="childCategory" items="${childCategoryList }" varStatus="childStatus">
-                            			<c:if test="${childCategory.categoryParentSeq == parentCategory.categorySeq }">
-                            			<li><a href="#">${childCategory.categoryName }</a>
-                            			</li>
-                            			</c:if>
-                            		</c:forEach>
-                            		</ul>
-                           			</div> --%>
-                            	</li>
-                            </c:forEach>
+                        <ul>
+                            <li><a href="#">사과/배</a></li>
+                            <li><a href="#">감귤/만감류</a></li>
+                            <li><a href="#">수박/멜로/참외/토마토</a></li>
+                            <li><a href="#">딸기/키위/블루베리</a></li>
+                            <li><a href="#">포토/자두/복숭아</a></li>
+                            <li><a href="#">바나나/파인애플</a></li>
+                            <li><a href="#">오렌지/지몽/레몬</a></li>
+                            <li><a href="#">망고/열대과일</a></li>
+                            <li><a href="#">체류/석류/아보카도</a></li>
+                            <li><a href="#">체리/앵두</a></li>
+                            <li><a href="#">견과류</a></li>
                             
                         </ul>
                     </div>

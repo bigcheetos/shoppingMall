@@ -1,14 +1,12 @@
 package egovframework.let.main.web;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 
 import egovframework.com.cmm.ComDefaultVO;
 import egovframework.let.cop.bbs.service.BoardVO;
 import egovframework.let.cop.bbs.service.EgovBBSManageService;
-import egovframework.let.cop.shop.service.CategoryVO;
-import egovframework.let.cop.shop.service.EgovShopService;
+
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
 import javax.annotation.Resource;
@@ -29,12 +27,6 @@ public class EgovMainController {
 	 */
 	@Resource(name = "EgovBBSManageService")
     private EgovBBSManageService bbsMngService;
-	
-	/**
-	 * EgovShopService
-	 */
-	@Resource(name = "EgovShopService")
-    private EgovShopService shopService;
 
 	/**
 	 * 메인 페이지에서 각 업무 화면으로 연계하는 기능을 제공한다.
@@ -43,10 +35,10 @@ public class EgovMainController {
 	 * @param commandMap
 	 * @exception Exception Exception
 	 */
-	@RequestMapping(value = "cmm/main/adminMain.do")
+	@RequestMapping(value = "/cmm/forwardPage.do")
 	public String forwardPageWithMenuNo(HttpServletRequest request, @RequestParam Map<String, Object> commandMap)
 	  throws Exception{
-		return "main/AdminMainView";
+		return "sample_menu/intro";
 	}
 
 	/**
@@ -85,23 +77,7 @@ public class EgovMainController {
 		model.addAttribute("galList", map.get("resultList"));
 
 		공지사항 메인컨텐츠 조회 끝 */ 
-		
-		List<CategoryVO> categoryAllList = shopService.getCategoryAll();
-    	
-    	List<CategoryVO> parentCategoryList = new ArrayList<>();
-    	List<CategoryVO> childCategoryList = new ArrayList<>();
-    	
-    	for(CategoryVO category : categoryAllList) {
-    		if(category.getCategoryParentSeq()== 0) {
-    			parentCategoryList.add(category);
-    		} else {
-    			childCategoryList.add(category);
-    		}
-    	}
-    	
-    	model.addAttribute("parentCategoryList", parentCategoryList);
-    	model.addAttribute("childCategoryList", childCategoryList);
-		
+
 		return "food/FoodMain";
 	}
 	
@@ -121,7 +97,8 @@ public class EgovMainController {
     @RequestMapping(value = "cmm/main/home/standard.do")
     public String getMgtHomeStandard(HttpServletRequest request, ModelMap model)
       throws Exception{
-    	// 보류
-    	return "redirect:/cmm/main/mainPage.do";
+    		
+    	// 확인 후 다시
+            return "food/FoodMain";
     }
 }

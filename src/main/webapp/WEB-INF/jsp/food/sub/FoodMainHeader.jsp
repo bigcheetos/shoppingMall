@@ -30,11 +30,11 @@
                             </ul>
                         </div>
                         <div class="header__top__right__auth" style = "padding: 0px 20px 0px 20px;">
-                            <a href="/uat/uia/LoginUsr.do"><i class="fa fa-user"></i> Login </a>
+                            <a href="<c:url value='/uat/uia/LoginUsr.do'/>"><i class="fa fa-user"></i> Login </a>
                         </div>
                         
                          <div class="header__top__right__auth">
-                            <a href="/user/com/userSignup.do"><i class="fas fa-user-plus"></i> sign up</a>
+                            <a href="<c:url value='/user/com/userSignup.do'/>"><i class="fas fa-user-plus"></i> sign up</a>
                         </div>
                     </div>
                 </div>
@@ -51,16 +51,16 @@
             <div class="col-lg-6">
                 <nav class="header__menu">
                     <ul>
-                        <li class="active"><a href="/cmm/main/home/intro.do">Home</a>
+                        <li class="active"><a href="./index.html">Home</a>
                         	<ul class="header__menu__dropdown">
                                 <li><a href="/cmm/main/home/intro.do">소개</a></li>
                                 <li><a href="/cmm/main/home/standard.do">상품기준</a></li>
                                 <li><a href="/cmm/main/home/event.do">이벤트/프로모션</a></li>
                             </ul>
                         </li>
-                        <li><a href="/cmm/main/shop/discount_shop.do">Shop</a>
+                        <li><a href="./shop-grid.html">Shop</a>
                         	 <ul class="header__menu__dropdown">
-                                <li><a href="/cmm/main/shop/discount_shop.do">할인관</a></li>
+                                <li><a href="./shoping-grid.html">할인관</a></li>
                                 <li><a href="">베스트</a></li>
                                 <li><a href="">신상품</a></li>
                             </ul>
