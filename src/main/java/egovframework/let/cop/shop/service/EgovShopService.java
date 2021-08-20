@@ -47,4 +47,13 @@ public interface EgovShopService {
 	 * @exception Exception Exception
 	 */
 	public List<ProductVO> getProductAllOnDiscountShopInOrder(String order) throws Exception;
+	
+	/**
+	 * 할인관의 제품의 상세정보를 조회한다.
+	 * @return ProductDetailVO
+	 * 
+	 * @param productSeq
+	 * @exception Exception Exception
+	 */
+	public ProductDetailVO getProductDetailByProSeq(int productSeq) throws Exception;
 }

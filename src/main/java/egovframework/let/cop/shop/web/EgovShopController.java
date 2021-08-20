@@ -18,6 +18,7 @@ import egovframework.com.cmm.ComDefaultVO;
 import egovframework.let.cop.bbscom.service.AtchFileVO;
 import egovframework.let.cop.bbscom.service.EgovBBSComService;
 import egovframework.let.cop.shop.service.EgovShopService;
+import egovframework.let.cop.shop.service.ProductDetailVO;
 import egovframework.let.cop.shop.service.ProductVO;
 
 @Controller@SessionAttributes(types = ComDefaultVO.class)
@@ -84,6 +85,7 @@ public class EgovShopController {
     	
     	ArrayList<String> proDisPriceList = new ArrayList<>();
     	ArrayList<String> proPriceList = new ArrayList<>();
+    	ArrayList<String> linkList = new ArrayList<>();
     	
     	ArrayList<String> imgPathList = new ArrayList<>();
     	
@@ -91,10 +93,18 @@ public class EgovShopController {
     		AtchFileVO atchFileVO = bbsComService.getAtchFileByAtchFileVO(new AtchFileVO.Builder(product.getAtchFileSeq(), product.getBbsSeq()).build());
     		imgPathList.add(atchFileVO.getAtchFilePath() + "." + atchFileVO.getAtchFileType());
     		
+    		if(shopService.getProductDetailByProSeq(product.getProSeq()) == null) {
+    			linkList.add("#");
+    		} else {
+    			linkList.add("/cmm/main/shop/discount_shop_detail.do?proSeq="+product.getProSeq());
+    		}
+    		
     		proDisPriceList.add(DECIMAL_FORMATTER.format(product.getProDisPrice()));
     		proPriceList.add(DECIMAL_FORMATTER.format(product.getProPrice()));
     	}
     	
+    	
+    	model.addAttribute("linkList", linkList);
     	model.addAttribute("imgPathList", imgPathList);
     	model.addAttribute("order", order);
     	model.addAttribute("proDisPriceList", proDisPriceList);
@@ -102,5 +112,20 @@ public class EgovShopController {
     	model.addAttribute("productList", productList);
     	
     	return "food/shop/DiscountShop";
+    }
+    
+    @RequestMapping("/cmm/main/shop/discount_shop_detail.do")
+    public String viewDiscountShopDetail(HttpServletRequest request, ModelMap model) throws Exception {
+    	int proSeq = Integer.parseInt(request.getParameter("proSeq"));
+    	ProductDetailVO productDetailVO = shopService.getProductDetailByProSeq(proSeq);
+    	
+    	List<AtchFileVO> thumbnailAtchFileList = bbsComService.getThumbnailListByProductDetailSeq(productDetailVO.getProDetailSeq());
+    	List<AtchFileVO> contetnAtchFileList = bbsComService.getContentsListByProductDetailSeq(productDetailVO.getProDetailSeq());
+    	
+    	model.addAttribute("thumbnailAtchFileList", thumbnailAtchFileList);
+    	model.addAttribute("contetnAtchFileList", contetnAtchFileList);
+    	model.addAttribute("productDetailVO", productDetailVO);
+    	
+    	return "food/shop/ProductDetail";
     }
 }

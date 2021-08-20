@@ -92,4 +92,16 @@ public class EgovBBSComServiceImpl extends EgovAbstractServiceImpl implements Eg
 		bbsComDAO.insertReplyByReplyVO(replyVO);
 	}
 
+	@Override
+	public List<AtchFileVO> getThumbnailListByProductDetailSeq(int productDetailSeq) throws Exception {
+		// TODO Auto-generated method stub
+		return bbsComDAO.selectThumbnailAtchFileListByProductDetailSeq(productDetailSeq);
+	}
+
+	@Override
+	public List<AtchFileVO> getContentsListByProductDetailSeq(int productDetailSeq) throws Exception {
+		// TODO Auto-generated method stub
+		return bbsComDAO.selectContentAtchFileListByProductDetailSeq(productDetailSeq);
+	}
+
 }

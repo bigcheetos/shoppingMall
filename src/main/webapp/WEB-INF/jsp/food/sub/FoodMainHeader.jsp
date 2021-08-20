@@ -30,11 +30,11 @@
                             </ul>
                         </div>
                         <div class="header__top__right__auth" style = "padding: 0px 20px 0px 20px;">
-                            <a href="<c:url value='/uat/uia/LoginUsr.do'/>"><i class="fa fa-user"></i> Login </a>
+                            <a href="/uat/uia/LoginUsr.do"><i class="fa fa-user"></i> Login </a>
                         </div>
                         
                          <div class="header__top__right__auth">
-                            <a href="<c:url value='/user/com/userSignup.do'/>"><i class="fas fa-user-plus"></i> sign up</a>
+                            <a href="/user/com/userSignup.do"><i class="fas fa-user-plus"></i> sign up</a>
                         </div>
                     </div>
                 </div>

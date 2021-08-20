@@ -57,6 +57,44 @@
 			AND B.BBS_SEQ 	  = #{bbsSeq}
 	</select>
 	
+	<select id="selectThumbnailAtchFileListByProductDetailSeq" parameterType="int" resultMap="atchFileResultMap" >
+			SELECT
+				A.ATCH_FILE_SEQ,
+			    A.BBS_SEQ,
+			    A.ATCH_FILE_PATH,
+			    A.ATCH_FILE_NAME,
+			    A.ATCH_FILE_TYPE,
+			    A.ATCH_FILE_REG_DATE
+			FROM
+				ATCHFILE AS A
+			JOIN
+				ATCHFILE_PRODUCTDETAIL AS B
+			ON
+				A.ATCH_FILE_SEQ = B.ATCH_FILE_SEQ
+			WHERE
+				B.PRO_DETAIL_SEQ = #{proDetailSeq}
+			AND B.PURPOSE = 'thumbnail'
+	</select>
+	
+	<select id="selectContentAtchFileListByProductDetailSeq" parameterType="int" resultMap="atchFileResultMap" >
+			SELECT
+				A.ATCH_FILE_SEQ,
+			    A.BBS_SEQ,
+			    A.ATCH_FILE_PATH,
+			    A.ATCH_FILE_NAME,
+			    A.ATCH_FILE_TYPE,
+			    A.ATCH_FILE_REG_DATE
+			FROM
+				ATCHFILE AS A
+			JOIN
+				ATCHFILE_PRODUCTDETAIL AS B
+			ON
+				A.ATCH_FILE_SEQ = B.ATCH_FILE_SEQ
+			WHERE
+				B.PRO_DETAIL_SEQ = #{proDetailSeq}
+			AND B.PURPOSE = 'content'
+	</select>
+	
 	<select id="selectReplyMaxSequence" resultType="String" >
 			SELECT 
 				MAX(REPLY_SEQ)

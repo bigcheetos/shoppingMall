@@ -88,121 +88,148 @@
 	</select>
 	
 	<select id="selectProductAllWhereDiscountShopOrderByRegdate" resultMap="productResultMap" >
-				SELECT 
-					PRO_SEQ,
-					BBS_SEQ,
-					PRO_NAME,
-					PRO_SUMMARY,
-					ATCH_FILE_SEQ,
-					PRO_PRICE,
-					PRO_DIS_PRICE,
-					PRO_DIS_RATIO,
-					PRO_STOCKAMOUNT,
-					PRO_SHOP,
-					PRO_STATUS,
-					PRO_CATEGORY_SEQ,
-					PRO_SUB_CATEGORY_SEQ,
-					PRO_RDCNT,
-					PRO_BESTCNT,
-					MEM_SEQ,
-					PRO_REGDATE,
-					PRO_SALE_STARTDATE,
-					PRO_SALE_ENDDATE
-				FROM
-					PRODUCT
-				WHERE
-					PRO_SHOP = 'dis'
-				ORDER BY
-					PRO_REGDATE DESC
+			SELECT 
+				PRO_SEQ,
+				BBS_SEQ,
+				PRO_NAME,
+				PRO_SUMMARY,
+				ATCH_FILE_SEQ,
+				PRO_PRICE,
+				PRO_DIS_PRICE,
+				PRO_DIS_RATIO,
+				PRO_STOCKAMOUNT,
+				PRO_SHOP,
+				PRO_STATUS,
+				PRO_CATEGORY_SEQ,
+				PRO_SUB_CATEGORY_SEQ,
+				PRO_RDCNT,
+				PRO_BESTCNT,
+				MEM_SEQ,
+				PRO_REGDATE,
+				PRO_SALE_STARTDATE,
+				PRO_SALE_ENDDATE
+			FROM
+				PRODUCT
+			WHERE
+				PRO_SHOP = 'dis'
+			ORDER BY
+				PRO_REGDATE DESC
 	</select>
 	
 	
 	<select id="selectProductAllWhereDiscountShopOrderByName" resultMap="productResultMap" >
-				SELECT 
-					PRO_SEQ,
-					BBS_SEQ,
-					PRO_NAME,
-					PRO_SUMMARY,
-					ATCH_FILE_SEQ,
-					PRO_PRICE,
-					PRO_DIS_PRICE,
-					PRO_DIS_RATIO,
-					PRO_STOCKAMOUNT,
-					PRO_SHOP,
-					PRO_STATUS,
-					PRO_CATEGORY_SEQ,
-					PRO_SUB_CATEGORY_SEQ,
-					PRO_RDCNT,
-					PRO_BESTCNT,
-					MEM_SEQ,
-					PRO_REGDATE,
-					PRO_SALE_STARTDATE,
-					PRO_SALE_ENDDATE
-				FROM
-					PRODUCT
-				WHERE
-					PRO_SHOP = 'dis'
-				ORDER BY
-					PRO_NAME ASC
+			SELECT 
+				PRO_SEQ,
+				BBS_SEQ,
+				PRO_NAME,
+				PRO_SUMMARY,
+				ATCH_FILE_SEQ,
+				PRO_PRICE,
+				PRO_DIS_PRICE,
+				PRO_DIS_RATIO,
+				PRO_STOCKAMOUNT,
+				PRO_SHOP,
+				PRO_STATUS,
+				PRO_CATEGORY_SEQ,
+				PRO_SUB_CATEGORY_SEQ,
+				PRO_RDCNT,
+				PRO_BESTCNT,
+				MEM_SEQ,
+				PRO_REGDATE,
+				PRO_SALE_STARTDATE,
+				PRO_SALE_ENDDATE
+			FROM
+				PRODUCT
+			WHERE
+				PRO_SHOP = 'dis'
+			ORDER BY
+				PRO_NAME ASC
 	</select>
 	
 	
 	<select id="selectProductAllWhereDiscountShopOrderByLowerPrice" resultMap="productResultMap" >
-				SELECT 
-					PRO_SEQ,
-					BBS_SEQ,
-					PRO_NAME,
-					PRO_SUMMARY,
-					ATCH_FILE_SEQ,
-					PRO_PRICE,
-					PRO_DIS_PRICE,
-					PRO_DIS_RATIO,
-					PRO_STOCKAMOUNT,
-					PRO_SHOP,
-					PRO_STATUS,
-					PRO_CATEGORY_SEQ,
-					PRO_SUB_CATEGORY_SEQ,
-					PRO_RDCNT,
-					PRO_BESTCNT,
-					MEM_SEQ,
-					PRO_REGDATE,
-					PRO_SALE_STARTDATE,
-					PRO_SALE_ENDDATE
-				FROM
-					PRODUCT
-				WHERE
-					PRO_SHOP = 'dis'
-				ORDER BY
-					PRO_DIS_PRICE ASC
+			SELECT 
+				PRO_SEQ,
+				BBS_SEQ,
+				PRO_NAME,
+				PRO_SUMMARY,
+				ATCH_FILE_SEQ,
+				PRO_PRICE,
+				PRO_DIS_PRICE,
+				PRO_DIS_RATIO,
+				PRO_STOCKAMOUNT,
+				PRO_SHOP,
+				PRO_STATUS,
+				PRO_CATEGORY_SEQ,
+				PRO_SUB_CATEGORY_SEQ,
+				PRO_RDCNT,
+				PRO_BESTCNT,
+				MEM_SEQ,
+				PRO_REGDATE,
+				PRO_SALE_STARTDATE,
+				PRO_SALE_ENDDATE
+			FROM
+				PRODUCT
+			WHERE
+				PRO_SHOP = 'dis'
+			ORDER BY
+				PRO_DIS_PRICE ASC
 	</select>
 	
 	<select id="selectProductAllWhereDiscountShopOrderByHigherPrice" resultMap="productResultMap" >
-				SELECT 
-					PRO_SEQ,
-					BBS_SEQ,
-					PRO_NAME,
-					PRO_SUMMARY,
-					ATCH_FILE_SEQ,
-					PRO_PRICE,
-					PRO_DIS_PRICE,
-					PRO_DIS_RATIO,
-					PRO_STOCKAMOUNT,
-					PRO_SHOP,
-					PRO_STATUS,
-					PRO_CATEGORY_SEQ,
-					PRO_SUB_CATEGORY_SEQ,
-					PRO_RDCNT,
-					PRO_BESTCNT,
-					MEM_SEQ,
-					PRO_REGDATE,
-					PRO_SALE_STARTDATE,
-					PRO_SALE_ENDDATE
-				FROM
-					PRODUCT
-				WHERE
-					PRO_SHOP = 'dis'
-				ORDER BY
-					PRO_DIS_PRICE DESC
+			SELECT 
+				PRO_SEQ,
+				BBS_SEQ,
+				PRO_NAME,
+				PRO_SUMMARY,
+				ATCH_FILE_SEQ,
+				PRO_PRICE,
+				PRO_DIS_PRICE,
+				PRO_DIS_RATIO,
+				PRO_STOCKAMOUNT,
+				PRO_SHOP,
+				PRO_STATUS,
+				PRO_CATEGORY_SEQ,
+				PRO_SUB_CATEGORY_SEQ,
+				PRO_RDCNT,
+				PRO_BESTCNT,
+				MEM_SEQ,
+				PRO_REGDATE,
+				PRO_SALE_STARTDATE,
+				PRO_SALE_ENDDATE
+			FROM
+				PRODUCT
+			WHERE
+				PRO_SHOP = 'dis'
+			ORDER BY
+				PRO_DIS_PRICE DESC
+	</select>
+	
+	<select id="selectProductByProSeq" parameterType="int" resultMap="productResultMap" >
+			SELECT 
+				PRO_SEQ,
+				BBS_SEQ,
+				PRO_NAME,
+				PRO_SUMMARY,
+				ATCH_FILE_SEQ,
+				PRO_PRICE,
+				PRO_DIS_PRICE,
+				PRO_DIS_RATIO,
+				PRO_STOCKAMOUNT,
+				PRO_SHOP,
+				PRO_STATUS,
+				PRO_CATEGORY_SEQ,
+				PRO_SUB_CATEGORY_SEQ,
+				PRO_RDCNT,
+				PRO_BESTCNT,
+				MEM_SEQ,
+				PRO_REGDATE,
+				PRO_SALE_STARTDATE,
+				PRO_SALE_ENDDATE
+			FROM
+				PRODUCT
+			WHERE
+				PRO_SEQ = #{proSeq}
 	</select>
 	
 	<resultMap id="productResultMap" type="egovframework.let.cop.shop.service.ProductVO">

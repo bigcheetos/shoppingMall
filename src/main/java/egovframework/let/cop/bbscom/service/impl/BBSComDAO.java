@@ -99,4 +99,30 @@ public class BBSComDAO extends EgovComAbstractDAO {
 		// TODO Auto-generated method stub
 		insert("BBSComDAO.insertReplyByReplyVO", replyVO);
 	}
+
+	public List<AtchFileVO> selectThumbnailAtchFileListByProductDetailSeq(int productDetailSeq) {
+		List<AtchFileVO> selectAtchFileList = new ArrayList<>();
+		List<?> returnList = selectList("BBSComDAO.selectThumbnailAtchFileListByProductDetailSeq", productDetailSeq);
+		
+		for(Object o : returnList) {
+			if(o instanceof AtchFileVO) {
+				selectAtchFileList.add((AtchFileVO)o);
+			}
+		}
+		// TODO Auto-generated method stub
+		return selectAtchFileList;
+	}
+
+	public List<AtchFileVO> selectContentAtchFileListByProductDetailSeq(int productDetailSeq) {
+		List<AtchFileVO> selectAtchFileList = new ArrayList<>();
+		List<?> returnList = selectList("BBSComDAO.selectContentAtchFileListByProductDetailSeq", productDetailSeq);
+		
+		for(Object o : returnList) {
+			if(o instanceof AtchFileVO) {
+				selectAtchFileList.add((AtchFileVO)o);
+			}
+		}
+		// TODO Auto-generated method stub
+		return selectAtchFileList;
+	}
 }

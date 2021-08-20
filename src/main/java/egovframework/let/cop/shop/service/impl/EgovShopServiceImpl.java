@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import egovframework.let.cop.shop.service.CategoryVO;
 import egovframework.let.cop.shop.service.EgovShopService;
+import egovframework.let.cop.shop.service.ProductDetailVO;
 import egovframework.let.cop.shop.service.ProductVO;
 import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 
@@ -21,7 +22,8 @@ public class EgovShopServiceImpl extends EgovAbstractServiceImpl implements Egov
 	@Resource(name = "ProductDAO")
 	private ProductDAO productDAO;
 	
-	
+	@Resource(name = "ProductDetailDAO")
+	private ProductDetailDAO productDetailDAO;
 	/**
      * 카테고리에 대하여 모든 목록을 조회 한다.
      *
@@ -78,6 +80,22 @@ public class EgovShopServiceImpl extends EgovAbstractServiceImpl implements Egov
 		
 		
 		return productList;
+	}
+
+	@Override
+	public ProductDetailVO getProductDetailByProSeq(int proSeq) throws Exception {
+		// TODO Auto-generated method stub
+		
+		ProductVO productVO = productDAO.selectProductByProSeq(proSeq);
+		ProductDetailVO productDetailVO = productDetailDAO.selectProductDetailByProSeq(proSeq);
+		
+		if(productDetailVO == null) {
+			return null;
+		}
+		
+		productDetailVO.setProductVO(productVO);
+		
+		return productDetailVO;
 	}
 
 }

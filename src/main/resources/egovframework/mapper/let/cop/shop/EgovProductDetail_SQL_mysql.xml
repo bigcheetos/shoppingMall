@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ProductDetailDAO">
+	
+	<select id="selectProductDetailByProSeq" resultMap="productDetailResultMap" >
+			SELECT 
+				PRO_DETAIL_SEQ,
+				PRO_SEQ,
+				BBS_SEQ,
+				PRO_DETAIL_UNIT,
+				PRO_DETAIL_ORIGIN,
+				PRO_DETAIL_HANDLINGTYPE,
+				PRO_DETAIL_DELIVERYTYPE,
+				PRO_DETAIL_ENDTIME,
+				PRO_DETAIL_DELIVERYPAY,
+				PRO_DETAIL_DELIVERYPAY_FREE
+			FROM
+				PRODUCTDETAIL
+			WHERE
+				PRO_SEQ = #{proSeq}	
+	</select>
+	
+	<resultMap id="productDetailResultMap" type="egovframework.let.cop.shop.service.ProductDetailVO">
+		<result property="proDetailSeq" column="PRO_DETAIL_SEQ"/>
+		<result property="proSeq" column="PRO_SEQ"/>
+		<result property="bbsSeq" column="BBS_SEQ"/>
+		<result property="proDetailUnit" column="PRO_DETAIL_UNIT"/>
+		<result property="proDetailOrigin" column="PRO_DETAIL_ORIGIN"/>
+		<result property="proDetailHandlingtype" column="PRO_DETAIL_HANDLINGTYPE"/>
+		<result property="proDetailDeliverytype" column="PRO_DETAIL_DELIVERYTYPE"/>
+		<result property="proDetailEndtime" column="PRO_DETAIL_ENDTIME"/>
+		<result property="proDetailDeliverypay" column="PRO_DETAIL_DELIVERYPAY"/>
+		<result property="proDetailDeliverypayFree" column="PRO_DETAIL_DELIVERYPAY_FREE"/>
+		
+	</resultMap>
+</mapper>

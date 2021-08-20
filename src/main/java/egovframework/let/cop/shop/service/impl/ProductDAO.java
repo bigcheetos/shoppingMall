@@ -90,4 +90,15 @@ public class ProductDAO extends EgovComAbstractDAO {
 		// TODO Auto-generated method stub
 		return selectList("selectProductAllWhereDiscountShopOrderByLowerPrice");
 	}
+	
+	/**
+     * 제품 시퀀스를 통해 할인 제품을 하나 조회 한다.
+     *
+     * @param 
+     * @return ProductVO
+     * @throws Exception
+     */
+	public ProductVO selectProductByProSeq(int proSeq) {
+		return selectOne("selectProductByProSeq", proSeq);
+	}
 }

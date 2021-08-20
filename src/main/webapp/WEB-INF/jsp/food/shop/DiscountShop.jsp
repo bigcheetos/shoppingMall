@@ -166,8 +166,9 @@
 			
 			<ul class="prod_list_tbl clfix">
 			<c:forEach var="product" items="${productList }" varStatus="status">
+				
 				<li class="product" style="padding-top: 0; padding-bottom: 0;">
-				    <%-- <a href="${linkList[status.index] }"> --%>
+				    <a href="${linkList[status.index] }">
 					    <div class="img-wrap">
 							<img class="img_hover" alt="상품 이미지" style="width:248px;height:298px;" src="${imgPathList[status.index] }"/>
 					        <div class="tips">
@@ -182,7 +183,7 @@
 								<span class="sale">${proPriceList[status.index] }원</span>
 							</p>
 					    </div>
-					<!-- </a> -->
+					</a>
 				</li>
 				
 			</c:forEach>

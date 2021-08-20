@@ -24,7 +24,7 @@ public interface EgovBBSComService {
 	
 	/**
 	 * 조건에 맞는 첨부파일을 조회 한다.
-	 * @return List<AtchFileVO>
+	 * @return AtchFileVO
 	 * 
 	 * @param atchFileVO
 	 * @exception Exception Exception
@@ -69,5 +69,22 @@ public interface EgovBBSComService {
 	 * @exception Exception Exception
 	 */
 	public void saveReplyByReplyVO(ReplyVO replyVO) throws Exception;
-
+	
+	/**
+	 * 제품 상세 썸네일 리스트를 가져온다.
+	 * @return List<AtchFileVO>
+	 * 
+	 * @param productDetailSeq
+	 * @exception Exception Exception
+	 */
+	public List<AtchFileVO> getThumbnailListByProductDetailSeq(int productDetailSeq) throws Exception;
+	
+	/**
+	 * 제품 상세 내용물 리스트를 가져온다.
+	 * @return List<AtchFileVO>
+	 * 
+	 * @param productDetailSeq
+	 * @exception Exception Exception
+	 */
+	public List<AtchFileVO> getContentsListByProductDetailSeq(int productDetailSeq) throws Exception;
 }
