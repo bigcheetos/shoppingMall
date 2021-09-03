@@ -1,5 +1,8 @@
 package egovframework.let.cop.management.web;
 
+import java.util.List;
+
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +13,20 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springmodules.validation.commons.DefaultBeanValidator;
 
 import egovframework.com.cmm.ComDefaultVO;
+import egovframework.let.cop.management.service.EgovManagementService;
+import egovframework.let.cop.management.service.ProductCategoryVO;
+import egovframework.let.cop.management.service.ProductTypeVO;
+import egovframework.let.cop.management.service.StockVO;
 
 @Controller @SessionAttributes(types = ComDefaultVO.class)
 public class EgovManagementController {
 
+	/**
+	 * EgovEventService
+	 */
+	@Resource(name = "EgovManagementService")
+	private EgovManagementService managementService;
+	
 	@Autowired
     private DefaultBeanValidator beanValidator;
 
@@ -53,7 +66,6 @@ public class EgovManagementController {
      */
     @RequestMapping("/cmm/main/management/product.do")
     public String viewProduct(HttpServletRequest request, ModelMap model) throws Exception {
-    	
     	return "food/management/Product";
     }
     

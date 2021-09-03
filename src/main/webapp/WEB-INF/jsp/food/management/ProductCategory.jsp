@@ -134,8 +134,8 @@
 					editable : true
 				}, {
 					field : "rowType",
-					width : 80,
-					hide : true,
+					width : 120,
+					hide : false,
 					editable : true
 				}];
 				var gridOpt = CommonGrid.getDefaultGridOpt(columnDefs);
@@ -247,7 +247,7 @@
 			});
 			maxCategoryOrder = +maxCategoryOrder + 1;
 			var newRow = {
-				categoryId : null,
+				t
 				categoryName : '',
 				categoryOrder : maxCategoryOrder,
 				categoryStatus : 'Y',

@@ -20,6 +20,7 @@ import egovframework.com.cmm.ComDefaultVO;
 import egovframework.let.cop.management.service.EgovManagementService;
 import egovframework.let.cop.management.service.ProductCategoryVO;
 import egovframework.let.cop.management.service.ProductTypeVO;
+import egovframework.let.cop.management.service.ProductVO;
 import egovframework.let.cop.management.service.StockIoVO;
 import egovframework.let.cop.management.service.StockVO;
 
@@ -64,6 +65,69 @@ public class EgovManagementRestController {
         ret = ret.replaceAll("</(F|f)(O|o)(R|r)(M|m)", "&lt;form");
 
         return ret;
+    }
+    /**
+     * 제품 조회
+     *
+     * @param request, model
+     * @return List<ProductCategoryVO>
+     */
+    @RequestMapping("/cmm/main/management/getProductList.do")
+    public List<ProductVO> getProductList(HttpServletRequest request, ModelMap model) throws Exception {
+    	
+    	List<ProductVO> productList = managementService.getProductListAll();
+    	
+    	return productList;
+    }
+    
+    /**
+     * 카테고리 추가/삭제/수정 저장
+     *
+     * @param paramList, request, model
+     * @return List<ProductCategoryVO>
+     */
+    @RequestMapping("/cmm/main/management/registProduct.do")
+    @ResponseBody
+    public String registProduct(@RequestBody  List<Map<String, Object>> paramList, HttpServletRequest request, ModelMap model) throws Exception {
+    	
+    	System.out.println(paramList.toString());
+    	
+    	for(Map<String, Object> param : paramList) {
+    		String rowType = String.valueOf(param.get("rowType"));
+    		
+    		ProductVO productVO = new ProductVO();
+    		productVO.setProductId(String.valueOf(param.get("productId")));
+    		productVO.setCategoryId(String.valueOf(param.get("categoryId")));
+    		productVO.setTypeId(String.valueOf(param.get("typeId")));
+    		productVO.setStockId(String.valueOf(param.get("stockId")));
+    		
+    		productVO.setProductName(String.valueOf(param.get("productName")));
+    		productVO.setProductSummary(String.valueOf(param.get("productSummary")));
+    		productVO.setProductPrice(String.valueOf(param.get("productPrice")));
+    		productVO.setProductDiscountPrice(String.valueOf(param.get("productDiscountPrice")));
+    		productVO.setProductOrigin(String.valueOf(param.get("productOrigin")));
+    		productVO.setProductDeliverypay(String.valueOf(param.get("productDeliverypay")));
+    		productVO.setProductStatus(String.valueOf(param.get("productStatus")));
+    		
+    		
+    		System.out.println("---------------- type check ----------------");
+    		System.out.println("productVO.getProductId()"+productVO.getProductId());
+    		
+    		// 신규 추가
+    		if(rowType.equals("new")) {
+    			// DB에서 다음 아이디 가져오기
+    			productVO.setProductId(managementService.getProductNextId());
+    			managementService.addProduct(productVO);
+    		// 수정
+			} else if(rowType.equals("updated")) {
+				managementService.modifyProduct(productVO);
+			// 삭제
+			} else if(rowType.equals("removed")) {
+				managementService.removeProduct(productVO);
+			}
+    	}
+    	
+    	return "success";
     }
     
     
@@ -189,17 +253,9 @@ public class EgovManagementRestController {
     @RequestMapping("/cmm/main/management/getStockList.do")
     public List<StockVO> getStockList(HttpServletRequest request, ModelMap model) throws Exception {
     	
-    	/*List<StockVO> stockList = new ArrayList<StockVO>(); 
+    	List<StockVO> stockList = managementService.getStockListAll();
     	
-    	StockVO allStock = new StockVO();
-    	allStock.setStockName("(전체)");
-    	
-    	stockList.add(allStock);
-    	stockList.addAll(managementService.getStockListAll());
-    	
-    	return stockList;*/
-    	
-    	return managementService.getStockListAll();
+    	return stockList;
     }
     
     /**

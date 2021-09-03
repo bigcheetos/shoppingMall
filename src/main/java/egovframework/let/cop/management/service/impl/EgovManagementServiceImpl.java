@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import egovframework.let.cop.management.service.EgovManagementService;
 import egovframework.let.cop.management.service.ProductCategoryVO;
 import egovframework.let.cop.management.service.ProductTypeVO;
+import egovframework.let.cop.management.service.ProductVO;
 import egovframework.let.cop.management.service.StockIoVO;
 import egovframework.let.cop.management.service.StockVO;
 import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
@@ -33,6 +34,9 @@ import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 @Service("EgovManagementService")
 public class EgovManagementServiceImpl extends EgovAbstractServiceImpl implements EgovManagementService {
 	
+	@Resource(name = "ProductDAO")
+	private ProductDAO productDAO;
+	
 	@Resource(name = "ProductCategoryDAO")
 	private ProductCategoryDAO productCategoryDAO;
 	
@@ -44,7 +48,65 @@ public class EgovManagementServiceImpl extends EgovAbstractServiceImpl implement
 	
 	@Resource(name = "StockIoDAO")
 	private StockIoDAO stockIoDAO;
+	
+	/**
+     * 모든 제품을 조회 한다.
+     *
+     * @see egovframework.let.cop.management.service.EgovManagementService
+     */
+	@Override
+	public List<ProductVO> getProductListAll() throws Exception {
+		// TODO Auto-generated method stub
+		return productDAO.selectProductListAll();
+	}
 
+	/**
+     * 제품 Id의 다음 값을 조회 한다.
+     *
+     * @see egovframework.let.cop.management.service.EgovManagementService
+     */
+	@Override
+	public String getProductNextId() throws Exception {
+		// TODO Auto-generated method stub
+		return productDAO.selecNextId();
+	}
+	
+	/**
+     * 제품을 추가한다.
+     *
+     * @see egovframework.let.cop.management.service.EgovManagementService
+     * #addProduct(egovframework.let.cop.management.service.ProductVO)
+     */
+	@Override
+	public void addProduct(ProductVO productVO) throws Exception {
+		// TODO Auto-generated method stub
+		productDAO.insertProduct(productVO);
+	}
+	
+	/**
+     * 제품을 수정한다.
+     *
+     * @see egovframework.let.cop.management.service.EgovManagementService
+     * #modifyProduct(egovframework.let.cop.management.service.ProductVO)
+     */
+	@Override
+	public void modifyProduct(ProductVO productVO) throws Exception {
+		// TODO Auto-generated method stub
+		productDAO.updateProduct(productVO);
+	}
+	
+	/**
+     * 제품을 삭제한다.
+     *
+     * @see egovframework.let.cop.management.service.EgovManagementService
+     * #removeProduct(egovframework.let.cop.management.service.ProductVO)
+     */
+	@Override
+	public void removeProduct(ProductVO productVO) throws Exception {
+		// TODO Auto-generated method stub
+		productDAO.deleteProduct(productVO);
+	}
+	
 	/**
      * 모든 카테고리를 조회 한다.
      *

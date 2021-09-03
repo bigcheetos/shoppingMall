@@ -21,6 +21,54 @@ import java.util.List;
  */
 public interface EgovManagementService {
 	
+	/** 제품 시작 **/
+	/**
+	 * 제품에 대하여 내용을 조회 한다.
+	 * @return
+	 * 
+	 * @param 
+	 * @exception Exception Exception
+	 */
+	public List<ProductVO> getProductListAll() throws Exception;
+	
+	/**
+	 * 제품의 ID 최대값 다음을 조회 한다.
+	 * @return
+	 * 
+	 * @param 
+	 * @exception Exception Exception
+	 */
+	public String getProductNextId() throws Exception;
+	
+	/**
+	 * 제품을 추가한다.
+	 * @return
+	 * 
+	 * @param 
+	 * @exception Exception Exception
+	 */
+	public void addProduct(ProductVO productVO) throws Exception;
+	
+	/**
+	 * 제품을 수정한다.
+	 * @return
+	 * 
+	 * @param 
+	 * @exception Exception Exception
+	 */
+	public void modifyProduct(ProductVO productVO) throws Exception;
+	
+	/**
+	 * 제품을 제거한다.
+	 * @return
+	 * 
+	 * @param 
+	 * @exception Exception Exception
+	 */
+	public void removeProduct(ProductVO productVO) throws Exception;
+	
+	
+	/** 제품 끝 **/
 	/** 카테고리 시작 **/
 	
 	/**

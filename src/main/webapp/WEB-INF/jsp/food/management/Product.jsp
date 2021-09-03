@@ -11,6 +11,14 @@
 .ag-header-cell-label {
    justify-content: center;
 }
+.ag-body-viewport {
+    overflow-x: scroll !important;
+}  
+.grid-wrapper::after {
+	display: block;
+	content: '';
+	clear: both;
+}
 </style>
 <head>
     <meta charset="UTF-8">
@@ -47,27 +55,15 @@
 	<!-- 테이블 넣을 곳 -->
 	<div style="padding: 2px;">
 		<div style="float:left">
-        	<button type="button" class="btn btn-primary" onclick="onBtSelectAll()">전체선택</button>
-        	<button type="button" class="btn btn-primary" onclick="onBtDeselectAll()">선택취소</button>
+        	<button type="button" class="btn btn-secondary" onclick="onBtSelectAll()">전체선택</button>
+        	<button type="button" class="btn btn-secondary" onclick="onBtDeselectAll()">선택취소</button>
         </div>
         <div style="float:left">
 	        &nbsp;
 	        &nbsp;
         </div>
-        <!-- <div style="float:left">
-	        <input type="radio" class="radio" name="categoryStatus" value="all">
-	        <label for="categoryStatusAll">전체</label>
-	        <input type="radio" class="radio" name="categoryStatus" value="y">
-	        <label for="categoryStatusY">Y</label>
-	        <input type="radio" class="radio" name="categoryStatus" value="n">
-	        <label for="categoryStatusN">N</label>
-        </div> -->
-        <div style="float:left">
-	        &nbsp;
-	        &nbsp;
-        </div>
-        <div style="float:left">
-	        <button type="button" class="btn btn-secondary" onclick="onBtSearch()">조회</button>
+        <div style="float:right">
+	        <button type="button" class="btn btn-primary" onclick="onBtSearch()">조회</button>
 	        <button type="button" class="btn btn-success" onclick="onBtAddBottom()">신규</button>
 	        <button type="button" class="btn btn-warning" onclick="onBtSave()">저장</button>
 	        <button type="button" class="btn btn-danger" onclick="onBtDelete()">삭제</button>
@@ -98,9 +94,34 @@
 	<!-- AS GRID -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.23.0/moment.min.js"></script>
 	<script src="https://unpkg.com/ag-grid/dist/ag-grid.min.js"></script>
-	<script src="/js/react/agGridUtil.js?ver=1"></script>
+	<script src="/js/react/agGridUtil.js?ver=12"></script>
+	<script src="/js/react/common_functions.js?ver=12"></script>
 
 	<script>
+
+		var productCategoryList = [];	// 카테고리
+		var productTypeList 	= [];	// 타입
+		var stockList 			= [];	// 재고
+		
+		var productCategoryMap = {};	// 카테고리
+		var productTypeMap	   = {};	// 타입
+		var stockMap		   = {};	// 재고
+		
+		var productCategoryTestMap = {
+			    1: "꽃바구니",
+			    2: "꽃다발",
+			    3: "축하화환",
+			    4: "근조화환",
+			    5: "관엽/화분",
+			    6: "동양란",
+			    7: "서양란",
+			    9: "꽃상자",
+		};
+		
+		gfn_common_load_data_request('/cmm/main/management/getProductCategoryList.do', productCategoryList, fn_set_productCategoryMap_mapping);
+		gfn_common_load_data_request('/cmm/main/management/getProductTypeList.do', productTypeList, fn_set_productTypeMap_mapping);
+		gfn_common_load_data_request('/cmm/main/management/getStockList.do', stockList, fn_set_stockMap_mapping);
+		
 		var MainGrid = function() {
 			var _this = this;
 			/* grid 영역 정의 */
@@ -110,7 +131,12 @@
 				var columnDefs = [ {
 					checkboxSelection : true
 				},
-				/* {field: "No.", width: 40, minWidth: 40, maxWidth: 40, editable: false}, */
+			/* {
+					field: "No.", 
+					width: 40,
+					valueGetter: "node.rowIndex + 1",
+					editable: false
+				}, */
 				{
 					field : "productId",
 					width : 0,
@@ -118,53 +144,113 @@
 					editable : false
 				},
 				{
+					headerName : "카테고리명",
 					field : "categoryId",
-					width : 0,
-					hide : true,
-					editable : false
+					width : 100,
+					/* valueGetter: function(params) {
+						return params.getValue('categoryId');
+					}, */
+					cellEditor: 'select',
+		            cellEditorParams: {
+		               values: extractValues(productCategoryMap)
+		            },
+		            filter: 'agSetColumnFilter',
+		            refData: productCategoryMap,
+					/* valueGetter: function(params) {
+						return params.getValue('categoryId');
+					}, */
+					/* cellEditor : 'agSelectCellEditor',
+					cellEditorParams : function(params) {
+						 return {
+							values: productCategoryList.map(d => {
+								return { value: d.categoryId, text: d.categoryName};
+							}),
+						};
+					}, */
+					/* valueGetter: function(params) {
+						var categoryId = params.getValue('categoryId');
+						var categoryName = '';
+						for(var productCategory of productCategoryList) {
+							if(productCategory.categoryId == categoryId) {
+								categoryName = productCategory.categoryName;
+								break;
+							}
+						}
+						return categoryName;
+					}, */
+					editable : true
 				},
 				{
+					headerName : "타입명",
 					field : "typeId",
-					width : 0,
-					hide : true,
-					editable : false
+					width : 100,
+					cellEditor: 'select',
+		            cellEditorParams: {
+		               values: extractValues(productTypeMap)
+		            },
+		            filter: 'agSetColumnFilter',
+		            refData: productTypeMap,
+					editable : true
 				},
 				{
+					headerName : "재고명",
 					field : "stockId",
-					width : 0,
-					hide : true,
+					width : 100,
+					cellEditor: 'select',
+		            cellEditorParams: {
+		               values: extractValues(stockMap)
+		            },
+		            filter: 'agSetColumnFilter',
+		            refData: stockMap,
+					editable : true
+				},
+				{
+					headerName : "재고량",
+					field : "stockAmt",
+					width : 100,
+					valueGetter: function(params) {
+						var stockId = params.getValue('stockId');
+						var stockAmt = '';
+						for(var stock of stockList) {
+							if(stock.stockId == stockId) {
+								stockAmt = stock.stockAmt;
+								break;
+							}
+						}
+						return stockAmt;
+					},
 					editable : false
 				},
 				{
 					headerName : "제품명",
 					field : "productName",
-					width : 100,
+					width : 200,
 					editable : true
 				}, 
 				{
 					headerName : "제품요약",
 					field : "productSummary",
-					width : 100,
+					width : 150,
 					editable : true,
 				},
 				{
 					headerName : "제품원가",
 					field : "productPrice",
-					width : 100,
+					width : 150,
 					editable : true,
 					type: "numericColumn"
 				},
 				{
 					headerName : "제품할인가",
 					field : "productDiscountPrice",
-					width : 100,
+					width : 150,
 					editable : true,
 					type: "numericColumn"
 				},
 				{
 					headerName : "원산지",
 					field : "productOrigin",
-					width : 100,
+					width : 150,
 					editable : true
 				},
 				{
@@ -176,48 +262,48 @@
 				{
 					headerName : "제품판매여부",
 					field : "productStatus",
-					width : 100,
+					width : 150,
 					editable : true
 				},
 				{
 					headerName : "조회수",
 					field : "productRdcnt",
 					width : 100,
-					editable : true
+					editable : false
 				},
 				{
 					headerName : "추천수",
 					field : "productBestcnt",
 					width : 100,
-					editable : true
+					editable : false
 				}, 
 				{
 					headerName : "등록자",
 					field : "productRegid",
 					width : 100,
 					hide : true,
-					editable : true
+					editable : false
 				},
 				{
 					headerName : "수정자",
 					field : "productUpdid",
 					width : 100,
 					hide : true,
-					editable : true
+					editable : false
 				},
 				{
 					headerName : "등록일",
 					field : "productRegdate",
 					width : 100,
 					hide : true,
-					editable : true
+					editable : false
 				},
 				{
 					headerName : "수정일",
 					field : "productUpddate",
 					width : 100,
 					hide : true,
-					editable : true
+					editable : false
 				},
 				{
 					field : "rowType",
@@ -225,7 +311,7 @@
 					hide : true,
 					editable : true
 				}];
-				var gridOpt = CommonGrid.getDefaultGridOpt(columnDefs);
+				var gridOpt = ScrollGrid.getDefaultGridOpt(columnDefs);
 				gridOpt.rowSelection = 'multiple';
 				/* gridOpt.isRowSelectable = function(rowNode){
 				    return (rowNode.data.country != "Russia")? true:false;
@@ -249,7 +335,9 @@
 					console.log(gridOpt.api
 							.getDisplayedRowAtIndex(event.rowIndex).data);
 				};
-
+				
+				//gridOpt.suppressHorizontalScroll = true;
+				
 				return gridOpt;
 			};
 			/* grid 옵션 가져오기 */
@@ -257,7 +345,7 @@
 			/* grid 실행 */
 			this.makeGrid = function(rowData) {
 				_this.gridOpts = _this.getColumnDefs();
-				CommonGrid.makeGridCommon(_this.gridDiv, _this.gridOpts,
+				ScrollGrid.makeGridCommon(_this.gridDiv, _this.gridOpts,
 						rowData)
 			};
 			
@@ -287,7 +375,7 @@
 		/*	조회	*/
 		function onBtSearch() {
 			// 조회조건이 있다면 여기서 체크
-			fn_loadData();
+			fn_load_data_request();
 		}
 		function fn_serachRows(rowData) {
 			var eGridDiv = document.querySelector('#myGrid');
@@ -306,39 +394,69 @@
 			removedRows = [];
 		}
 		// 데이터 가져오기
-		function fn_loadData() {
-			var httpRequest = new XMLHttpRequest();
-			httpRequest.responseType = 'json';
+		function fn_load_data() {
+		  return new Promise((resolve, reject) => {
+			const xhr = new XMLHttpRequest();
+			xhr.responseType = 'json';
 
-			httpRequest.open('POST',
-					'/cmm/main/management/getProductCategoryList.do',
+			xhr.open('POST',
+					'/cmm/main/management/getProductList.do',
 					true);
-			httpRequest.setRequestHeader("Content-Type",
+			xhr.setRequestHeader("Content-Type",
 					"application/x-www-form-urlencoded");
-			httpRequest.send();
-
-			httpRequest.onreadystatechange = function() {
-				if (httpRequest.readyState === 4
-						&& httpRequest.status === 200) {
-					var httpResult = httpRequest.response; //JSON.parse(httpRequest.response);
-					fn_serachRows(httpResult);
+			
+			xhr.onload = function() {
+				if (this.status >= 200 && this.status < 300) {
+					resolve(xhr.response);
+				} else {
+					reject({
+						status: this.status,
+						statusText: xhr.statusText
+					});
 				}
 			};
+			xhr.onerror = function () {
+		      reject({
+		        status: this.status,
+		        statusText: xhr.statusText
+		      });
+		    };
+		    xhr.send();
+		  });
 		}
+		// 그리드1 데이터 로드 요청
+		function fn_load_data_request() {
+			fn_load_data()
+			.then(function (datums) {
+				fn_serachRows(datums);
+			})
+			.catch(function (err) {
+				console.error(err.statusText);
+			});
+		}
+		
+		
 		/*	신규	*/
 		function onBtAddBottom() {
 			
 			// 초기값 넣기
-			var maxCategoryOrder = 0;
-			mainGrid.gridOpts.api.forEachNode(function(rowNode, index) {
-				maxCategoryOrder = (+rowNode.data.categoryOrder > +maxCategoryOrder)?rowNode.data.categoryOrder:maxCategoryOrder;
-			});
-			maxCategoryOrder = +maxCategoryOrder + 1;
 			var newRow = {
-				categoryId : null,
-				categoryName : '',
-				categoryOrder : maxCategoryOrder,
-				categoryStatus : 'Y',
+				product_id : null,
+				category_id : null,
+				type_id : null,
+				stock_id : null,
+				productName : '',
+				productSummary : '',
+				productPrice : 0,
+				productDiscountPrice : 0,
+				productOrigin : '',
+				productDeliverypay : 0,
+				productStatus : '',
+				productRdcnt : 0,
+				productBestcnt : 0,
+				productRegid : '',
+				productUpdid : '',
+				productRegdate : '',
 				rowType : "new"
 			}
 			
@@ -374,11 +492,11 @@
 			var savable = true;
 			var edit_count = 0;
 			mainGrid.gridOpts.api.forEachNode(function(rowNode, index) {
-				if(rowNode.data.categoryName == ''
+/* 				if(rowNode.data.categoryName == ''
 				|| rowNode.data.categoryOrder == ''
 				|| (rowNode.data.categoryStatus != 'Y' && rowNode.data.categoryStatus != 'N')) {
 					savable = false;
-				};
+				}; */
 				if (rowNode.data.edit) {
 					edit_count++;
 				}
@@ -409,37 +527,78 @@
 			var uploadRows = Object.assign(updateRows, removedRows);
 			
 			$("#updateRows").html(JSON.stringify(uploadRows));
-			fn_uploadData(uploadRows);
+			fn_upload_data_request(uploadRows);
 		}
 		
 		// 데이터 내보내기
-		function fn_uploadData(updateRows, removedRows) {
-			var httpRequest = new XMLHttpRequest();
-			httpRequest.responseType = 'json';
+		function fn_upload_data(updateRows) {
+		  return new Promise((resolve, reject) => {
+			const xhr = new XMLHttpRequest();
+			//xhr.responseType = 'json';
 			
-			httpRequest.open('POST',
-					'/cmm/main/management/registProductCategory.do',
+			xhr.open('POST',
+					'/cmm/main/management/registProduct.do',
 					true);
-			httpRequest.setRequestHeader("Content-Type",
+			xhr.setRequestHeader("Content-Type",
 					"application/json");
-			httpRequest.send(JSON.stringify(updateRows));
-
-			httpRequest.onreadystatechange = function() {
-				if (httpRequest.readyState === 4
-						&& httpRequest.status === 200) {
-					var httpResult = httpRequest.response; //JSON.parse(httpRequest.response);
-					console.log(httpResult);
-					fn_serachRows(httpResult);
+			
+			xhr.send(JSON.stringify(updateRows));
+			
+			xhr.onload = function() {
+				if (this.status >= 200 && this.status < 300) {
+					resolve(xhr.response);
 				} else {
-					var httpResult = httpRequest.response; //JSON.parse(httpRequest.response);
-					console.log(httpResult);
+					reject({
+						status: this.status,
+						statusText: xhr.statusText
+					});
 				}
 			};
+			xhr.onerror = function () {
+		      reject({
+		        status: this.status,
+		        statusText: xhr.statusText
+		      });
+		    };
+		  });
 		}
+		
+		function fn_upload_data_request(uploadRows) {
+			// 그리드 데이터 업로드 요청
+			fn_upload_data(updateRows)
+			.then(function (datums) {
+				console.log(datums);
+				fn_load_data_request();	// 재조회
+				updateRows = [];		// 업데이트 로우맵 초기화
+				alert("저장이 완료되었습니다!");
+			})
+			.catch(function (err) {
+				console.error(err.statusText);
+			});
+		}
+		
+		function fn_set_productCategoryMap_mapping() {
+			for(var productCategory of productCategoryList) {
+				productCategoryMap[productCategory.categoryId] = productCategory.categoryName;
+			}
+		}
+		function fn_set_productTypeMap_mapping() {
+			for(var productType of productTypeList) {
+				productTypeMap[productType.typeId] = productType.typeName;
+			}
+		}
+		function fn_set_stockMap_mapping() {
+			for(var stock of stockList) {
+				stockMap[stock.stockId] = stock.stockName;
+			}
+		}
+		
 		// setup the grid after the page has finished loading
 		document.addEventListener('DOMContentLoaded',
 			function() {
-				fn_loadData();
+				
+				
+				fn_load_data_request();
 			}
 		);
 	</script>
