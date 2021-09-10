@@ -5,6 +5,7 @@
 	<select id="selectCategoryListAll" resultMap="productCategoryResultMap" >
 			SELECT 
 				CATEGORY_ID,
+				TYPE_ID,
 				CATEGORY_NAME,
 				CATEGORY_ORDER,
 				CATEGORY_STATUS
@@ -24,6 +25,7 @@
 				PRODUCT_CATEGORY
 			(
 				CATEGORY_ID,
+				TYPE_ID,
 				CATEGORY_NAME,
 				CATEGORY_ORDER,
 				CATEGORY_STATUS
@@ -31,6 +33,7 @@
 			VALUES
 			(
 				#{categoryId},
+				#{typeId},
 				#{categoryName}, 
 				#{categoryOrder}, 
 				#{categoryStatus}
@@ -42,6 +45,7 @@
 				PRODUCT_CATEGORY
 			SET
 				CATEGORY_NAME = #{categoryName},
+				TYPE_ID 	  = #{typeId},
 				CATEGORY_ORDER = #{categoryOrder}, 
 				CATEGORY_STATUS = #{categoryStatus}
 			WHERE
@@ -57,6 +61,7 @@
 	
 	<resultMap id="productCategoryResultMap" type="egovframework.let.cop.management.service.ProductCategoryVO">
 		<result property="categoryId" column="CATEGORY_ID"/>
+		<result property="typeId" column="TYPE_ID"/>
 		<result property="categoryName" column="CATEGORY_NAME"/>
 		<result property="categoryOrder" column="CATEGORY_ORDER"/>
 		<result property="categoryStatus" column="CATEGORY_STATUS"/>

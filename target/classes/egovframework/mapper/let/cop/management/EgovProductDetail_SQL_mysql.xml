@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ProductDetailDAO">
+	
+	<select id="selectProductDetail" resultMap="ProductDetailResultMap" parameterType = "egovframework.let.cop.management.service.ProductDetailVO">
+			SELECT 
+				A.PRODUCT_ID,
+				A.STOCK_ID,
+				A.PRODUCT_NAME,
+				A.PRODUCT_SUMMARY,
+				A.PRODUCT_PRICE,
+				A.PRODUCT_DISCOUNT_PRICE,
+				A.PRODUCT_ORIGIN,
+				A.PRODUCT_DELIVERYPAY,
+				A.PRODUCT_STATUS,
+				A.PRODUCT_RDCNT,
+				A.PRODUCT_BESTCNT,
+				A.PRODUCT_REGID,
+				A.PRODUCT_UPDID,
+				A.PRODUCT_REGDATE,
+				A.PRODUCT_UPDDATE,
+				
+				B.PRODUCT_CODE, 
+				B.PRODUCT_CONTENT,
+				B.PRODUCT_SIZE,
+				B.PRODUCT-INTRODUCTION,
+				B.PRODUCT_PURPOSE,
+				B.PRODUCT_GUIDE,
+				B.PRODUCT_CANCEL_GUIDE,
+				B.PRODUCT_PRECAUSION,
+				B.DETAIL_STATUS,
+				B.DETAIL_REGID,
+				B.DETAIL_UPDID,
+				B.DETAIL_REGDATE,
+				B.DETAIL_UPDDATE
+				
+			FROM
+				PRODUCT A
+			INNER JOIN
+				PRODUCT_DETAIL B
+			ON A.PRODUCT_ID = B.PRODUCT_ID
+			WHERE
+				PRODUCT_ID = #{productId}	
+	</select>
+	
+	<select id="selectCountProductCode" resultType="int" parameterType = "egovframework.let.cop.management.service.ProductDetailVO">
+		SELECT
+			COUNT(*)
+		FROM
+			PRODUCT_DETAIL
+		WHERE
+			PRODUCT_CODE = #{productCode}
+	</select>
+	
+	
+	<insert id="insertProduct" parameterType = "egovframework.let.cop.management.service.ProductDetailVO">
+			INSERT INTO
+				PRODUCT_DETAIL
+			(
+				PRODUCT_CODE,
+				PRODUCT_ID,
+				PRODUCT_CONTENT,
+				PRODUCT_SIZE,
+				PRODUCT_INTRODUCTION,
+				PRODUCT_PURPOSE,
+				PRODUCT_GUIDE,
+				PRODUCT_CANCEL_GUIDE,
+				PRODUCT_PRECAUSION,
+				DETAIL_STATUS,
+				DETAIL_REGID,
+				DETAIL_UPDID,
+				DETAIL_REGDATE,
+				DETAIL_UPDDATE
+			)
+			VALUES
+			(
+				#{productCode},
+				#{productContent},
+				#{productSize},
+				#{productIntroduction},
+				#{productPurpose},
+				#{productGuide},
+				#{productCancelGuide},
+				#{productPrecausion},
+				#{detailStatus},
+				#{detailRegid},
+				#{detailUpdid},
+				now(),
+				now()
+			)
+	</insert>
+	
+	<update id="updateProduct" parameterType = "egovframework.let.cop.management.service.ProductDetailVO">
+			UPDATE
+				PRODUCT_DETAIL
+			SET
+				PRODUCT_CONTENT 		= #{productContent},
+				PRODUCT_SIZE			= #{productSize},
+				PRODUCT_INTRODUCTION 	= #{productIntroduction},
+				PRODUCT_PURPOSE  		= #{productPurpose},
+				PRODUCT_GUIDE 			= #{productGuide},
+				PRODUCT_CANCEL_GUIDE 	= #{productCancelGuide},
+				PRODUCT_PRECAUSION 		= #{productPrecausion},
+				DETAIL_STATUS			= #{detailStatus},
+				DETAIL_UPDID 			= #{productUpdid},
+				DETAIL_UPDDATE 			= now()
+			WHERE
+				PRODUCT_CODE 			= #{productCode}
+	</update>
+	
+	<resultMap id="ProductDetailResultMap" type="egovframework.let.cop.management.service.ProductDetailVO">
+		<result property="productId" column="PRODUCT_ID"/>
+		<result property="stockId" column="STOCK_ID"/>
+		<result property="productName" column="PRODUCT_NAME"/>
+		<result property="productSummary" column="PRODUCT_SUMMARY"/>
+		<result property="productPrice" column="PRODUCT_PRICE"/>
+		<result property="productDiscountPrice" column="PRODUCT_DISCOUNT_PRICE"/>
+		<result property="productOrigin" column="PRODUCT_ORIGIN"/>
+		<result property="productDeliverypay" column="PRODUCT_DELIVERYPAY"/>
+		<result property="productStatus" column="PRODUCT_STATUS"/>
+		<result property="productRdcnt" column="PRODUCT_RDCNT"/>
+		<result property="productBestcnt" column="PRODUCT_BESTCNT"/>
+		
+		<result property="productCode" column="PRODUCT_CODE"/>
+		<result property="productContent" column="PRODUCT_CONTENT"/>
+		<result property="productSize" column="PRODUCT_SIZE"/>
+		<result property="productGuide" column="PRODUCT_GUIDE"/>
+		<result property="productCancelGuide" column="PRODUCT_CANCEL_GUIDE"/>
+		<result property="productPrecausion" column="PRODUCT_PRECAUSION"/>
+		<result property="detailRegid" column="DETAIL_REGID"/>
+		<result property="detailUpdid" column="DETAIL_UPDID"/>
+		<result property="detailRegdate" column="DETAIL_REGDATE"/>
+		<result property="detailUpddate" column="DETAIL_UPDDATE"/>
+	</resultMap>
+</mapper>

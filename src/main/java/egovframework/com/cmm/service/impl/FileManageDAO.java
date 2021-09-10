@@ -3,9 +3,9 @@ package egovframework.com.cmm.service.impl;
 import java.util.Iterator;
 import java.util.List;
 
-import egovframework.com.cmm.service.FileVO;
-
 import org.springframework.stereotype.Repository;
+
+import egovframework.com.cmm.service.FileVO;
 
 
 @Repository("FileManageDAO")
@@ -19,6 +19,9 @@ public class FileManageDAO extends EgovComAbstractDAO {
 	 * @throws Exception
 	 */
 	public String insertFileInfs(List<?> fileList) throws Exception {
+		
+		fileList.toString();
+		
 		FileVO vo = (FileVO) fileList.get(0);
 		String atchFileId = vo.getAtchFileId();
 
@@ -100,6 +103,17 @@ public class FileManageDAO extends EgovComAbstractDAO {
 	}
 
 	/**
+	 * 파일 Id에 대한 최대값을 구한다.
+	 *
+	 * @param fvo
+	 * @return
+	 * @throws Exception
+	 */
+	public int getMaxFileId() throws Exception {
+		return (Integer) selectOne("FileManageDAO.getMaxFileId");
+	}
+
+	/**
 	 * 파일 구분자에 대한 최대값을 구한다.
 	 *
 	 * @param fvo
@@ -109,7 +123,6 @@ public class FileManageDAO extends EgovComAbstractDAO {
 	public int getMaxFileSN(FileVO fvo) throws Exception {
 		return (Integer) selectOne("FileManageDAO.getMaxFileSN", fvo);
 	}
-
 	/**
 	 * 파일에 대한 상세정보를 조회한다.
 	 *

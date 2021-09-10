@@ -210,6 +210,38 @@ function getDateTimePicker(paramFmt) {
     return DateTimepicker;
 }
 
+function getBtnCellRenderer(innerHTML) {
+	
+	function BtnCellRenderer() {}
+	
+	BtnCellRenderer.prototype.init = function(params) {
+	  this.params = params;
+	  this.eGui = document.createElement('button');
+	  this.eGui.innerHTML = innerHTML;
+	  this.btnClickedHandler = this.btnClickedHandler.bind(this);
+	  this.eGui.addEventListener('click', this.btnClickedHandler);
+	}
+	BtnCellRenderer.prototype.getGui = function() {
+		return this.eGui;
+	}
+	
+	// returns the new value after editing
+	BtnCellRenderer.prototype.getValue = function() {
+        return this.eGui.innerHTML;
+    };
+	
+	BtnCellRenderer.prototype.btnClickedHandler = function(event) {
+		// 일단 보류 
+		fn_gridBtnOnClicked();
+	}
+	
+	BtnCellRenderer.prototype.destroy = function() {
+		this.eGui.removeEventListener('click', this.btnClickedHandler);
+	}
+	
+	return BtnCellRenderer;
+}
+
 /**
  * 공통 그리드 util
  */
@@ -619,3 +651,71 @@ var ScrollGrid = {
 			gridMainOpts.api.setPinnedTopRowData(resultArray);
 		}
 	}
+
+var NewGrid = function(gridDiv, columnDefs, rowSelection, isScroll, fn_customColumnSetting) {
+	var _this = this;
+	/* grid 영역 정의 */
+	this.gridDiv = gridDiv;
+	this.columnDefs = columnDefs;
+	this.rowSelection = rowSelection;
+	this.fn_customColumnSetting = fn_customColumnSetting;
+	
+	/* grid 칼럼 정의 */
+	this.getColumnDefs = function() {
+		
+		var gridOpt = "";
+		if(isScroll) {
+			gridOpt = ScrollGrid.getDefaultGridOpt(_this.columnDefs);
+		} else {
+			gridOpt = CommonGrid.getDefaultGridOpt(_this.columnDefs);
+		}
+		
+		
+		gridOpt.rowSelection = _this.rowSelection;
+		
+		gridOpt.onRowEditingStarted = function(event) {
+			console.log('never called - not doing row editing');
+		};
+		gridOpt.onRowEditingStopped = function(event) {
+			console.log('never called - not doing row editing');
+		};
+		gridOpt.onCellEditingStarted = function(event) {
+			console.log('cellEditingStarted');
+		};
+		gridOpt.onCellEditingStopped = function(event) {
+			console.log('cellEditingStopped');
+			if(event.data.rowType != "new") event.data.rowType = "updated";
+			event.data.edit = true;
+			gridOpt.api.updateRowData({
+				update : [ event.data ]
+			});
+			console.log(gridOpt.api
+					.getDisplayedRowAtIndex(event.rowIndex).data);
+		};
+		
+		if(_this.fn_customColumnSetting) {
+			_this.fn_customColumnSetting(gridOpt);
+		}
+		
+		return gridOpt;
+	};
+	
+	/* grid 옵션 가져오기 */
+	this.gridOpts = null;
+	/* grid 실행 */
+	this.makeGrid = function(rowData) {
+		_this.gridOpts = _this.getColumnDefs();
+		
+		if(isScroll) {
+			ScrollGrid.makeGridCommon(_this.gridDiv, _this.gridOpts,
+					rowData)
+		} else {
+			CommonGrid.makeGridCommon(_this.gridDiv, _this.gridOpts,
+					rowData)
+		}
+	};
+	
+	this.getRowIndex = function(node) {
+		return node.rowIndex + 1;
+	};
+}

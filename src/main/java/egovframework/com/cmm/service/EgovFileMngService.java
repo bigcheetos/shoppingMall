@@ -88,6 +88,14 @@ public interface EgovFileMngService {
     public int getMaxFileSN(FileVO fvo) throws Exception;
 
     /**
+     * 파일 Id 대한 최대값을 구한다.
+     *
+     * @param fvo
+     * @return
+     * @throws Exception
+     */
+    public int getMaxFileId() throws Exception;
+    /**
      * 전체 파일을 삭제한다.
      *
      * @param fvo

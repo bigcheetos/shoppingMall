@@ -29,8 +29,6 @@ public class ProductVO implements Serializable {
 	private static final long serialVersionUID = 6828071680939789548L;
 	
 	private String productId;
-	private String categoryId;
-	private String typeId;
 	private String stockId;
 	private String productName;
 	private String productSummary;
@@ -51,18 +49,6 @@ public class ProductVO implements Serializable {
 	}
 	public void setProductId(String productId) {
 		this.productId = productId;
-	}
-	public String getCategoryId() {
-		return categoryId;
-	}
-	public void setCategoryId(String categoryId) {
-		this.categoryId = categoryId;
-	}
-	public String getTypeId() {
-		return typeId;
-	}
-	public void setTypeId(String typeId) {
-		this.typeId = typeId;
 	}
 	public String getStockId() {
 		return stockId;

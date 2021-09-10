@@ -11,6 +11,14 @@
 .ag-header-cell-label {
    justify-content: center;
 }
+.ag-body-viewport {
+    overflow-x: scroll !important;
+}  
+.grid-wrapper::after {
+	display: block;
+	content: '';
+	clear: both;
+}
 </style>
 <head>
     <meta charset="UTF-8">
@@ -20,7 +28,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet"> <!--CDN 링크 -->
 
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Stock</title>
+    <title>제품 관리</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
@@ -42,17 +50,13 @@
     <jsp:include page="/WEB-INF/jsp/food/sub/FoodMainHeader.jsp"/> 
     <!-- Header Section End -->
 	
-<section class="stock">
+<section class="product">
 	<div class="container">
 	<!-- 테이블 넣을 곳 -->
 	<div style="padding: 2px;">
 		<div style="float:left">
         	<button type="button" class="btn btn-secondary" onclick="onBtSelectAll()">전체선택</button>
         	<button type="button" class="btn btn-secondary" onclick="onBtDeselectAll()">선택취소</button>
-        </div>
-        <div style="float:left">
-	        &nbsp;
-	        &nbsp;
         </div>
         <div style="float:left">
 	        &nbsp;
@@ -90,108 +94,180 @@
 	<!-- AS GRID -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.23.0/moment.min.js"></script>
 	<script src="https://unpkg.com/ag-grid/dist/ag-grid.min.js"></script>
-	<script src="/js/react/agGridUtil.js?ver=1"></script>
+	<script src="/js/react/agGridUtil.js"></script>
+	<script src="/js/react/commonFunctions.js"></script>
 
 	<script>
-		var MainGrid = function() {
-			var _this = this;
-			/* grid 영역 정의 */
-			this.gridDiv = "myGrid";
-			/* grid 칼럼 정의 */
-			this.getColumnDefs = function() {
-				var columnDefs = [ {
-					checkboxSelection : true
-				},
-				{
-					field : "stockId",
-					width : 0,
-					hide : true,
-					editable : false
-				}, 
-				{
-					headerName : "재고명",
-					field : "stockName",
-					width : 100,
-					editable : true
-				}, 
-				{
-					headerName : "재고량",
-					field : "stockAmt",
-					width : 100,
-					editable : true,
-					type: "numericColumn"
-				},
-				{
-					field : "rowType",
-					width : 100,
-					hide : true,
-					editable : true
-				}];
-				var gridOpt = CommonGrid.getDefaultGridOpt(columnDefs);
-				gridOpt.rowSelection = 'multiple';
-				/* gridOpt.isRowSelectable = function(rowNode){
-				    return (rowNode.data.country != "Russia")? true:false;
-				} */
-				gridOpt.onRowEditingStarted = function(event) {
-					console.log('never called - not doing row editing');
-				};
-				gridOpt.onRowEditingStopped = function(event) {
-					console.log('never called - not doing row editing');
-				};
-				gridOpt.onCellEditingStarted = function(event) {
-					console.log('cellEditingStarted');
-				};
-				gridOpt.onCellEditingStopped = function(event) {
-					console.log('cellEditingStopped');
-					if(event.data.rowType != "new") event.data.rowType = "updated";
-					event.data.edit = true;
-					gridOpt.api.updateRowData({
-						update : [ event.data ]
-					});
-					console.log(gridOpt.api
-							.getDisplayedRowAtIndex(event.rowIndex).data);
-				};
 
-				return gridOpt;
-			};
-			/* grid 옵션 가져오기 */
-			this.gridOpts = null;
-			/* grid 실행 */
-			this.makeGrid = function(rowData) {
-				_this.gridOpts = _this.getColumnDefs();
-				CommonGrid.makeGridCommon(_this.gridDiv, _this.gridOpts,
-						rowData)
-			};
+		var stockList 			= [];	// 재고
+		var stockMap		   	= {};	// 재고
+		
+		var updateRows 	= []; // 신규,수정
+		var removedRows = []; // 삭제
+		
+		var mainGrid;	// 메인그리드
+		var columnDefs;	// 그리드 컬럼정보
+		
+		
+		var fn_makeGrid = function() {
 			
-			this.getRowIndex = function(node) {
-				return node.rowIndex + 1;
-			};
-		}
-		var mainGrid = new MainGrid();
+			// 그리드1 컬럼 정보 세팅
+			columnDefs = [ {
+				checkboxSelection : true
+			},
+			{
+				field : "productId",
+				width : 0,
+				hide : true,
+				editable : false
+			},
+			{
+				headerName : "재고명",
+				field : "stockId",
+				width : 150,
+				cellEditor: 'agSelectCellEditor',
+	            cellEditorParams: {
+	               values: extractValues(stockMap)
+	            },
+	            filter: 'agSetColumnFilter',
+	            refData: stockMap,
+				editable : true
+			},
+			{
+				headerName : "재고량",
+				field : "stockAmt",
+				width : 120,
+				valueGetter: function(params) {
+					var stockId = params.getValue('stockId');
+					var stockAmt = '';
+					for(var stock of stockList) {
+						if(stock.stockId == stockId) {
+							stockAmt = stock.stockAmt;
+							break;
+						}
+					}
+					return stockAmt;
+				},
+				editable : false
+			},
+			{
+				headerName : "제품명",
+				field : "productName",
+				width : 200,
+				editable : true
+			}, 
+			{
+				headerName : "제품요약",
+				field : "productSummary",
+				width : 150,
+				editable : true,
+			},
+			{
+				headerName : "제품원가",
+				field : "productPrice",
+				width : 150,
+				editable : true,
+				type: "numericColumn"
+			},
+			{
+				headerName : "제품할인가",
+				field : "productDiscountPrice",
+				width : 150,
+				editable : true,
+				type: "numericColumn"
+			},
+			{
+				headerName : "원산지",
+				field : "productOrigin",
+				width : 150,
+				editable : true
+			},
+			{
+				headerName : "배송비",
+				field : "productDeliverypay",
+				width : 120,
+				editable : true
+			},
+			{
+				headerName : "제품판매여부",
+				field : "productStatus",
+				width : 200,
+				editable : true
+			},
+			{
+				headerName : "조회수",
+				field : "productRdcnt",
+				width : 100,
+				editable : false
+			},
+			{
+				headerName : "추천수",
+				field : "productBestcnt",
+				width : 100,
+				editable : false
+			}, 
+			{
+				headerName : "등록자",
+				field : "productRegid",
+				width : 100,
+				hide : true,
+				editable : false
+			},
+			{
+				headerName : "수정자",
+				field : "productUpdid",
+				width : 100,
+				hide : true,
+				editable : false
+			},
+			{
+				headerName : "등록일",
+				field : "productRegdate",
+				width : 100,
+				hide : true,
+				editable : false
+			},
+			{
+				headerName : "수정일",
+				field : "productUpddate",
+				width : 100,
+				hide : true,
+				editable : false
+			},
+			{
+				field : "rowType",
+				width : 80,
+				hide : true,
+				editable : true
+			}];
+			
+			mainGrid = new NewGrid("myGrid", columnDefs, "multiple", true);
 
-		function onBtStopEditing() {
-			mainGrid.gridOpts.api.stopEditing();
+			function onBtStopEditing() {
+				mainGrid.gridOpts.api.stopEditing();
+			}
+			function onBtNextCell() {
+				mainGrid.gridOpts.api.tabToNextCell();
+			}
+			function onBtPreviousCell() {
+				mainGrid.gridOpts.api.tabToPreviousCell();
+			}
+			/*	전체선택	*/
+			function onBtSelectAll() {
+				mainGrid.gridOpts.api.selectAll();
+			}
+			/*	전체선택해제	*/
+			function onBtDeselectAll() {
+				mainGrid.gridOpts.api.deselectAll();
+			}	
 		}
-		function onBtNextCell() {
-			mainGrid.gridOpts.api.tabToNextCell();
-		}
-		function onBtPreviousCell() {
-			mainGrid.gridOpts.api.tabToPreviousCell();
-		}
-		/*	전체선택	*/
-		function onBtSelectAll() {
-			mainGrid.gridOpts.api.selectAll();
-		}
-		/*	전체선택해제	*/
-		function onBtDeselectAll() {
-			mainGrid.gridOpts.api.deselectAll();
-		}
+		
 		/*	조회	*/
 		function onBtSearch() {
 			// 조회조건이 있다면 여기서 체크
-			fn_load_data_request();
+			fn_loadDataRequest();
 		}
-		function fn_serachRows(rowData) {
+		var fn_serachRows = function(rowData) {
 			var eGridDiv = document.querySelector('#myGrid');
 			if(eGridDiv.hasChildNodes()) {
 				fn_gridRefresh(rowData);	
@@ -200,68 +276,17 @@
 			}
 		}
 		/*	리프레쉬	*/
-		function fn_gridRefresh(rowData) {
+		var fn_gridRefresh = function(rowData) {
 			mainGrid.gridOpts.api.refreshCells();
 			mainGrid.gridOpts.api.setRowData(rowData);
 			
 			// 삭제된 행 초기화
 			removedRows = [];
 		}
-		/* // 데이터 가져오기
-		function fn_loadData() {
-			var httpRequest = new XMLHttpRequest();
-			httpRequest.responseType = 'json';
-
-			httpRequest.open('POST',
-					'/cmm/main/management/getStockList.do',
-					true);
-			httpRequest.setRequestHeader("Content-Type",
-					"application/x-www-form-urlencoded");
-			httpRequest.send();
-
-			httpRequest.onreadystatechange = function() {
-				if (httpRequest.readyState === 4
-						&& httpRequest.status === 200) {
-					var httpResult = httpRequest.response; //JSON.parse(httpRequest.response);
-					fn_serachRows(httpResult);
-				}
-			};
-		} */
 		
-		// 그리드1 데이터 가져오기
-		function fn_load_data() {
-		  return new Promise((resolve, reject) => {
-			const xhr = new XMLHttpRequest();
-			xhr.responseType = 'json';
-
-			xhr.open('POST',
-					'/cmm/main/management/getStockList.do',
-					true);
-			xhr.setRequestHeader("Content-Type",
-					"application/x-www-form-urlencoded");
-			
-			xhr.onload = function() {
-				if (this.status >= 200 && this.status < 300) {
-					resolve(xhr.response);
-				} else {
-					reject({
-						status: this.status,
-						statusText: xhr.statusText
-					});
-				}
-			};
-			xhr.onerror = function () {
-		      reject({
-		        status: this.status,
-		        statusText: xhr.statusText
-		      });
-		    };
-		    xhr.send();
-		  });
-		}
 		// 그리드1 데이터 로드 요청
-		function fn_load_data_request() {
-			fn_load_data()
+		var fn_loadDataRequest = function() {
+			gfn_loadData('/cmm/main/management/getProductList.do')
 			.then(function (datums) {
 				fn_serachRows(datums);
 			})
@@ -270,13 +295,26 @@
 			});
 		}
 		
+		
 		/*	신규	*/
 		function onBtAddBottom() {
+			
 			// 초기값 넣기
 			var newRow = {
+				productId : null,
 				stockId : null,
-				stockName : '',
-				stockAmt : '',
+				productName : '',
+				productSummary : '',
+				productPrice : 0,
+				productDiscountPrice : 0,
+				productOrigin : '',
+				productDeliverypay : 0,
+				productStatus : '',
+				productRdcnt : 0,
+				productBestcnt : 0,
+				productRegid : '',
+				productUpdid : '',
+				productRegdate : '',
 				rowType : "new"
 			}
 			
@@ -285,14 +323,13 @@
 				add : [ newRow ]
 			});
 		}
-		// 삭제
-		var removedRows = [];
+		
 		
 		function onBtDelete() {
 			fn_deleteRows();
 		}
 		
-		function fn_deleteRows() {
+		var fn_deleteRows = function() {
 			var selectedRows = mainGrid.gridOpts.api.getSelectedRows();
 			selectedRows.forEach(function(selectedRow, index) {
 				if(selectedRow.rowType != "new") {
@@ -306,14 +343,16 @@
 		}
 		
 		/*	저장	*/
-		var updateRows = [];
+		
 		function onBtSave() {
 			// 필수체크
 			var savable = true;
 			var edit_count = 0;
 			mainGrid.gridOpts.api.forEachNode(function(rowNode, index) {
-				if(rowNode.data.stockName == ''
-				|| rowNode.data.stockAmt == '') {
+ 				if(rowNode.data.stockId == ''
+				|| rowNode.data.productName == ''
+				|| rowNode.data.productPrice == ''
+				|| rowNode.data.productOrigin == '') {
 					savable = false;
 				};
 				if (rowNode.data.edit) {
@@ -336,7 +375,7 @@
 			};
 		}
 		
-		function fn_saveRows() {
+		var fn_saveRows = function() {
 			mainGrid.gridOpts.api.stopEditing();
 			mainGrid.gridOpts.api.forEachNode(function(rowNode, index) {
 				if (rowNode.data.edit) {
@@ -345,60 +384,43 @@
 			});
 			var uploadRows = Object.assign(updateRows, removedRows);
 			
-			$("#updateRows").html(JSON.stringify(uploadRows));
-			fn_upload_data_request(uploadRows);
+			// $("#updateRows").html(JSON.stringify(uploadRows));
+			fn_uploadDataRequest(uploadRows);
 		}
+		// 
 		
-		// 데이터 내보내기
-		function fn_upload_data(updateRows) {
-		  return new Promise((resolve, reject) => {
-			const xhr = new XMLHttpRequest();
-			//xhr.responseType = 'json';
-			
-			xhr.open('POST',
-					'/cmm/main/management/registStock.do',
-					true);
-			xhr.setRequestHeader("Content-Type",
-					"application/json");
-			xhr.send(JSON.stringify(updateRows));
-
-			xhr.onload = function() {
-				if (this.status >= 200 && this.status < 300) {
-					resolve(xhr.response);
-				} else {
-					reject({
-						status: this.status,
-						statusText: xhr.statusText
-					});
-				}
-			};
-			xhr.onerror = function () {
-		      reject({
-		        status: this.status,
-		        statusText: xhr.statusText
-		      });
-		    };
-		    
-		    // xhr.send(JSON.stringify(updateRows));
-		  });
-		}
-		function fn_upload_data_request(uploadRows) {
-			// 그리드2 데이터 업로드 요청
-			fn_upload_data(updateRows)
+		var fn_uploadDataRequest = function(uploadRows) {
+			// 그리드 데이터 업로드 요청
+			gfn_uploadData(updateRows, '/cmm/main/management/registProduct.do')
 			.then(function (datums) {
 				console.log(datums);
-				alert("저장이 완료되었습니다!");
-				updateRows = [];	// 업데이트 로우맵 초기화
-				fn_load_data_request();
+				fn_loadDataRequest();	// 재조회
+				updateRows = [];		// 업데이트 로우맵 초기화
+				if(datums=="success") {
+					alert("저장이 완료되었습니다!");
+				} else if(datums=="fail") {
+					alert("저장이 실패하였습니다.");
+				}
 			})
 			.catch(function (err) {
 				console.error(err.statusText);
 			});
 		}
+		
+		var fn_setStockMap = function() {
+			for(var stock of stockList) {
+				stockMap[stock.stockId] = stock.stockName;
+			}
+			
+			fn_makeGrid();
+		}
+		
 		// setup the grid after the page has finished loading
 		document.addEventListener('DOMContentLoaded',
 			function() {
-				fn_load_data_request();
+				gfn_commonLoadDataRequest('/cmm/main/management/getStockList.do', stockList, fn_setStockMap);
+				
+				fn_loadDataRequest();
 			}
 		);
 	</script>

@@ -20,7 +20,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet"> <!--CDN 링크 -->
 
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Type</title>
+    <title>제품 유형 관리</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
@@ -47,8 +47,8 @@
 	<!-- 테이블 넣을 곳 -->
 	<div style="padding: 2px;">
 		<div style="float:left">
-        	<button type="button" class="btn btn-primary" onclick="onBtSelectAll()">전체선택</button>
-        	<button type="button" class="btn btn-primary" onclick="onBtDeselectAll()">선택취소</button>
+        	<button type="button" class="btn btn-secondary" onclick="onBtSelectAll()">전체선택</button>
+        	<button type="button" class="btn btn-secondary" onclick="onBtDeselectAll()">선택취소</button>
         </div>
         <div style="float:left">
 	        &nbsp;
@@ -66,8 +66,8 @@
 	        &nbsp;
 	        &nbsp;
         </div>
-        <div style="float:left">
-	        <button type="button" class="btn btn-secondary" onclick="onBtSearch()">조회</button>
+        <div style="float:right">
+	        <button type="button" class="btn btn-primary" onclick="onBtSearch()">조회</button>
 	        <button type="button" class="btn btn-success" onclick="onBtAddBottom()">신규</button>
 	        <button type="button" class="btn btn-warning" onclick="onBtSave()">저장</button>
 	        <button type="button" class="btn btn-danger" onclick="onBtDelete()">삭제</button>
@@ -99,114 +99,80 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.23.0/moment.min.js"></script>
 	<script src="https://unpkg.com/ag-grid/dist/ag-grid.min.js"></script>
 	<script src="/js/react/agGridUtil.js?ver=1"></script>
-
+	<script src="/js/react/commonFunctions.js"></script>
+	
 	<script>
-		var MainGrid = function() {
-			var _this = this;
-			/* grid 영역 정의 */
-			this.gridDiv = "myGrid";
-			/* grid 칼럼 정의 */
-			this.getColumnDefs = function() {
-				var columnDefs = [ {
-					checkboxSelection : true
-				},
-				/* {field: "No.", width: 40, minWidth: 40, maxWidth: 40, editable: false}, */
-				{
-					field : "typeId",
-					width : 0,
-					hide : true,
-					editable : false
-				},
-				{
-					headerName : "이름",
-					field : "typeName",
-					width : 100,
-					editable : true
-				},
-				{
-					headerName : "순서",
-					field : "typeOrder",
-					width : 100,
-					editable : true,
-					type: "numericColumn"
-				},
-				{
-					headerName : "사용여부",
-					field : "typeStatus",
-					width : 100,
-					editable : true
-				},
-				{
-					field : "rowType",
-					width : 80,
-					hide : true,
-					editable : true
-				}];
-				var gridOpt = CommonGrid.getDefaultGridOpt(columnDefs);
-				gridOpt.rowSelection = 'multiple';
-				/* gridOpt.isRowSelectable = function(rowNode){
-				    return (rowNode.data.country != "Russia")? true:false;
-				} */
-				gridOpt.onRowEditingStarted = function(event) {
-					console.log('never called - not doing row editing');
-				};
-				gridOpt.onRowEditingStopped = function(event) {
-					console.log('never called - not doing row editing');
-				};
-				gridOpt.onCellEditingStarted = function(event) {
-					console.log('cellEditingStarted');
-				};
-				gridOpt.onCellEditingStopped = function(event) {
-					console.log('cellEditingStopped');
-					if(event.data.rowType != "new") event.data.rowType = "updated";
-					event.data.edit = true;
-					gridOpt.api.updateRowData({
-						update : [ event.data ]
-					});
-					console.log(gridOpt.api
-							.getDisplayedRowAtIndex(event.rowIndex).data);
-				};
-
-				return gridOpt;
-			};
-			/* grid 옵션 가져오기 */
-			this.gridOpts = null;
-			/* grid 실행 */
-			this.makeGrid = function(rowData) {
-				_this.gridOpts = _this.getColumnDefs();
-				CommonGrid.makeGridCommon(_this.gridDiv, _this.gridOpts,
-						rowData)
-			};
+		var updateRows 	= []; // 신규,수정
+		var removedRows = []; // 삭제
+		
+		var mainGrid;	// 메인그리드
+		var columnDefs;	// 그리드 컬럼정보	
+		
+		var fn_makeGrid = function() {
+			columnDefs = [ {
+				checkboxSelection : true
+			},
+			/* {field: "No.", width: 40, minWidth: 40, maxWidth: 40, editable: false}, */
+			{
+				field : "typeId",
+				width : 0,
+				hide : true,
+				editable : false
+			},
+			{
+				headerName : "이름",
+				field : "typeName",
+				width : 100,
+				editable : true
+			},
+			{
+				headerName : "순서",
+				field : "typeOrder",
+				width : 100,
+				editable : true,
+				type: "numericColumn"
+			},
+			{
+				headerName : "사용여부",
+				field : "typeStatus",
+				width : 100,
+				editable : true
+			},
+			{
+				field : "rowType",
+				width : 80,
+				hide : true,
+				editable : true
+			}];
 			
-			this.getRowIndex = function(node) {
-				return node.rowIndex + 1;
-			};
+			// gridDiv, columnDefs, rowSelection, isScroll
+			mainGrid = new NewGrid("myGrid", columnDefs, "multiple", false);
+			
+			function onBtStopEditing() {
+				mainGrid.gridOpts.api.stopEditing();
+			}
+			function onBtNextCell() {
+				mainGrid.gridOpts.api.tabToNextCell();
+			}
+			function onBtPreviousCell() {
+				mainGrid.gridOpts.api.tabToPreviousCell();
+			}
+			/*	전체선택	*/
+			function onBtSelectAll() {
+				mainGrid.gridOpts.api.selectAll();
+			}
+			/*	전체선택해제	*/
+			function onBtDeselectAll() {
+				mainGrid.gridOpts.api.deselectAll();
+			}
 		}
-		var mainGrid = new MainGrid();
-
-		function onBtStopEditing() {
-			mainGrid.gridOpts.api.stopEditing();
-		}
-		function onBtNextCell() {
-			mainGrid.gridOpts.api.tabToNextCell();
-		}
-		function onBtPreviousCell() {
-			mainGrid.gridOpts.api.tabToPreviousCell();
-		}
-		/*	전체선택	*/
-		function onBtSelectAll() {
-			mainGrid.gridOpts.api.selectAll();
-		}
-		/*	전체선택해제	*/
-		function onBtDeselectAll() {
-			mainGrid.gridOpts.api.deselectAll();
-		}
+		
 		/*	조회	*/
 		function onBtSearch() {
 			// 조회조건이 있다면 여기서 체크
-			fn_loadData();
+			fn_loadDataRequest();
 		}
-		function fn_serachRows(rowData) {
+		var fn_serachRows = function(rowData) {
 			var eGridDiv = document.querySelector('#myGrid');
 			if(eGridDiv.hasChildNodes()) {
 				fn_gridRefresh(rowData);	
@@ -215,7 +181,7 @@
 			}
 		}
 		/*	리프레쉬	*/
-		function fn_gridRefresh(rowData) {
+		var fn_gridRefresh = function(rowData) {
 			mainGrid.gridOpts.api.refreshCells();
 			mainGrid.gridOpts.api.setRowData(rowData);
 			
@@ -223,25 +189,16 @@
 			removedRows = [];
 		}
 		// 데이터 가져오기
-		function fn_loadData() {
-			var httpRequest = new XMLHttpRequest();
-			httpRequest.responseType = 'json';
-
-			httpRequest.open('POST',
-					'/cmm/main/management/getProductTypeList.do',
-					true);
-			httpRequest.setRequestHeader("Content-Type",
-					"application/x-www-form-urlencoded");
-			httpRequest.send();
-
-			httpRequest.onreadystatechange = function() {
-				if (httpRequest.readyState === 4
-						&& httpRequest.status === 200) {
-					var httpResult = httpRequest.response; //JSON.parse(httpRequest.response);
-					fn_serachRows(httpResult);
-				}
-			};
+		var fn_loadDataRequest = function() {
+			gfn_loadData('/cmm/main/management/getProductTypeList.do')
+			.then(function (datums) {
+				fn_serachRows(datums);
+			})
+			.catch(function (err) {
+				console.error(err.statusText);
+			});
 		}
+		
 		/*	신규	*/
 		function onBtAddBottom() {
 			// 초기값 넣기
@@ -264,13 +221,11 @@
 			});
 		}
 		// 삭제
-		var removedRows = [];
-		
 		function onBtDelete() {
 			fn_deleteRows();
 		}
 		
-		function fn_deleteRows() {
+		var fn_deleteRows = function() {
 			var selectedRows = mainGrid.gridOpts.api.getSelectedRows();
 			selectedRows.forEach(function(selectedRow, index) {
 				if(selectedRow.rowType != "new") {
@@ -284,8 +239,12 @@
 		}
 		
 		/*	저장	*/
-		var updateRows = [];
+		
 		function onBtSave() {
+			fn_saveCheck();
+		}
+		
+		var fn_saveCheck = function() {
 			// 필수체크
 			var savable = true;
 			var edit_count = 0;
@@ -315,7 +274,7 @@
 			};
 		}
 		
-		function fn_saveRows() {
+		var fn_saveRows = function() {
 			mainGrid.gridOpts.api.stopEditing();
 			mainGrid.gridOpts.api.forEachNode(function(rowNode, index) {
 				if (rowNode.data.edit) {
@@ -324,38 +283,36 @@
 			});
 			var uploadRows = Object.assign(updateRows, removedRows);
 			
-			$("#updateRows").html(JSON.stringify(uploadRows));
-			fn_uploadData(uploadRows);
+			// $("#updateRows").html(JSON.stringify(uploadRows));
+			fn_uploadDataRequest(uploadRows);
 		}
 		
-		// 데이터 내보내기
-		function fn_uploadData(updateRows, removedRows) {
-			var httpRequest = new XMLHttpRequest();
-			httpRequest.responseType = 'json';
-			
-			httpRequest.open('POST',
-					'/cmm/main/management/registProductType.do',
-					true);
-			httpRequest.setRequestHeader("Content-Type",
-					"application/json");
-			httpRequest.send(JSON.stringify(updateRows));
-
-			httpRequest.onreadystatechange = function() {
-				if (httpRequest.readyState === 4
-						&& httpRequest.status === 200) {
-					var httpResult = httpRequest.response; //JSON.parse(httpRequest.response);
-					console.log(httpResult);
-					fn_serachRows(httpResult);
-				} else {
-					var httpResult = httpRequest.response; //JSON.parse(httpRequest.response);
-					console.log(httpResult);
+		// 데이터 내보내기 
+		var fn_uploadDataRequest = function(uploadRows) {
+			// 그리드 데이터 업로드 요청
+			gfn_uploadData(updateRows, '/cmm/main/management/registProductType.do')
+			.then(function (datums) {
+				console.log(datums);
+				fn_loadDataRequest();	// 재조회
+				updateRows = [];		// 업데이트 로우맵 초기화
+				if(datums=="success") {
+					alert("저장이 완료되었습니다!");
+				} else if(datums=="fail") {
+					alert("저장이 실패하였습니다.");
 				}
-			};
+			})
+			.catch(function (err) {
+				console.error(err.statusText);
+			});
 		}
+		
 		// setup the grid after the page has finished loading
 		document.addEventListener('DOMContentLoaded',
 			function() {
-				fn_loadData();
+			
+				fn_makeGrid();
+				
+				fn_loadDataRequest();
 			}
 		);
 	</script>

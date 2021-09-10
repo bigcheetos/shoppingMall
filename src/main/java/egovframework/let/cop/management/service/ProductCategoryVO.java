@@ -29,6 +29,7 @@ public class ProductCategoryVO implements Serializable {
 	private static final long serialVersionUID = 784406012834453764L;
 	
 	private String categoryId;
+	private String typeId;
 	private String categoryName;
 	private String categoryOrder;
 	private String categoryStatus;
@@ -41,6 +42,14 @@ public class ProductCategoryVO implements Serializable {
 		this.categoryId = categoryId;
 	}
 
+	public String getTypeId() {
+		return typeId;
+	}
+
+	public void setTypeId(String typeId) {
+		this.typeId = typeId;
+	}
+	
 	public String getCategoryName() {
 		return categoryName;
 	}

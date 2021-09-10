@@ -1,6 +1,7 @@
 package egovframework.let.cop.management.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import egovframework.let.cop.management.service.EgovManagementService;
 import egovframework.let.cop.management.service.ProductCategoryVO;
+import egovframework.let.cop.management.service.ProductDetailVO;
 import egovframework.let.cop.management.service.ProductTypeVO;
 import egovframework.let.cop.management.service.ProductVO;
 import egovframework.let.cop.management.service.StockIoVO;
@@ -36,6 +38,9 @@ public class EgovManagementServiceImpl extends EgovAbstractServiceImpl implement
 	
 	@Resource(name = "ProductDAO")
 	private ProductDAO productDAO;
+	
+	@Resource(name = "ProductDetailDAO")
+	private ProductDetailDAO productDetailDAO;
 	
 	@Resource(name = "ProductCategoryDAO")
 	private ProductCategoryDAO productCategoryDAO;
@@ -69,6 +74,46 @@ public class EgovManagementServiceImpl extends EgovAbstractServiceImpl implement
 	public String getProductNextId() throws Exception {
 		// TODO Auto-generated method stub
 		return productDAO.selecNextId();
+	}
+	
+	/**
+     * 컨트롤러에서 넘겨받은 제품 리스트를 신규, 수정, 삭제로 분류하여 저장한다.
+     *
+     * @see egovframework.let.cop.management.service.EgovManagementService
+     * #addProduct(egovframework.let.cop.management.service.ProductVO)
+     */
+	@Override
+	public void saveProductList(List<Map<String, Object>> paramList) throws Exception {
+		// TODO Auto-generated method stub
+		
+		for(Map<String, Object> param : paramList) {
+    		String rowType = String.valueOf(param.get("rowType"));
+    		
+    		ProductVO productVO = new ProductVO();
+    		productVO.setProductId(String.valueOf(param.get("productId")));
+    		productVO.setStockId(String.valueOf(param.get("stockId")));
+    		
+    		productVO.setProductName(String.valueOf(param.get("productName")));
+    		productVO.setProductSummary(String.valueOf(param.get("productSummary")));
+    		productVO.setProductPrice(String.valueOf(param.get("productPrice")));
+    		productVO.setProductDiscountPrice(String.valueOf(param.get("productDiscountPrice")));
+    		productVO.setProductOrigin(String.valueOf(param.get("productOrigin")));
+    		productVO.setProductDeliverypay(String.valueOf(param.get("productDeliverypay")));
+    		productVO.setProductStatus(String.valueOf(param.get("productStatus")));
+    		
+    		// 신규 추가
+    		if(rowType.equals("new")) {
+    			// DB에서 다음 아이디 가져오기
+    			productVO.setProductId(getProductNextId());
+    			addProduct(productVO);
+    		// 수정
+			} else if(rowType.equals("updated")) {
+				modifyProduct(productVO);
+			// 삭제
+			} else if(rowType.equals("removed")) {
+				removeProduct(productVO);
+			}
+    	}
 	}
 	
 	/**
@@ -108,6 +153,73 @@ public class EgovManagementServiceImpl extends EgovAbstractServiceImpl implement
 	}
 	
 	/**
+     * 제품상세을 조회 한다.
+     *
+     * @see egovframework.let.cop.management.service.EgovManagementService
+     */
+	@Override
+	public ProductDetailVO getProductDetailByProductId(String productId) throws Exception {
+		// TODO Auto-generated method stub
+		return productDetailDAO.selectProductDetailByProductId(productId);
+	}
+
+	@Override
+	public boolean checkProductCode(String productCode) throws Exception {
+		// TODO Auto-generated method stub
+		return productDetailDAO.countByProductCode(productCode)>0;
+	}
+
+	@Override
+	public void saveProductDetail(List<Map<String, Object>> paramList) throws Exception {
+		// TODO Auto-generated method stub
+		
+		// 신규인지 수정인지 체크
+		for(Map<String, Object> param : paramList) {
+    		String rowType = String.valueOf(param.get("rowType"));
+    		
+    		ProductDetailVO productDetailVO = new ProductDetailVO();
+    		
+    		ProductVO productVO = productDetailVO.getProductVO();
+    		
+    		// 신규 추가
+    		if(rowType.equals("new")) {
+    			// DB에서 다음 아이디 가져오기
+    			/*productDetailVO.setProductId(getProductNextId());*/
+    			addProductDetail(productDetailVO);
+    		// 수정
+			} else if(rowType.equals("updated")) {
+				modifyProductDetail(productDetailVO);
+			// 삭제
+			} else if(rowType.equals("removed")) {
+				removeProductDetail(productDetailVO);
+			}
+    	}
+		/*ProductVO productVO = productDetailVO.getProductVO();
+		
+		productDetailDAO.insertProductDetail(productDetailVO);*/
+		
+		
+	}
+
+	@Override
+	public void addProductDetail(ProductDetailVO productDetailVO) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void modifyProductDetail(ProductDetailVO productDetailVO) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void removeProductDetail(ProductDetailVO productDetailVO) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	/**
      * 모든 카테고리를 조회 한다.
      *
      * @see egovframework.let.cop.management.service.EgovManagementService
@@ -127,6 +239,39 @@ public class EgovManagementServiceImpl extends EgovAbstractServiceImpl implement
 	public String getCategoryNextId() throws Exception {
 		// TODO Auto-generated method stub
 		return productCategoryDAO.selecNextId();
+	}
+	
+	/**
+     * 컨트롤러에서 넘겨받은 카테고리 리스트를 신규, 수정, 삭제로 분류한다.
+     *
+     * 
+     */
+	@Override
+	public void saveCategoryList(List<Map<String, Object>> paramList) throws Exception {
+		// TODO Auto-generated method stub
+		for(Map<String, Object> param : paramList) {
+    		String rowType = String.valueOf(param.get("rowType"));
+    		
+    		ProductCategoryVO productCategoryVO = new ProductCategoryVO();
+    		productCategoryVO.setCategoryId(String.valueOf(param.get("categoryId")));
+    		productCategoryVO.setTypeId(String.valueOf(param.get("typeId")));
+    		productCategoryVO.setCategoryName(String.valueOf(param.get("categoryName")));
+    		productCategoryVO.setCategoryOrder(String.valueOf(param.get("categoryOrder")));
+    		productCategoryVO.setCategoryStatus(String.valueOf(param.get("categoryStatus")));
+    		
+    		// 신규 추가
+    		if(rowType.equals("new")) {
+    			// DB에서 다음 아이디 가져오기
+    			productCategoryVO.setCategoryId(getCategoryNextId());
+    			addCategory(productCategoryVO);
+    		// 수정
+			} else if(rowType.equals("updated")) {
+				modifyCategory(productCategoryVO);
+			// 삭제
+			} else if(rowType.equals("removed")) {
+				removeCategory(productCategoryVO);
+			}
+		}
 	}
 	
 	/**
@@ -187,6 +332,39 @@ public class EgovManagementServiceImpl extends EgovAbstractServiceImpl implement
 		return productTypeDAO.selecNextId();
 	}
 	
+
+	/**
+     * 컨트롤러에서 넘겨받은 유형 리스트를 신규, 수정, 삭제로 분류한다.
+     *
+     * 
+     */
+	@Override
+	public void saveTypeList(List<Map<String, Object>> paramList) throws Exception {
+		// TODO Auto-generated method stub
+		for(Map<String, Object> param : paramList) {
+    		String rowType = String.valueOf(param.get("rowType"));
+    		
+    		ProductTypeVO productTypeVO = new ProductTypeVO();
+    		productTypeVO.setTypeId(String.valueOf(param.get("typeId")));
+    		productTypeVO.setTypeName(String.valueOf(param.get("typeName")));
+    		productTypeVO.setTypeOrder(String.valueOf(param.get("typeOrder")));
+    		productTypeVO.setTypeStatus(String.valueOf(param.get("typeStatus")));
+    		
+    		// 신규 추가
+    		if(rowType.equals("new")) {
+    			// DB에서 다음 아이디 가져오기
+    			productTypeVO.setTypeId(getTypeNextId());
+    			addType(productTypeVO);
+    		// 수정
+			} else if(rowType.equals("updated")) {
+				modifyType(productTypeVO);
+			// 삭제
+			} else if(rowType.equals("removed")) {
+				removeType(productTypeVO);
+			}
+    	}
+	}
+	
 	/**
      * 타입을 추가한다.
      *
@@ -244,6 +422,76 @@ public class EgovManagementServiceImpl extends EgovAbstractServiceImpl implement
 	public String getStockNextId() throws Exception {
 		// TODO Auto-generated method stub
 		return stockDAO.selecNextId();
+	}
+	
+	/**
+     * 컨트롤러에서 넘겨받은 재고 리스트를 신규, 수정, 삭제로 분류한다.
+     *
+     * 
+     */
+	@Override
+	public void saveStockList(List<Map<String, Object>> paramList) throws Exception {
+		// TODO Auto-generated method stub
+		for(Map<String, Object> param : paramList) {
+    		String rowType = String.valueOf(param.get("rowType"));
+    		
+    		StockVO stockVO = new StockVO();
+    		stockVO.setStockId(String.valueOf(param.get("stockId")));
+    		stockVO.setStockName(String.valueOf(param.get("stockName")));
+    		stockVO.setStockAmt(String.valueOf(param.get("stockAmt")));
+    		
+    		// 신규 추가
+    		if(rowType.equals("new")) {
+    			// DB에서 다음 아이디 가져오기
+    			stockVO.setStockId(getStockNextId());
+    			addStock(stockVO);
+    		// 수정
+			} else if(rowType.equals("updated")) {
+				modifyStock(stockVO);
+			// 삭제
+			} else if(rowType.equals("removed")) {
+				removeStock(stockVO);
+			}
+    	}
+	}
+	
+	/**
+     * 컨트롤러에서 넘겨받은 입출고 리스트를 신규, 수정, 삭제로 분류한다.
+     *
+     * 
+     */
+	@Override
+	public void saveStockIoList(List<Map<String, Object>> paramList) throws Exception {
+		// TODO Auto-generated method stub
+		for(Map<String, Object> param : paramList) {
+    		String rowType = String.valueOf(param.get("rowType"));
+    		
+    		StockIoVO stockIoVO = new StockIoVO();
+    		stockIoVO.setStockIoId(String.valueOf(param.get("stockIoId")));
+    		stockIoVO.setStockId(String.valueOf(param.get("stockId")));
+    		stockIoVO.setStockIoAmt(String.valueOf(param.get("stockIoAmt")));
+    		stockIoVO.setStockIoType(String.valueOf(param.get("stockIoType")));
+    		stockIoVO.setStockIoDate(String.valueOf(param.get("stockIoDate")).replace("T", " "));
+    		
+    		// 신규 추가
+    		if(rowType.equals("new")) {
+    			// DB에서 다음 아이디 가져오기
+    			stockIoVO.setStockIoId(getStockIoNextId());
+    			System.out.println("Insert stockIoVO:" + stockIoVO.toString());
+    			
+    			addStockIo(stockIoVO);
+    		// 수정
+			} else if(rowType.equals("updated")) {
+				System.out.println("Update stockIoVO:" + stockIoVO.toString());
+				
+				modifyStockIo(stockIoVO);
+			// 삭제
+			} else if(rowType.equals("removed")) {
+				System.out.println("Delete stockIoVO:" + stockIoVO.toString());
+				
+				removeStockIo(stockIoVO);
+			}
+    	}
 	}
 	
 	/**
@@ -362,5 +610,4 @@ public class EgovManagementServiceImpl extends EgovAbstractServiceImpl implement
 		// TODO Auto-generated method stub
 		stockIoDAO.deleteStockIo(stockIoVO);
 	}
-	
 }

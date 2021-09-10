@@ -1,6 +1,7 @@
 package egovframework.let.cop.management.service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 상품 관리를 위한 서비스 인터페이스  클래스
@@ -41,6 +42,15 @@ public interface EgovManagementService {
 	public String getProductNextId() throws Exception;
 	
 	/**
+	 * 컨트롤러에서 넘겨받은 제품 리스트를 신규, 수정, 삭제로 분류하여 저장한다.
+	 * @return String
+	 * 
+	 * @param List<Map<String, Object>> paramList
+	 * @exception Exception Exception
+	 */
+	public void saveProductList(List<Map<String, Object>> paramList) throws Exception;
+	
+	/**
 	 * 제품을 추가한다.
 	 * @return
 	 * 
@@ -69,6 +79,63 @@ public interface EgovManagementService {
 	
 	
 	/** 제품 끝 **/
+	/** 제품 상세 시작 **/
+	
+	/**
+	 * 제품 상세에 대하여 조회 한다.
+	 * @return ProductDetailVO
+	 * 
+	 * @param String
+	 * @exception Exception Exception
+	 */
+	public ProductDetailVO getProductDetailByProductId(String productId) throws Exception;
+	
+	/**
+	 * 제품 상세코드가 데이터베이스에 존재하는지 확인한다.
+	 * @return boolean
+	 * 
+	 * @param String
+	 * @exception Exception Exception
+	 */
+	public boolean checkProductCode(String productCode) throws Exception;
+	
+	/**
+	 * 제품 상세를 저장한다.
+	 * @return
+	 * 
+	 * @param ProductDetailVO
+	 * @exception Exception Exception
+	 */
+	public void saveProductDetail(List<Map<String, Object>> paramList) throws Exception;
+	
+	/**
+	 * 제품 상세를 추가한다.
+	 * @return
+	 * 
+	 * @param ProductDetailVO
+	 * @exception Exception Exception
+	 */
+	public void addProductDetail(ProductDetailVO productDetailVO) throws Exception;
+	
+	/**
+	 * 제품 상세를 수정한다.
+	 * @return
+	 * 
+	 * @param ProductDetailVO
+	 * @exception Exception Exception
+	 */
+	public void modifyProductDetail(ProductDetailVO productDetailVO) throws Exception;
+	
+	/**
+	 * 제품 상세를 삭제한다.
+	 * @return
+	 * 
+	 * @param ProductDetailVO
+	 * @exception Exception Exception
+	 */
+	public void removeProductDetail(ProductDetailVO productDetailVO) throws Exception;
+	
+	/** 제품 상세 끝 **/
 	/** 카테고리 시작 **/
 	
 	/**
@@ -79,6 +146,16 @@ public interface EgovManagementService {
 	 * @exception Exception Exception
 	 */
 	public List<ProductCategoryVO> getCategoryListAll() throws Exception;
+	
+
+	/**
+	 * 컨트롤러에서 넘겨받은 카테고리 리스트를 신규, 수정, 삭제로 분류하여 저장한다.
+	 * @return String
+	 * 
+	 * @param List<Map<String, Object>> paramList
+	 * @exception Exception Exception
+	 */
+	public void saveCategoryList(List<Map<String, Object>> paramList) throws Exception;
 	
 	/**
 	 * 카테고리의 ID 최대값 다음을 조회 한다.
@@ -128,6 +205,16 @@ public interface EgovManagementService {
 	 */
 	public List<ProductTypeVO> getTypeListAll() throws Exception;
 	
+
+	/**
+	 * 컨트롤러에서 넘겨받은 유형 리스트를 신규, 수정, 삭제로 분류하여 저장한다.
+	 * @return String
+	 * 
+	 * @param List<Map<String, Object>> paramList
+	 * @exception Exception Exception
+	 */
+	public void saveTypeList(List<Map<String, Object>> paramList) throws Exception;
+	
 	/**
 	 * 타입의 ID 최대값 다음을 조회 한다.
 	 * @return
@@ -175,6 +262,16 @@ public interface EgovManagementService {
 	 * @exception Exception Exception
 	 */
 	public List<StockVO> getStockListAll() throws Exception;
+	
+
+	/**
+	 * 컨트롤러에서 넘겨받은 재고 리스트를 신규, 수정, 삭제로 분류하여 저장한다.
+	 * @return String
+	 * 
+	 * @param List<Map<String, Object>> paramList
+	 * @exception Exception Exception
+	 */
+	public void saveStockList(List<Map<String, Object>> paramList) throws Exception;
 	
 	/**
 	 * 재고의 ID의 최대값 다음을 조회 한다.
@@ -240,6 +337,15 @@ public interface EgovManagementService {
 	 * @exception Exception Exception
 	 */
 	public List<StockIoVO> getStockOutputListByStockId(String stockId) throws Exception;
+
+	/**
+	 * 컨트롤러에서 넘겨받은 입출고 리스트를 신규, 수정, 삭제로 분류하여 저장한다.
+	 * @return String
+	 * 
+	 * @param List<Map<String, Object>> paramList
+	 * @exception Exception Exception
+	 */
+	public void saveStockIoList(List<Map<String, Object>> paramList) throws Exception;
 	
 	/**
 	 * 입출고의 ID의 최대값 다음을 조회 한다.
@@ -275,6 +381,5 @@ public interface EgovManagementService {
 	 * @param 
 	 * @exception Exception Exception
 	 */
-	public void removeStockIo(StockIoVO stockIoVO) throws Exception;
-	
+	public void removeStockIo(StockIoVO stockIoVO) throws Exception;	
 }

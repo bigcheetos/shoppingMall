@@ -128,6 +128,17 @@ public class EgovFileMngServiceImpl extends EgovAbstractServiceImpl implements E
     }
 
     /**
+     * 파일 구분자에 대한 최대값을 구한다.
+     *
+     * @see egovframework.com.cmm.service.EgovFileMngService#getMaxFileSN(egovframework.com.cmm.service.FileVO)
+     */
+    @Override
+	public int getMaxFileId() throws Exception {
+	return fileMngDAO.getMaxFileId();
+    }
+
+    
+    /**
      * 전체 파일을 삭제한다.
      *
      * @see egovframework.com.cmm.service.EgovFileMngService#deleteAllFileInf(egovframework.com.cmm.service.FileVO)

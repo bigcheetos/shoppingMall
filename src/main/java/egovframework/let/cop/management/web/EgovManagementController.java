@@ -1,7 +1,5 @@
 package egovframework.let.cop.management.web;
 
-import java.util.List;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,9 +12,6 @@ import org.springmodules.validation.commons.DefaultBeanValidator;
 
 import egovframework.com.cmm.ComDefaultVO;
 import egovframework.let.cop.management.service.EgovManagementService;
-import egovframework.let.cop.management.service.ProductCategoryVO;
-import egovframework.let.cop.management.service.ProductTypeVO;
-import egovframework.let.cop.management.service.StockVO;
 
 @Controller @SessionAttributes(types = ComDefaultVO.class)
 public class EgovManagementController {
@@ -64,44 +59,70 @@ public class EgovManagementController {
     /**
      * 관리 > 상품
      */
-    @RequestMapping("/cmm/main/management/product.do")
-    public String viewProduct(HttpServletRequest request, ModelMap model) throws Exception {
-    	return "food/management/Product";
+    @RequestMapping("/cmm/main/management/product_management.do")
+    public String viewProductManagement(HttpServletRequest request, ModelMap model) throws Exception {
+    	return "food/management/ProductManagement";
+    }
+
+    /**
+     * 관리 > 상품
+     */
+    @RequestMapping("/cmm/main/management/product_regist.do")
+    public String viewProductRegist(HttpServletRequest request, ModelMap model) throws Exception {
+    	return "food/management/ProductRegist";
+    }
+        
+    /**
+     * 관리 > 재고
+     */
+    @RequestMapping("/cmm/main/management/stock_management.do")
+    public String viewStockManagement(HttpServletRequest request, ModelMap model) throws Exception {
+    	
+    	return "food/management/StockManagement";
     }
     
     /**
      * 관리 > 재고
      */
-    @RequestMapping("/cmm/main/management/stock.do")
-    public String viewStock(HttpServletRequest request, ModelMap model) throws Exception {
+    @RequestMapping("/cmm/main/management/stock_io_management.do")
+    public String viewStockIoManagement(HttpServletRequest request, ModelMap model) throws Exception {
     	
-    	return "food/management/Stock";
-    }
-    
-    /**
-     * 관리 > 재고
-     */
-    @RequestMapping("/cmm/main/management/stock_io.do")
-    public String viewStockIo(HttpServletRequest request, ModelMap model) throws Exception {
-    	
-    	return "food/management/StockIo";
+    	return "food/management/StockIoManagement";
     }
     
     /**
      * 관리 > 카테고리
      */
-    @RequestMapping("/cmm/main/management/product_category.do")
-    public String viewProductCategory(HttpServletRequest request, ModelMap model) throws Exception {
+    @RequestMapping("/cmm/main/management/product_category_management.do")
+    public String viewProductCategoryManagement(HttpServletRequest request, ModelMap model) throws Exception {
     	
-    	return "food/management/ProductCategory";
+    	return "food/management/ProductCategoryManagement";
     }
     
     /**
      * 관리 > 유형
      */
-    @RequestMapping("/cmm/main/management/product_type.do")
-    public String viewProductType(HttpServletRequest request, ModelMap model) throws Exception {
+    @RequestMapping("/cmm/main/management/product_type_management.do")
+    public String viewProductTypeManagement(HttpServletRequest request, ModelMap model) throws Exception {
     	
-    	return "food/management/ProductType";
+    	return "food/management/ProductTypeManagement";
+    }
+    
+    /**
+     * 관리 > 첨부파일 관리
+     */
+    @RequestMapping("/cmm/main/management/atch_file_management.do")
+    public String viewAtchFileManagement(HttpServletRequest request, ModelMap model) throws Exception {
+    	
+    	return "food/management/AtchFileManagement";
+    }
+    
+	/**
+     * 관리 > 첨부파일 팝업
+     */
+    @RequestMapping("/cmm/fms/EgovFileUploadPopup.do")
+    public String viewEgovFileUploadPopup(HttpServletRequest request, ModelMap model) throws Exception {
+    	
+    	return "cmm/fms/EgovFileUploadPopup";
     }
 }
