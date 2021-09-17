@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import egovframework.let.cop.management.service.EgovManagementService;
 import egovframework.let.cop.management.service.ProductCategoryVO;
 import egovframework.let.cop.management.service.ProductDetailVO;
+import egovframework.let.cop.management.service.ProductOptionVO;
 import egovframework.let.cop.management.service.ProductTypeVO;
 import egovframework.let.cop.management.service.ProductVO;
 import egovframework.let.cop.management.service.StockIoVO;
@@ -53,6 +54,9 @@ public class EgovManagementServiceImpl extends EgovAbstractServiceImpl implement
 	
 	@Resource(name = "StockIoDAO")
 	private StockIoDAO stockIoDAO;
+
+	@Resource(name = "ProductOptionDAO")
+	private ProductOptionDAO productOptionDAO;
 	
 	/**
      * 모든 제품을 조회 한다.
@@ -174,7 +178,8 @@ public class EgovManagementServiceImpl extends EgovAbstractServiceImpl implement
 		// TODO Auto-generated method stub
 		
 		// 신규인지 수정인지 체크
-		for(Map<String, Object> param : paramList) {
+		// 작업중...
+		/*for(Map<String, Object> param : paramList) {
     		String rowType = String.valueOf(param.get("rowType"));
     		
     		ProductDetailVO productDetailVO = new ProductDetailVO();
@@ -184,7 +189,7 @@ public class EgovManagementServiceImpl extends EgovAbstractServiceImpl implement
     		// 신규 추가
     		if(rowType.equals("new")) {
     			// DB에서 다음 아이디 가져오기
-    			/*productDetailVO.setProductId(getProductNextId());*/
+    			productDetailVO.setProductId(getProductNextId());
     			addProductDetail(productDetailVO);
     		// 수정
 			} else if(rowType.equals("updated")) {
@@ -193,7 +198,7 @@ public class EgovManagementServiceImpl extends EgovAbstractServiceImpl implement
 			} else if(rowType.equals("removed")) {
 				removeProductDetail(productDetailVO);
 			}
-    	}
+    	}*/
 		/*ProductVO productVO = productDetailVO.getProductVO();
 		
 		productDetailDAO.insertProductDetail(productDetailVO);*/
@@ -204,19 +209,19 @@ public class EgovManagementServiceImpl extends EgovAbstractServiceImpl implement
 	@Override
 	public void addProductDetail(ProductDetailVO productDetailVO) throws Exception {
 		// TODO Auto-generated method stub
-		
+		productDetailDAO.insertProductDetail(productDetailVO);
 	}
 
 	@Override
 	public void modifyProductDetail(ProductDetailVO productDetailVO) throws Exception {
 		// TODO Auto-generated method stub
-		
+		productDetailDAO.updateProductDetail(productDetailVO);
 	}
 
 	@Override
 	public void removeProductDetail(ProductDetailVO productDetailVO) throws Exception {
 		// TODO Auto-generated method stub
-		
+		productDetailDAO.deleteProductDetail(productDetailVO);
 	}
 	
 	/**
@@ -576,7 +581,7 @@ public class EgovManagementServiceImpl extends EgovAbstractServiceImpl implement
 	}
 	
 	/**
-     * 입출고를 수정한다.
+     * 입출고를 신규 추가한다.
      *
      * @see egovframework.let.cop.management.service.EgovManagementService
      * #modifyStock(egovframework.let.cop.management.service.StockIoVO)
@@ -609,5 +614,99 @@ public class EgovManagementServiceImpl extends EgovAbstractServiceImpl implement
 	public void removeStockIo(StockIoVO stockIoVO) throws Exception {
 		// TODO Auto-generated method stub
 		stockIoDAO.deleteStockIo(stockIoVO);
+	}
+
+	/** 입출고 끝 **/
+	/** 옵션 시작 **/
+	
+	/**
+     * 모든 옵션을 조회 한다.
+     *
+     * @see egovframework.let.cop.management.service.EgovManagementService
+     */
+	@Override
+	public List<ProductOptionVO> getOptionListAll() throws Exception {
+		// TODO Auto-generated method stub
+		return productOptionDAO.selectOptionListAll();
+	}
+	
+	/**
+     * 컨트롤러에서 넘겨받은 옵션 목록을 신규, 수정, 삭제로 분류한다.
+     *
+     * @see egovframework.let.cop.management.service.EgovManagementService
+     */
+	@Override
+	public void saveOptionList(List<Map<String, Object>> paramList) throws Exception {
+		// TODO Auto-generated method stub
+		for(Map<String, Object> param : paramList) {
+    		String rowType = String.valueOf(param.get("rowType"));
+    		
+    		ProductOptionVO optionVO = new ProductOptionVO();
+    		optionVO.setOptionCode(String.valueOf(param.get("optionCode")));
+    		optionVO.setStockId(String.valueOf(param.get("stockId")));
+    		optionVO.setAtchFileId(String.valueOf(param.get("atchFileId")));
+    		optionVO.setOptionName(String.valueOf(param.get("optionName")));
+    		optionVO.setOptionStatus(String.valueOf(param.get("optionStatus")));
+    		optionVO.setOptionPrice(String.valueOf(param.get("optionPrice")));
+    		
+    		// 신규 추가
+    		if(rowType.equals("new")) {
+    			// DB에서 다음 아이디 가져오기
+    			addOption(optionVO);
+    		// 수정
+			} else if(rowType.equals("updated")) {
+				modifyOption(optionVO);
+			// 삭제
+			} else if(rowType.equals("removed")) {
+				removeOption(optionVO);
+			}
+    	}
+	}
+	
+	/**
+     * 옵션 코드값이 존재하는지 조회한다.
+     *
+     * @see egovframework.let.cop.management.service.EgovManagementService
+     */
+	@Override
+	public boolean checkOptionCode(String optionCode) throws Exception {
+		// TODO Auto-generated method stub
+		return productOptionDAO.countByOptionCode(optionCode)>0;
+	}
+	
+	/**
+     * 옵션을 신규 추가한다.
+     *
+     * @see egovframework.let.cop.management.service.EgovManagementService
+     * #modifyStock(egovframework.let.cop.management.service.productOptionVO)
+     */
+	@Override
+	public void addOption(ProductOptionVO productOptionVO) throws Exception {
+		// TODO Auto-generated method stub
+		productOptionDAO.insertOption(productOptionVO);
+	}
+	
+	/**
+     * 옵션을 수정한다.
+     *
+     * @see egovframework.let.cop.management.service.EgovManagementService
+     * #modifyStock(egovframework.let.cop.management.service.productOptionVO)
+     */
+	@Override
+	public void modifyOption(ProductOptionVO productOptionVO) throws Exception {
+		// TODO Auto-generated method stub
+		productOptionDAO.updateOption(productOptionVO);
+	}
+	
+	/**
+     * 옵션을삭제한다.
+     *
+     * @see egovframework.let.cop.management.service.EgovManagementService
+     * #modifyStock(egovframework.let.cop.management.service.productOptionVO)
+     */
+	@Override
+	public void removeOption(ProductOptionVO productOptionVO) throws Exception {
+		// TODO Auto-generated method stub
+		productOptionDAO.deleteOption(productOptionVO);
 	}
 }

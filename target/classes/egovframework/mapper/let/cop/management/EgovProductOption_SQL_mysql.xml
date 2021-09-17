@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ProductOptionDAO">
+	
+	<select id="selectOptionListAll" resultMap="ProductOptionResultMap" >
+			SELECT 
+				OPTION_CODE,
+				STOCK_ID,
+				ATCH_FILE_ID,
+				OPTION_NAME,
+				OPTION_STATUS,
+				OPTION_PRICE
+			FROM
+				PRODUCT_OPTION			
+	</select>
+	
+	<select id="selectCountByOptionCode" resultType="int" parameterType = "string">
+		SELECT
+			COUNT(*)
+		FROM
+			PRODUCT_OPTION
+		WHERE
+			OPTION_CODE = #{optionCode}
+	</select>
+	
+	<insert id="insertOption">
+			INSERT INTO
+				PRODUCT_OPTION
+			(
+				OPTION_CODE,
+				STOCK_ID,
+				ATCH_FILE_ID,
+				OPTION_NAME,
+				OPTION_STATUS,
+				OPTION_PRICE
+			)
+			VALUES
+			(
+				#{optionCode},
+				#{stockId},
+				#{atchFileId}, 
+				#{optionName},
+				#{optionStatus},
+				#{optionPrice}
+			)
+	</insert>
+	
+	<update id="updateOption">
+			UPDATE
+				PRODUCT_OPTION
+			SET
+				STOCK_ID 		= #{stockId},
+				ATCH_FILE_ID 	= #{atchFileId},
+				OPTION_NAME 	= #{optionName},
+				OPTION_STATUS 	= #{optionStatus},  
+				OPTION_PRICE 	= #{optionPrice}
+			WHERE
+				OPTION_CODE 		= #{optionCode}
+	</update>
+	
+	<delete id="deleteOption">
+		DELETE
+			FROM PRODUCT_OPTION
+		WHERE
+			OPTION_CODE = #{optionCode}
+	</delete>
+	
+	<resultMap id="ProductOptionResultMap" type="egovframework.let.cop.management.service.ProductOptionVO">
+		<result property="optionCode" 	column="OPTION_CODE"/>
+		<result property="stockId" 		column="STOCK_ID"/>
+		<result property="atchFileId" 	column="ATCH_FILE_ID"/>
+		<result property="optionStatus" column="OPTION_STATUS"/>
+		<result property="optionName" 	column="OPTION_NAME"/>
+		<result property="optionPrice" 	column="OPTION_PRICE"/>
+	</resultMap>
+</mapper>

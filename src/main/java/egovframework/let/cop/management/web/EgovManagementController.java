@@ -59,7 +59,7 @@ public class EgovManagementController {
     /**
      * 관리 > 상품
      */
-    @RequestMapping("/cmm/main/management/product_management.do")
+    @RequestMapping("/cmm/main/management/productManagement.do")
     public String viewProductManagement(HttpServletRequest request, ModelMap model) throws Exception {
     	return "food/management/ProductManagement";
     }
@@ -67,7 +67,7 @@ public class EgovManagementController {
     /**
      * 관리 > 상품
      */
-    @RequestMapping("/cmm/main/management/product_regist.do")
+    @RequestMapping("/cmm/main/management/productRegist.do")
     public String viewProductRegist(HttpServletRequest request, ModelMap model) throws Exception {
     	return "food/management/ProductRegist";
     }
@@ -75,7 +75,7 @@ public class EgovManagementController {
     /**
      * 관리 > 재고
      */
-    @RequestMapping("/cmm/main/management/stock_management.do")
+    @RequestMapping("/cmm/main/management/stockManagement.do")
     public String viewStockManagement(HttpServletRequest request, ModelMap model) throws Exception {
     	
     	return "food/management/StockManagement";
@@ -84,7 +84,7 @@ public class EgovManagementController {
     /**
      * 관리 > 재고
      */
-    @RequestMapping("/cmm/main/management/stock_io_management.do")
+    @RequestMapping("/cmm/main/management/stockIoManagement.do")
     public String viewStockIoManagement(HttpServletRequest request, ModelMap model) throws Exception {
     	
     	return "food/management/StockIoManagement";
@@ -93,7 +93,7 @@ public class EgovManagementController {
     /**
      * 관리 > 카테고리
      */
-    @RequestMapping("/cmm/main/management/product_category_management.do")
+    @RequestMapping("/cmm/main/management/productCategoryManagement.do")
     public String viewProductCategoryManagement(HttpServletRequest request, ModelMap model) throws Exception {
     	
     	return "food/management/ProductCategoryManagement";
@@ -102,7 +102,7 @@ public class EgovManagementController {
     /**
      * 관리 > 유형
      */
-    @RequestMapping("/cmm/main/management/product_type_management.do")
+    @RequestMapping("/cmm/main/management/productTypeManagement.do")
     public String viewProductTypeManagement(HttpServletRequest request, ModelMap model) throws Exception {
     	
     	return "food/management/ProductTypeManagement";
@@ -111,10 +111,19 @@ public class EgovManagementController {
     /**
      * 관리 > 첨부파일 관리
      */
-    @RequestMapping("/cmm/main/management/atch_file_management.do")
+    @RequestMapping("/cmm/main/management/atchFileManagement.do")
     public String viewAtchFileManagement(HttpServletRequest request, ModelMap model) throws Exception {
     	
     	return "food/management/AtchFileManagement";
+    }
+    
+    /**
+     * 관리 > 옵션 관리
+     */
+    @RequestMapping("/cmm/main/management/productOptionManagement.do")
+    public String viewProductOptionManagement(HttpServletRequest request, ModelMap model) throws Exception {
+    	
+    	return "food/management/ProductOptionManagement";
     }
     
 	/**
@@ -124,5 +133,23 @@ public class EgovManagementController {
     public String viewEgovFileUploadPopup(HttpServletRequest request, ModelMap model) throws Exception {
     	
     	return "cmm/fms/EgovFileUploadPopup";
+    }
+    
+    /**
+     * 관리 > 꽃 원산지 표시 안내 팝업
+     */
+    @RequestMapping("/cmm/main/management/viewOriginFlowerCountry.do")
+    public String viewOriginFlowerCountry(HttpServletRequest request, ModelMap model) throws Exception {
+    	
+    	return "food/management/OriginFlowerContry";
+    }
+    
+    /**
+     * 관리 > 이미지 파일 팝업
+     */
+    @RequestMapping("/cmm/main/management/viewImgFilePopup.do")
+    public String viewImgFilePopup(HttpServletRequest request, ModelMap model) throws Exception {
+    	
+    	return "food/management/ImgFilePopup";
     }
 }

@@ -1,6 +1,7 @@
 package egovframework.let.cop.management.web;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,6 +23,7 @@ import egovframework.com.cmm.service.EgovFileMngService;
 import egovframework.com.cmm.service.FileVO;
 import egovframework.let.cop.management.service.EgovManagementService;
 import egovframework.let.cop.management.service.ProductCategoryVO;
+import egovframework.let.cop.management.service.ProductOptionVO;
 import egovframework.let.cop.management.service.ProductTypeVO;
 import egovframework.let.cop.management.service.ProductVO;
 import egovframework.let.cop.management.service.StockIoVO;
@@ -244,9 +246,12 @@ public class EgovManagementRestController {
     	
     	String stockId = request.getParameter("stockId");
     	
-    	if(EgovStringUtil.isEmpty(stockId)) {
+    	if(EgovStringUtil.isEmpty(stockId)
+		||stockId.equals("null")) {
     		stockId = "";
     	}
+    	
+    	
     	
     	StockIoVO stockIoVO = new StockIoVO();
     	stockIoVO.setStockId(stockId);
@@ -294,7 +299,8 @@ public class EgovManagementRestController {
     	
     	FileVO fileVO = new FileVO();
     	
-    	if(EgovStringUtil.isEmpty(atchFileId)) {
+    	if(EgovStringUtil.isEmpty(atchFileId)
+		|| atchFileId.equals("null")) {
     		atchFileId = "";
     	}
     	
@@ -303,5 +309,92 @@ public class EgovManagementRestController {
     	List<FileVO> result = fileService.selectFileInfs(fileVO);
     	
     	return result;
+    }
+    
+    /**
+     * 이미지파일 목록 조회
+     *
+     * @param request, model
+     * @return List<FileVO>
+     */
+    @RequestMapping("/cmm/fms/getImgFileList.do")
+    public List<FileVO> getImgFileList(HttpServletRequest request, ModelMap model) throws Exception {
+    	
+    	String atchFileId = request.getParameter("atchFileId");
+    	
+    	FileVO fileVO = new FileVO();
+    	
+    	if(EgovStringUtil.isEmpty(atchFileId)
+		|| atchFileId.equals("null")) {
+    		atchFileId = "";
+    	}
+    	
+    	fileVO.setAtchFileId(atchFileId);
+    	
+    	List<FileVO> result = fileService.selectImageFileList(fileVO);
+    	
+    	return result;
+    }
+    
+    /**
+     * 옵션 목록 조회
+     *
+     * @param request, model
+     * @return List<ProductOptionVO>
+     */
+    @RequestMapping("/cmm/main/management/getProductOptionList.do")
+    public List<ProductOptionVO> getProductOptionList(HttpServletRequest request, ModelMap model) throws Exception {
+    	
+    	List<ProductOptionVO> optionList = managementService.getOptionListAll();
+    	
+    	return optionList;
+    }
+    
+    /**
+     * 옵션 추가/삭제/수정 저장
+     *
+     * @param paramList, request, model
+     * @return List<ProductOptionVO>
+     */
+    @RequestMapping("/cmm/main/management/registProductOption.do")
+    @ResponseBody
+    public String registProductOption(@RequestBody  List<Map<String, Object>> paramList, HttpServletRequest request, ModelMap model) throws Exception {
+    	
+    	String message = "";
+    	
+    	if(paramList != null) {
+    		try {
+    			managementService.saveOptionList(paramList);
+    			message = "success";
+    		} catch(Exception e) {
+    			e.printStackTrace();
+    			message = "fail";
+    		}
+    	}
+    	
+    	return message;
+    }  
+    
+    /**
+     * 상품코드 조회
+     *
+     * @param request, model
+     * @return String
+     */
+    @RequestMapping("/cmm/main/management/checkExistProductCode.do")
+    public HashMap<String, String> checkExistProductCode(HttpServletRequest request, ModelMap model) throws Exception {
+    	
+    	String productCode = request.getParameter("productCode");
+    	String returnValue = "fail";
+    	HashMap<String, String> returnMap = new HashMap<>();
+    	
+    	// + 기타 상품코드를 검사하는 코드...
+    	if(!EgovStringUtil.isEmpty(productCode)) {
+    		returnValue = managementService.checkProductCode(productCode)?"true":"false";
+    	}
+    	
+    	returnMap.put("returnValue", returnValue);
+    	
+    	return returnMap;
     }
 }

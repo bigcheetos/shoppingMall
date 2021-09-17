@@ -381,5 +381,65 @@ public interface EgovManagementService {
 	 * @param 
 	 * @exception Exception Exception
 	 */
-	public void removeStockIo(StockIoVO stockIoVO) throws Exception;	
+	public void removeStockIo(StockIoVO stockIoVO) throws Exception;
+	
+	/** 입출고 끝 **/
+	/** 옵션 시작 **/
+
+	/**
+	 * 옵션에 대하여 내용을 조회 한다.
+	 * @return
+	 * 
+	 * @param 
+	 * @exception Exception Exception
+	 */
+	public List<ProductOptionVO> getOptionListAll() throws Exception;
+	
+
+	/**
+	 * 컨트롤러에서 넘겨받은 옵션 리스트를 신규, 수정, 삭제로 분류하여 저장한다.
+	 * @return String
+	 * 
+	 * @param List<Map<String, Object>> paramList
+	 * @exception Exception Exception
+	 */
+	public void saveOptionList(List<Map<String, Object>> paramList) throws Exception;
+	
+	/**
+	 * 옵션 코드가 데이터베이스에 존재하는지 확인한다.
+	 * @return boolean
+	 * 
+	 * @param String
+	 * @exception Exception Exception
+	 */
+	public boolean checkOptionCode(String optionCode) throws Exception;
+	
+	/**
+	 * 옵션을 추가한다.
+	 * @return
+	 * 
+	 * @param 
+	 * @exception Exception Exception
+	 */
+	public void addOption(ProductOptionVO productOptionVO) throws Exception;
+	
+	/**
+	 * 옵션을 수정한다.
+	 * @return
+	 * 
+	 * @param 
+	 * @exception Exception Exception
+	 */
+	public void modifyOption(ProductOptionVO productOptionVO) throws Exception;
+	
+	/**
+	 * 옵션을 제거한다.
+	 * @return
+	 * 
+	 * @param 
+	 * @exception Exception Exception
+	 */
+	public void removeOption(ProductOptionVO productOptionVO) throws Exception;
+	
+	/** 옵션 끝 **/
 }

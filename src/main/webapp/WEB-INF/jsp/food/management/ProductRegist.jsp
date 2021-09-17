@@ -14,7 +14,6 @@
 .bg-lightgray {
 	background: #f4f4f4;
 }
-
 </style>
 <head>
     <meta charset="UTF-8">
@@ -76,11 +75,15 @@
 						<td class="bg-lightgray">
 							상품코드
 						</td>
-						<td class="s_txt02 bt">
-							<input type="text" name="prd_code" title="상품코드" class="input_s" size="20" maxlength="20" value="">
-							<!-- <span class="button small icon"><span class="check"></span></span> -->
-							<button class="btn btn-primary" type="button" onclick="check_exist_prdcode()">중복체크</button>
-							<span class="blue">미입력시 자동으로 등록됩니다.</span>
+						<td>
+							<div style="float:left">
+								<input type="text" id="product_code" name="product_code" title="상품코드" class="form-control" size="20" maxlength="20" value="">
+							</div>
+							<div>
+								&nbsp;
+								<button class="btn btn-primary" type="button" onclick="fn_checkExistProductcode()">중복체크</button>
+								<span class="blue">미입력시 자동으로 등록됩니다.</span>
+							</div>
 						</td>
 					</tr>
 
@@ -88,7 +91,7 @@
 						<td class="bg-lightgray">
 							*카테고리
 						</td>
-						<td class="s_txt02 bt">
+						<td>
 						<!-- 카테고리 넣는 곳 -->
 							<div id="category_areas">								 
 							</div>
@@ -98,11 +101,7 @@
 						<td class="bg-lightgray">
 							*이미지
 						</td>
-						<td class="s_txt02" style="padding-right:0;">
-                            
-                            <!-- <img src="/common/html/admin/images/goods/btn_inter_img.gif" alt="제공이미지 사용" width="91" height="19" class="pointer" onclick="$('#image_selector').dialog('open')" style="float:right;"> -->
-                            <input type="button" class="btn btn-primary" value="제공이미지 사용"/>
-                            
+						<td style="padding-right:0;">
 							<div id="my_image_file">
 								<ul class="prd_img_file list-group" style="width:100%;">
 									<li class="list-group-item">
@@ -113,7 +112,9 @@
                                         <div class="img_cont">
                                             <div class="blue">대표 이미지(필수)</div>
                                             <div class="file">
-                                                <input class ="btn" name="prd_image1" id="prd_image1" type="file" title="상품 이미지">
+                                                <!-- <input class ="btn" name="prd_image1" id="prd_image1" type="file" title="상품 이미지"> -->
+                                                <input type="button" class="btn btn-secondary" onclick="fn_btnImgUploadOnClicked()" value="파일선택"/>
+                                                <input type="button" class="btn btn-secondary" onclick="fn_btnImgSelectorOnClicked()" value="제공이미지 사용"/>
                                             </div>
                                         </div>
 									</li>
@@ -121,8 +122,8 @@
                                         <div class="img_thumb" style="width:0;"></div>
                                         <div class="img_cont">
                                             <div class="blue">
-                                                * 파일 확장자 : <b>gif, jpg, png</b> / 파일 용량 : <b>5MB</b><br>
-                                                * 적용하기 후 등록한 상품 <b>이미지 회전</b> 가능
+                                                * 파일 확장자 : <b>gif, jpg, png, bmp</b> / 파일 용량 : <b>5MB</b><br>
+                                                <!-- * 적용하기 후 등록한 상품 <b>이미지 회전</b> 가능 -->
                                             </div>
                                         </div>
 									</li>
@@ -264,9 +265,9 @@
 						<td class="bg-lightgray">
 							*상품명
 						</td>
-						<td class="s_txt02">
+						<td>
 							<div class="item">
-								<input type="text" name="prd_name" title="상품명" class="input_s" size="50" value="">
+								<input type="text" name="prd_name" title="상품명" class="form-control" size="50" value="" required>
 							</div>
 						</td>
 					</tr>
@@ -274,334 +275,79 @@
 						<td class="bg-lightgray">
 							*판매 금액<br />
 						</td>
-						<td class="s_txt02">
+						<td>
 							<div class="item">
-								<!-- 명칭 <input type="text" name="prd_pname1" title="명칭1" class="input_s" size="10" style="margin-bottom:4px;" value="">&nbsp; 가격-->
-								 <input type="text" name="prd_price1" title="가격1" class="input_s" size="10" style="margin-bottom:4px; text-align:right;" value="0">원
-
-								* 명칭은 4~5자가 가장 적절하게 표시됩니다.
+								<div style="float:left">
+									<input type="number" min="0" name="prd_price1" title="가격1" class="form-control" style="margin-bottom:4px; text-align:right;" value="0" required>
+								</div>
+								 <div>
+									 &nbsp;원
+									 &nbsp;* 명칭은 4~5자가 가장 적절하게 표시됩니다.
+								 </div>
+								 
 								<br/>
-								<!-- 명칭 <input type="text" name="prd_pname2" title="명칭2" class="input_s" size="10" style="margin-bottom:4px;" value="상품">&nbsp;
-								가격 <input type="text" name="prd_price2" title="가격2" class="input_s" size="10" style="margin-bottom:4px; text-align:right;" value="0">원
-								<br/>
-								명칭 <input type="text" name="prd_pname3" title="명칭3" class="input_s" size="10" style="margin-bottom:4px;" value="특품">&nbsp;
-								가격 <input type="text" name="prd_price3" title="가격3" class="input_s" size="10" style="margin-bottom:4px; text-align:right;" value="0">원 -->
 							</div>
 						</td>
 					</tr>
-					
-
-					<!-- <tr>
-						<td class="bg-lightgray">
-							발주 금액 
-							<img src="/common/html/admin/images/common/question.gif" border="0" width="12" height="15" id="btn_balju_price_info" class="point" />
-							<div id="balju_price_info" style="display:none; position:absolute; background-color:#eee; border:1px solid #666; width:505px; height:70px; padding:10px;">
-1.관리자 페이지에서 발주시 해당 금액 또는 %를 반영하여 결제금액으로 노출됩니다.<br />
-2.쇼핑몰관리 - 발주설정의 기본 결제금액 요율 보다 우선 적용됩니다.<br />
-3.다중상품에서 발주금액이 없는 상품이 있는경우 쇼핑몰관리 - 발주설정의<br />
-&nbsp;&nbsp;기본 결제금액 요율로 적용됩니다.
-							</div>
-						</td>
-						<td class="s_txt02">
-							<div class="item" style="margin-bottom:4px;">
-								명칭1 
-								<input type="radio" name="prd_balju_price1_flag" title="고정"   class="input_s" value="F" id="prd_balju_price1_flag_F"  /><label for="prd_balju_price1_flag_F">고정</label>
-								<input type="radio" name="prd_balju_price1_flag" title="퍼센트" class="input_s" value="P" id="prd_balju_price1_flag_P"  /><label for="prd_balju_price1_flag_P">퍼센트</label>
-								<input type="text"  name="prd_balju_price1" title="할인율" class="input_s" size="10" value="" style="text-align:right;" />
-								<span class="flag_sub">%</span>
-							</div>
-
-							<div class="item" style="margin-bottom:4px;">
-								명칭2 
-								<input type="radio" name="prd_balju_price2_flag" title="고정"   class="input_s" value="F" id="prd_balju_price2_flag_F"  /><label for="prd_balju_price2_flag_F">고정</label>
-								<input type="radio" name="prd_balju_price2_flag" title="퍼센트" class="input_s" value="P" id="prd_balju_price2_flag_P"  /><label for="prd_balju_price2_flag_P">퍼센트</label>
-								<input type="text"  name="prd_balju_price2" title="할인율" class="input_s" size="10" value="" style="text-align:right;" />
-								<span class="flag_sub">%</span>
-							</div>
-							
-							<div class="item" style="margin-bottom:4px;">
-								명칭3
-								<input type="radio" name="prd_balju_price3_flag" title="고정"   class="input_s" value="F" id="prd_balju_price3_flag_F"  /><label for="prd_balju_price3_flag_F">고정</label>
-								<input type="radio" name="prd_balju_price3_flag" title="퍼센트" class="input_s" value="P" id="prd_balju_price3_flag_P"  /><label for="prd_balju_price3_flag_P">퍼센트</label>
-								<input type="text"  name="prd_balju_price3" title="할인율" class="input_s" size="10" value="" style="text-align:right;" />
-								<span class="flag_sub">%</span>
-							</div>
-						</td>
-					</tr> -->
-
-
 					<tr>
 						<td class="bg-lightgray" rowspan="2">
-							사용자옵션
+							옵션
 						</td>
-						<td class="s_txt02">
+						<td>
 							<div class="item" style="padding-bottom:3px; padding-top:2px; ">
-								옵션명 <input type="text" name="ps_title[]" title="사용자옵션명" class="input_s" value="">
-								옵션내용 <input type="text" name="ps_contents[]" title="사용자옵션" class="input_s"  value="">
-								<!-- <img src="/common/html/admin/images/common/btn_plus.gif" width="15" height="15" align="absmiddle" class="pointer" onclick="add_spec(this);"> -->
-								<input type="button" class="btn btn-secondary" value="+추가 옵션">
+								<div>
+									<div style="width:20%; float:left">
+										&nbsp;&nbsp;옵션명&nbsp;
+									</div>
+									<div style="width:79%; float:left">
+										<input type="text" name="ps_title[]" title="사용자옵션명" class="form-control" value="">
+									</div>
+								</div>
+								<div>
+									<div style="width:20%; float:left">
+										&nbsp;&nbsp;옵션내용&nbsp;
+									</div>
+									<div style="width:79%; float:left">
+									 	<input type="text" name="ps_contents[]" title="사용자옵션" class="form-control"  value="">
+									</div>
+								</div>
+								<div>
+									<input type="button" class="btn btn-secondary" value="+추가 옵션">
+								</div>
 							</div>
 							
 							
 						</td>
 					</tr>
-					<tr><td class="s_txt02" style="padding-bottom:3px; padding-top:2px;">*옵션명은 한글 기준 20자 옵션내용은 한글 기준 50글자 이내로 작성하여 주세요.</td></tr>
+					<tr><td style="padding-bottom:3px; padding-top:2px;">*옵션명은 한글 기준 20자 옵션내용은 한글 기준 50글자 이내로 작성하여 주세요.</td></tr>
 					<tr>
 						<td class="bg-lightgray">
 							할인금액
 						</td>
-						<td class="s_txt02">
+						<td>
 							<div class="item">
-								<!-- <input type="radio" name="prd_dc_flag" title="고정"   class="input_s" value="F" id="prd_dc_flag_F" /><label for="prd_dc_flag_F">고정</label>
-								<input type="radio" name="prd_dc_flag" title="퍼센트" class="input_s" value="P" id="prd_dc_flag_P" /><label for="prd_dc_flag_P">퍼센트</label> -->
-								<input type="text" name="prd_dc_rate" title="할인율" class="input_s" size="4" value="0" style="text-align:right;" readonly />원
-								<!-- <span class="flag_sub">%</span> -->
-
-								<!-- &nbsp;&nbsp;&nbsp;
-								<input type="radio" name="is_dc_except" class="input_s" id="is_dc_except_N" value="N" checked /><label for="is_dc_except_N">할인 포함</label>&nbsp;
-								<input type="radio" name="is_dc_except" class="input_s" id="is_dc_except_Y" value="Y"  /><label for="is_dc_except_Y">할인 제외</label>&nbsp;
-								
-								&nbsp;&nbsp; * 할인정책 설정 후 입력가능합니다. -->
-							</div>
-						</td>
-					</tr>
-					<!--
-					<tr>
-						<td class="bg-lightgray">
-							할인 사용 여부
-						</td>
-						<td class="s_txt02">
-							<div class="item">
-								<input type="radio" name="prd_dc_used" title="할인 사용 가능" class="input_s" value="Y" id="prd_dc_used_Y" /><label for="prd_dc_used_Y">가능</label>
-								<input type="radio" name="prd_dc_used" title="할인 사용 불가" class="input_s" value="N" id="prd_dc_used_N" /><label for="prd_dc_used_N">불가능</label>
-							</div>
-						</td>
-					</tr>
-					-->
-					<!-- <tr>
-						<td class="bg-lightgray">
-							적립율
-						</td>
-						<td class="s_txt02">
-							<div class="item">
-								<input type="radio" name="prd_mile_flag" title="고정"   class="input_s" value="F" id="prd_mile_flag_F" /><label for="prd_mile_flag_F">고정</label>
-								<input type="radio" name="prd_mile_flag" title="퍼센트" class="input_s" value="P" id="prd_mile_flag_P" /><label for="prd_mile_flag_P">퍼센트</label>
-								<input type="text" name="prd_mile_rate" title="적립율" class="input_s" size="4" value="0" style="text-align:right;" />
-								<span class="flag_sub">%</span>
-								
-								&nbsp;&nbsp;&nbsp;
-								<input type="radio" name="is_mile_except" class="input_s" id="is_mile_except_N" value="N" checked /><label for="is_mile_except_N">적립 포함</label>&nbsp;
-								<input type="radio" name="is_mile_except" class="input_s" id="is_mile_except_Y" value="Y"  /><label for="is_mile_except_Y">적립 제외</label>&nbsp;
-								
-							</div>
-						</td>
-					</tr> -->
-					
-					<!--
-					<tr>
-						<td class="bg-lightgray">
-							적립금 사용 여부
-						</td>
-						<td class="s_txt02">
-							<div class="item">
-								<input type="radio" name="prd_mile_used" title="적립금 사용 가능" class="input_s" value="Y" id="prd_mile_used_Y" /><label for="prd_mile_used_Y">가능</label>
-								<input type="radio" name="prd_mile_used" title="적립금 사용 불가" class="input_s" value="N" id="prd_mile_used_N" /><label for="prd_mile_used_N">불가능</label>
-							</div>
-						</td>
-					</tr>
-					-->
-					
-					<!-- <tr>
-						<td class="bg-lightgray">
-							결제시 적립금 사용
-						</td>
-						<td class="s_txt02">
-							<div class="item">
-								<input type="radio" name="is_pay4mile" title="결제시 적립금 사용 가능" class="input_s" value="Y" id="is_pay4mile_Y" /><label for="is_pay4mile_Y">가능</label>
-								<input type="radio" name="is_pay4mile" title="결제시 적립금 사용 불가" class="input_s" value="N" id="is_pay4mile_N" /><label for="is_pay4mile_N">불가능</label>
-							</div>
-						</td>
-					</tr>
-					
-						<tr>
-							<td class="bg-lightgray">
-								아이콘
-							</td>
-							<td class="s_txt02">
-								<input type="checkbox" onclick="set_checkbox('#goods_regist_form','pi_kind[]', this.checked)" id="set_check_all_kind"/><label for="set_check_all_kind">전체선택</label>
-								<div class="item">
-									<input type="checkbox" name="pi_kind[]" title="BEST" value="10" id="pi_kind10">
-									<label for="pi_kind10">BEST</label>&nbsp;
-									<input type="checkbox" name="pi_kind[]" title="HOT" value="20" id="pi_kind20">
-									<label for="pi_kind20">HOT</label>&nbsp;
-									<input type="checkbox" name="pi_kind[]" title="NEW" value="30" id="pi_kind30">
-									<label for="pi_kind30">NEW</label>&nbsp;
-									<input type="checkbox" name="pi_kind[]" title="HIT" value="40" id="pi_kind40">
-									<label for="pi_kind40">HIT</label>&nbsp;
-									<input type="checkbox" name="pi_kind[]" title="추천" value="50" id="pi_kind50">
-									<label for="pi_kind50">추천</label>&nbsp;
+								<div style="float:left">
+									<input type="number" min="0" name="prd_dc_rate" title="할인금액" class="form-control" value="0" style="text-align:right;"/>
 								</div>
-							</td>
-						</tr>
- -->
-
-					<!-- 	<tr>
-							<td class="bg-lightgray">
-								배송 아이콘
-							</td>
-							<td class="s_txt02">
-								<div class="item">
-									<div style="width:20%;float:left;">
-									<input id="prd_delivery_icon" type="radio" value="" name="prd_delivery_icon" checked>
-									<label for="prd_delivery_icon">없음</label>
-									</div>
-
-									<div style="width:20%;float:left;">
-									<input type="radio" name="prd_delivery_icon" id="prd_delivery_iconA" title="전국" value="A" >
-									<label for="prd_delivery_iconA">전국</label>&nbsp;
-									</div>
-
-									<div style="width:20%;float:left;">
-									<input type="radio" name="prd_delivery_icon" id="prd_delivery_iconB" title="서울" value="B" >
-									<label for="prd_delivery_iconB">서울</label>&nbsp;
-									</div>
-
-									<div style="width:20%;float:left;">
-									<input type="radio" name="prd_delivery_icon" id="prd_delivery_iconC" title="수도권" value="C" >
-									<label for="prd_delivery_iconC">수도권</label>&nbsp;
-									</div>
-
-									<div style="width:20%;float:left;">
-									<input type="radio" name="prd_delivery_icon" id="prd_delivery_iconD" title="택배" value="D" >
-									<label for="prd_delivery_iconD">택배</label>&nbsp;
-									</div>
-
-									<div style="width:20%;float:left;">
-									<input type="radio" name="prd_delivery_icon" id="prd_delivery_iconE" title="예약" value="E" >
-									<label for="prd_delivery_iconE">예약</label>&nbsp;
-									</div>
-
-									<div style="width:20%;float:left;">
-									<input type="radio" name="prd_delivery_icon" id="prd_delivery_iconF" title="서울/수도권" value="F" >
-									<label for="prd_delivery_iconF">서울/수도권</label>&nbsp;
-									</div>
-
-									<div style="width:20%;float:left;">
-									<input type="radio" name="prd_delivery_icon" id="prd_delivery_iconG" title="서울/광역시" value="G" >
-									<label for="prd_delivery_iconG">서울/광역시</label>&nbsp;
-									</div>
-
-									<div style="width:20%;float:left;">
-									<input type="radio" name="prd_delivery_icon" id="prd_delivery_iconH" title="광역시" value="H" >
-									<label for="prd_delivery_iconH">광역시</label>&nbsp;
-									</div>
-
+								<div>
+									&nbsp;원
 								</div>
-							</td>
-						</tr> -->
-						<!-- 
-						<tr>
-							<td class="bg-lightgray">
-								택배 배송 여부
-							</td>
-							<td class="s_txt02">
-								<input type="radio" name="prd_delivery_fee" title="직접 배송" checked class="input_s" value="0" id="prd_delivery_fee_N" /><label for="prd_delivery_fee_N">직접 배송</label>
-								<input type="radio" name="prd_delivery_fee" title="택배 배송"  class="input_s" value="1" id="prd_delivery_fee_Y" /><label for="prd_delivery_fee_Y">택배 배송</label>
-                                (<input type="checkbox" name="is_deli_except" title="묶음배송제외"  class="input_s" value="Y" id="is_deli_except_Y" /><label for="is_deli_except_Y">묶음배송제외</label> )
-								&nbsp;&nbsp;* 상품 환경설정 > 택배 배송비 설정과 연동됩니다.
-							</td>
-						</tr>
+							</div>
+						</td>
+					</tr>
 						
-						<tr>
-							<td class="bg-lightgray">
-								지역별 배송비
-							</td>
-							<td class="s_txt02">
-								<input type="radio" name="use_zone_cost" title="지역별 배송비 사용"    class="input_s" value="Y" id="use_zone_cost_Y" /><label for="use_zone_cost_Y">사용</label>
-								<input type="radio" name="use_zone_cost" title="지역별 배송비 미사용" checked class="input_s" value="N" id="use_zone_cost_N" /><label for="use_zone_cost_N">미사용</label>
-							</td>
-						</tr>
-						
-						
-						<tr>
-							<td class="bg-lightgray">
-								재사용 화환 여부
-							</td>
-							<td class="s_txt02">
-								<input type="radio" name="is_reuse" title="재사용이다"       class="input_s" value="Y" id="is_reuse_Y" /><label for="is_reuse_Y">재사용이다</label>
-								<input type="radio" name="is_reuse" title="재사용이 아니다" checked class="input_s" value="N" id="is_reuse_N" /><label for="is_reuse_N">재사용이 아니다</label>
-							</td>
-						</tr>
-						<tr>
-							<td class="bg-lightgray">
-								옵션상품
-							</td>
-							<td class="s_txt02">
-								<input type="checkbox" onclick="set_checkbox('#goods_regist_form','prd_code_option[]', this.checked)" id="set_check_all_option"/> <label for="set_check_all_option">전체선택</label>
-								<div class="item">
-									
-									<div style="width:33%;float:left;">
-									<input type="checkbox" name="prd_code_option[]" title="옵션상품" value="OG1001" id="prd_code_optionOG1001"/>
-									<label for="prd_code_optionOG1001">생크림케익</label>&nbsp;
-									</div>
-									<div style="width:33%;float:left;">
-									<input type="checkbox" name="prd_code_option[]" title="옵션상품" value="OG1002" id="prd_code_optionOG1002"/>
-									<label for="prd_code_optionOG1002">초코케익</label>&nbsp;
-									</div>
-									<div style="width:33%;float:left;">
-									<input type="checkbox" name="prd_code_option[]" title="옵션상품" value="OG1003" id="prd_code_optionOG1003"/>
-									<label for="prd_code_optionOG1003">일반 케익</label>&nbsp;
-									</div>
-									<div style="width:33%;float:left;">
-									<input type="checkbox" name="prd_code_option[]" title="옵션상품" value="OG1004" id="prd_code_optionOG1004"/>
-									<label for="prd_code_optionOG1004">사탕</label>&nbsp;
-									</div>
-									<div style="width:33%;float:left;">
-									<input type="checkbox" name="prd_code_option[]" title="옵션상품" value="OG1005" id="prd_code_optionOG1005"/>
-									<label for="prd_code_optionOG1005">초콜릿</label>&nbsp;
-									</div>
-									<div style="width:33%;float:left;">
-									<input type="checkbox" name="prd_code_option[]" title="옵션상품" value="OG1006" id="prd_code_optionOG1006"/>
-									<label for="prd_code_optionOG1006">샴페인(무알콜)</label>&nbsp;
-									</div>
-									<div style="width:33%;float:left;">
-									<input type="checkbox" name="prd_code_option[]" title="옵션상품" value="OG1007" id="prd_code_optionOG1007"/>
-									<label for="prd_code_optionOG1007">빼빼로</label>&nbsp;
-									</div>
-									<div style="width:33%;float:left;">
-									<input type="checkbox" name="prd_code_option[]" title="옵션상품" value="OG1008" id="prd_code_optionOG1008"/>
-									<label for="prd_code_optionOG1008">코사지1개</label>&nbsp;
-									</div>
-									<div style="width:33%;float:left;">
-									<input type="checkbox" name="prd_code_option[]" title="옵션상품" value="OG1009" id="prd_code_optionOG1009"/>
-									<label for="prd_code_optionOG1009">코사지2개</label>&nbsp;
-									</div>
-								</div>
-							</td>
-						</tr> -->
-						<!-- <tr>
-							<td class="bg-lightgray">
-								사은품
-							</td>
-							<td class="s_txt02">
-								<div class="item">
-									<div style="width:33%;float:left;">
-									<input type="checkbox" name="prd_gift[]" title="사은품" class="input_s" value="1001" id="prd_gift1001"/>
-									<label for="prd_gift1001">사은품</label>&nbsp;
-									</div>
-								</div>
-							</td>
-						</tr> -->
 					<tr>
 						<td class="bg-lightgray">
 							*원산지
 						</td>
-						<td class="s_txt02">
-							<input type="text" name="prd_madein" title="원산지" class="input_s" style="width:100%" value="">
+						<td>
+							<input type="text" name="prd_madein" title="원산지" class="form-control" style="width:100%" value="">
 							
 							<div class="item" style="padding-top:10px;">
+							<a href='/images/food/origin_flower_country.pdf' target='_blank'>
 								<input type="button" class="btn btn-primary" value="꽃 원산지 표시 안내">
-								<input type="button" class="btn btn-primary" value="간편 등록">
+							</a>
+								<input type="button" class="btn btn-primary" value="간편 등록" onClick="$('#pop_set_madein_info').dialog({width:800,height:700});">
 								<!-- <span class="button small"><a href="http://www.roseweb.co.kr/download/files/origin_flower_country.pdf" target="_blank">꽃 원산지 표시 안내</a></span> -->
 								
 								<!-- <span class="button small"><button type="button" onclick="$('#pop_set_madein_info').dialog('open');">간편 등록</button></span> -->
@@ -625,9 +371,9 @@
 							상품재료
 							<br /><a href="javascript:search_goods_info('compose');"></a>
 						</td>
-						<td class="s_txt02" style="border-top:1px solid #aaa;">
+						<td style="border-top:1px solid #aaa;">
 							<div class="item">
-								<!-- <textarea name="prd_desc_material" cols="50" rows="2" title="상품재료" class="i_text"></textarea> -->
+								<!-- <textarea name="prd_desc_material" cols="50" rows="2" title="상품재료" class="form-control"></textarea> -->
 <!-- <link rel="stylesheet" href="/common/html/daumeditor/css/editor.css" type="text/css"  charset="utf-8" /> -->
 <!-- 
 <script src="/common/html/daumeditor/js/editor_loader.js" type="text/javascript" charset="utf-8"></script>
@@ -1080,9 +826,9 @@
 							상품사이즈
 							<br /><a href="javascript:search_goods_info('size');">
 						</td>
-						<td class="s_txt02">
+						<td>
 							<div class="item">
-								<textarea name="prd_desc_size" cols="50" rows="2" title="상품사이즈" class="i_text"></textarea>
+								<textarea name="prd_desc_size" cols="50" rows="2" title="상품사이즈" class="form-control"></textarea>
 							</div>
 						</td>
 					</tr>
@@ -1091,9 +837,9 @@
 							상품용도
 							<br /><a href="javascript:search_goods_info('use');"></a>
 						</td>
-						<td class="s_txt02">
+						<td>
 							<div class="item">
-								<textarea name="prd_desc_use" cols="50" rows="2" title="상품용도" class="i_text"></textarea>
+								<textarea name="prd_desc_use" cols="50" rows="2" title="상품용도" class="form-control"></textarea>
 							</div>
 						</td>
 					</tr>
@@ -1102,9 +848,9 @@
 							상품소개
 							<br /><a href="javascript:search_goods_info('intro');"></a>
 						</td>
-						<td class="s_txt02">
+						<td>
 							<div class="item">
-								<textarea name="prd_desc_intro" cols="50" rows="5" title="상품소개" class="i_text"></textarea>
+								<textarea name="prd_desc_intro" cols="50" rows="5" title="상품소개" class="form-control"></textarea>
 							</div>
 						</td>
 					</tr>
@@ -1112,9 +858,9 @@
 						<td class="bg-lightgray">
 							배송안내
 						</td>
-						<td class="s_txt02">
+						<td>
 							<div class="item">
-								<textarea name="prd_notice_delivery" cols="50" rows="5" title="배송안내" class="i_text"></textarea>
+								<textarea name="prd_notice_delivery" cols="50" rows="5" title="배송안내" class="form-control"></textarea>
 								<div class="blue">+ 입력하지 않으시면, [<a href="/homepage/adm_use_info_modify_form" target="_blank">쇼핑몰관리>상점상세정보>이용안내>배송안내</a>]의 내용이 출력됩니다.</div>
 							</div>
 						</td>
@@ -1123,9 +869,9 @@
 						<td class="bg-lightgray">
 							주문취소안내
 						</td>
-						<td class="s_txt02">
+						<td>
 							<div class="item">
-								<textarea name="prd_notice_cancel" cols="50" rows="5" title="주문취소안내" class="i_text"></textarea>
+								<textarea name="prd_notice_cancel" cols="50" rows="5" title="주문취소안내" class="form-control"></textarea>
 								<div class="blue">+ 입력하지 않으시면, [<a href="/homepage/adm_use_info_modify_form" target="_blank">쇼핑몰관리>상점상세정보>이용안내>주문취소안내</a>]의 내용이 출력됩니다.</div>
 							</div>
 						</td>
@@ -1134,9 +880,9 @@
 						<td class="bg-lightgray">
 							구매시유의사항
 						</td>
-						<td class="s_txt02">
+						<td>
 							<div class="item">
-								<textarea name="prd_notice_buy" cols="50" rows="5" title="구매시유의사항" class="i_text"></textarea>
+								<textarea name="prd_notice_buy" cols="50" rows="5" title="구매시유의사항" class="form-control"></textarea>
 								<div class="blue">+ 입력하지 않으시면, [<a href="/homepage/adm_use_info_modify_form" target="_blank">쇼핑몰관리>상점상세정보>이용안내>구매시유의사항</a>]의 내용이 출력됩니다.</div>
 							</div>
 						</td>
@@ -1159,7 +905,132 @@
 	</tr>
 </table>
 </div>
+
+
+<!-- 원산지 팝업 -->
+<div id="pop_set_madein_info" title="원산지 간편 등록" style="display:none;">
+	<form name="set_madein_form" id="set_madein_form">
+	<div style="clear:both; font-weight:bold; border-bottom:2px solid #ddd; overflow:hidden;margin:5px 0 10px 0;padding-bottom:10px;">
+		
+		<h3>소재 선택</h3>
+		
+		<div style="width:20%; padding:5px 0; float:left;"><input type="checkbox" name="set_material" id="set_material0" value="국화" >
+			<label for="set_material0">국화</label>
+		</div>
+		<div style="width:20%; padding:5px 0; float:left;"><input type="checkbox" name="set_material" id="set_material1" value="글라디올러스" >
+			<label for="set_material1">글라디올러스</label>
+		</div>
+		<div style="width:20%; padding:5px 0; float:left;"><input type="checkbox" name="set_material" id="set_material2" value="거베라" >
+			<label for="set_material2">거베라</label>
+		</div>
+		<div style="width:20%; padding:5px 0; float:left;"><input type="checkbox" name="set_material" id="set_material3" value="백합" >
+			<label for="set_material3">백합</label>
+		</div>
+		<div style="width:20%; padding:5px 0; float:left;"><input type="checkbox" name="set_material" id="set_material4" value="아이리스" >
+			<label for="set_material4">아이리스</label>
+		</div>
+		<div style="width:20%; padding:5px 0; float:left;"><input type="checkbox" name="set_material" id="set_material5" value="안개꽃" >
+			<label for="set_material5">안개꽃</label>
+		</div>
+		<div style="width:20%; padding:5px 0; float:left;"><input type="checkbox" name="set_material" id="set_material6" value="장미" >
+			<label for="set_material6">장미</label>
+		</div>
+		<div style="width:20%; padding:5px 0; float:left;"><input type="checkbox" name="set_material" id="set_material7" value="튤립" >
+			<label for="set_material7">튤립</label>
+		</div>
+		<div style="width:20%; padding:5px 0; float:left;"><input type="checkbox" name="set_material" id="set_material8" value="프리지아" >
+			<label for="set_material8">프리지아</label>
+		</div>
+		<div style="width:20%; padding:5px 0; float:left;"><input type="checkbox" name="set_material" id="set_material9" value="카네이션" >
+			<label for="set_material9">카네이션</label>
+		</div>
+		<div style="width:20%; padding:5px 0; float:left;"><input type="checkbox" name="set_material" id="set_material10" value="칼라" >
+			<label for="set_material10">칼라</label>
+		</div>
+		
+		<div style="width:60%; padding:5px 0; float:left;"><input type="checkbox" name="set_material" value="text" >
+			<input type="text" name="set_material_text" value="" style="width:90%;" class="form-control" />
+		</div>
+		<div style="width:20%; padding:5px 0; float:left;"><input type="checkbox" id="set_material_all" onclick="set_checkbox('#set_madein_form','set_material', this.checked, 'text')" >
+			<label for="set_material_all">전체</label>
+		</div>
+	</div>
 	
+	<div style="clear:both; font-weight:bold; border-bottom:2px solid #ddd; overflow:hidden;margin:0 0 10px 0;padding-bottom:10px;">
+		
+		<h3>국가 선택</h3>
+		
+		<div style="width:25%; padding:5px 0; float:left;"><input type="radio" name="set_madein" id="set_madein0" value="국내산" >
+			<label for="set_madein0">국내산</label>
+		</div>
+		<div style="width:25%; padding:5px 0; float:left;"><input type="radio" name="set_madein" id="set_madein1" value="뉴질랜드" >
+			<label for="set_madein1">뉴질랜드</label>
+		</div>
+		<div style="width:25%; padding:5px 0; float:left;"><input type="radio" name="set_madein" id="set_madein2" value="대만" >
+			<label for="set_madein2">대만</label>
+		</div>
+		<div style="width:25%; padding:5px 0; float:left;"><input type="radio" name="set_madein" id="set_madein3" value="말레이시아" >
+			<label for="set_madein3">말레이시아</label>
+		</div>
+		<div style="width:25%; padding:5px 0; float:left;"><input type="radio" name="set_madein" id="set_madein4" value="배트남" >
+			<label for="set_madein4">배트남</label>
+		</div>
+		<div style="width:25%; padding:5px 0; float:left;"><input type="radio" name="set_madein" id="set_madein5" value="브라질" >
+			<label for="set_madein5">브라질</label>
+		</div>
+		<div style="width:25%; padding:5px 0; float:left;"><input type="radio" name="set_madein" id="set_madein6" value="아프리카" >
+			<label for="set_madein6">아프리카</label>
+		</div>
+		<div style="width:25%; padding:5px 0; float:left;"><input type="radio" name="set_madein" id="set_madein7" value="영국" >
+			<label for="set_madein7">영국</label>
+		</div>
+		<div style="width:25%; padding:5px 0; float:left;"><input type="radio" name="set_madein" id="set_madein8" value="오스트레일리아" >
+			<label for="set_madein8">오스트레일리아</label>
+		</div>
+		<div style="width:25%; padding:5px 0; float:left;"><input type="radio" name="set_madein" id="set_madein9" value="이디오피아" >
+			<label for="set_madein9">이디오피아</label>
+		</div>
+		<div style="width:25%; padding:5px 0; float:left;"><input type="radio" name="set_madein" id="set_madein10" value="일본" >
+			<label for="set_madein10">일본</label>
+		</div>
+		<div style="width:25%; padding:5px 0; float:left;"><input type="radio" name="set_madein" id="set_madein11" value="중국" >
+			<label for="set_madein11">중국</label>
+		</div>
+		<div style="width:25%; padding:5px 0; float:left;"><input type="radio" name="set_madein" id="set_madein12" value="케냐" >
+			<label for="set_madein12">케냐</label>
+		</div>
+		<div style="width:25%; padding:5px 0; float:left;"><input type="radio" name="set_madein" id="set_madein13" value="태국" >
+			<label for="set_madein13">태국</label>
+		</div>
+		<div style="width:25%; padding:5px 0; float:left;"><input type="radio" name="set_madein" id="set_madein14" value="콜롬비아" >
+			<label for="set_madein14">콜롬비아</label>
+		</div>
+		<div style="width:25%; padding:5px 0; float:left;"><input type="radio" name="set_madein" id="set_madein15" value="필리핀" >
+			<label for="set_madein15">필리핀</label>
+		</div>
+		<div style="width:25%; padding:5px 0; float:left;"><input type="radio" name="set_madein" id="set_madein16" value="호주" >
+			<label for="set_madein16">호주</label>
+		</div>
+		
+		<div style="width:75%; padding:5px 0; float:left;"><input type="radio" name="set_madein" value="text" >
+			<input type="text" name="set_madein_text" value="" style="width:90%;" class="form-control" />
+		</div>
+	</div>
+		
+	<div style="clear:both; font-weight:bold; overflow:hidden;margin:0 0 10px 0;padding-bottom:10px;">
+		원산지 : <input type="text" name="prd_madein" value="" style="width:90%;" class="form-control" />
+	</div>
+	
+	<div style="text-align:center;">
+		<button type="button" class="btn btn-primary" onclick="fn_setOrigin()">추가</button>
+		&nbsp;&nbsp;&nbsp;
+		<button type="button" class="btn btn-primary" onclick="fn_resetOrigin();">초기화</button>
+	</div>
+	</form>
+
+</div>
+
+
 </section>
     <!-- Footer Section Begin -->
     <jsp:include page="/WEB-INF/jsp/food/sub/FoodMainFooter.jsp"/> 
@@ -1183,6 +1054,10 @@
 	
 	var productCategoryList = []; 	// 카테고리
 	var productCategoryMap	= {};	// 카테고리
+	
+	var imgFileList = []; 	// 이미지파일
+	
+	var productCode = document.querySelector('#product_code');
 	
 	// 타입세팅
 	var fn_setProductTypeMap = function() {
@@ -1256,6 +1131,120 @@
 			
 			document.querySelector("#category_areas").appendChild(com_divType);
 		}
+	}
+	
+	//상품코드 중복체크
+	var fn_checkExistProductcode = function() {
+		var productCodeVal = productCode.value;
+		var checkPattern = /[^0-9a-zA-Z,_-]/;
+		//값 있는지 체크...
+		if(productCodeVal < 4
+		||productCodeVal > 20
+		||checkPattern.test(productCodeVal)) {
+			alert("영문과 숫자(일부특수문자:-,_)로 조합된 4-20자리 문자로 입력해 주십시오.");
+			return
+		}
+		
+		fn_checkProductCodeRequest(productCodeVal);
+	}
+	
+	// 
+	var fn_checkProductCodeRequest = function(productCodeVal) {
+		gfn_loadData('/cmm/main/management/checkExistProductCode.do?productCode='+productCodeVal)
+		.then(function (datums) {
+			if(datums.returnValue == "true") {
+				alert("["+productCode.value+"]는 이미 사용중인 코드입니다.");
+			} else if (datums.returnValue == "false"){
+				alert("["+productCode.value+"]는 사용가능한 코드입니다.");
+			} else {
+				alert("영문과 숫자(일부특수문자:-,_)로 조합된 4-20자리 문자로 입력해 주십시오.");
+			}
+		})
+		.catch(function (err) {
+			alert("영문과 숫자(일부특수문자:-,_)로 조합된 4-20자리 문자로 입력해 주십시오.");
+			console.error(err.statusText);
+		});
+	}
+	
+	// 원산지 등록
+	
+	// 원산지 등록 추가 체크
+	var fn_setOrigin = function() {
+		// 폼명, 체크박스 경로
+		var checkboxList = document.getElementById('set_madein_form').querySelectorAll('[name=set_material_all]');
+		var hasChecked = false;
+		
+		for(var i = 0; i < checkboxList.length; i++) {
+			if(checkboxList[i].checked) {
+				hasChecked = true;
+				break;
+			}
+		}
+		
+		if(!hasChecked) {
+			alert("체크해야 합니다.");
+			return;
+		}
+	}
+	
+	//업무버튼
+	var fn_btnImgUploadOnClicked = function() {
+		var url = '/cmm/fms/EgovFileUploadPopup.do';
+		var winWidth = 700;
+		var winHeight = 300;
+		var popupOption = "width="+winWidth+",height="+winHeight;
+		
+		if(window.showModalDialog == undefined){  
+			window.showModalDialog = function(url,mixedVar,features){  
+		    	window.hasOpenWindow = true;  
+            	if(mixedVar) var mixedVar = mixedVar;  
+            	if(features) var features = features.replace(/(dialog)|(px)/ig,"").replace(/;/g,',').replace(/\:/g,"=");  
+                window.myNewWindow = window.open(url,"_blank",features);  
+	        }
+		}
+		
+		window.showModalDialog(url, "", popupOption);
+		
+	}
+	
+	// 팝업결과 리턴
+	var fn_uploadPopupHandler = function(_this, result) {
+		_this.window.close();
+		alert("저장이 완료되었습니다!");		
+	}
+	
+	//제공이미지 팝업 클릭
+	var fn_btnImgSelectorOnClicked = function() {
+		var url = '/cmm/main/management/viewImgFilePopup.do';
+		var winWidth = 700;
+		var winHeight = 600;
+		var popupOption = "width="+winWidth+",height="+winHeight;
+		
+		if(window.showModalDialog == undefined){  
+			window.showModalDialog = function(url,mixedVar,features){  
+		    	window.hasOpenWindow = true;  
+            	if(mixedVar) var mixedVar = mixedVar;  
+            	if(features) var features = features.replace(/(dialog)|(px)/ig,"").replace(/;/g,',').replace(/\:/g,"=");  
+                window.myNewWindow = window.open(url,"_blank",features);  
+	        }
+		}
+		
+		window.showModalDialog(url, "", popupOption);
+		
+	}
+	
+	// 팝업결과 리턴
+	var fn_selectPopupHandler = function(_this, result) {
+		_this.window.close();
+		alert("저장이 완료되었습니다!");
+	}
+	
+	var fn_getImgFile = function(atchFileId) {
+		gfn_commonLoadDataRequest('/cmm/fms/getImgFileList.do?atchFileId='atchFileId, imgFileList, fn_setImg);
+	}
+	
+	var fn_setImg = function() {
+		
 	}
 	
 	// setup the grid after the page has finished loading

@@ -27,7 +27,7 @@ public class ProductDetailDAO extends EgovComAbstractDAO{
      * @throws Exception
      */
 	public int countByProductCode(String productCode) throws Exception {
-		return selectOne("ProductDetailDAO.selectProductDetailCountByProductCode");
+		return selectOne("ProductDetailDAO.selectCountByProductCode");
 	}
 	
 	/**

@@ -9,7 +9,21 @@
 <html>
 <style>
 .ag-header-cell-label {
-   justify-content: center;
+	justify-content: center;
+}
+.grid-wrapper::after {
+	display: block;
+	content: '';
+	clear: both;
+}
+.btn {
+	margin: 2px;
+}
+.float_left {
+	float: left;
+}
+.float_right {
+	float: right;
 }
 </style>
 <head>
@@ -44,39 +58,15 @@
 	
 <section class="category">
 	<div class="container">
-	<!-- 테이블 넣을 곳 -->
-	<div style="padding: 2px;">
-		<div style="float:left">
-        	<button type="button" class="btn btn-primary" onclick="onBtSelectAll()">전체선택</button>
-        	<button type="button" class="btn btn-primary" onclick="onBtDeselectAll()">선택취소</button>
-        </div>
-        <div style="float:left">
-	        &nbsp;
-	        &nbsp;
-        </div>
-        <!-- <div style="float:left">
-	        <input type="radio" class="radio" name="categoryStatus" value="all">
-	        <label for="categoryStatusAll">전체</label>
-	        <input type="radio" class="radio" name="categoryStatus" value="y">
-	        <label for="categoryStatusY">Y</label>
-	        <input type="radio" class="radio" name="categoryStatus" value="n">
-	        <label for="categoryStatusN">N</label>
-        </div> -->
-        <div style="float:left">
-	        &nbsp;
-	        &nbsp;
-        </div>
-        <div style="float:left">
-	        <button type="button" class="btn btn-secondary" onclick="onBtSearch()">조회</button>
-	        <button type="button" class="btn btn-success" onclick="onBtAddBottom()">신규</button>
-	        <button type="button" class="btn btn-warning" onclick="onBtSave()">저장</button>
-	        <button type="button" class="btn btn-danger" onclick="onBtDelete()">삭제</button>
-        </div>
-
-    </div>
+	<!-- 버튼 -->
+	<div id="commonSearchDiv_container"></div>
+    
     <div id="updateRows" style="height:100px;border:1px solid #f4f4f4;margin:5px 0"></div>
+    
+    <!-- 그리드 -->
     <div class="grid-wrapper">
         <div style="width: 100%; height:580px" id="myGrid" class="ag-grid-div ag-theme-balham ag-basic"></div>
+        <!-- <div style="width: 20%; height: 580px; float: right" id="selectedRowImg"></div> -->
     </div>
 	
 	</div>
@@ -86,121 +76,203 @@
     <!-- Footer Section End -->
 
     <!-- Js Plugins -->
-    <script src="/js/jquery-3.3.1.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
-    <script src="/js/jquery.nice-select.min.js"></script>
-    <script src="/js/jquery-ui.min.js"></script>
-    <script src="/js/jquery.slicknav.js"></script>
-    <script src="/js/mixitup.min.js"></script>
-    <script src="/js/owl.carousel.min.js"></script>
-    <script src="/js/main.js"></script>
-	
+	<script src="/js/jquery-3.3.1.min.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+	<script src="/js/jquery.nice-select.min.js"></script>
+	<script src="/js/jquery-ui.min.js"></script>
+	<script src="/js/jquery.slicknav.js"></script>
+	<script src="/js/mixitup.min.js"></script>
+	<script src="/js/owl.carousel.min.js"></script>
+	<script src="/js/main.js"></script>
+
 	<!-- AS GRID -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.23.0/moment.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/locale/ko.min.js" integrity="sha512-3kMAxw/DoCOkS6yQGfQsRY1FWknTEzdiz8DOwWoqf+eGRN45AmjS2Lggql50nCe9Q6m5su5dDZylflBY2YjABQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	<script src="https://unpkg.com/ag-grid/dist/ag-grid.min.js"></script>
-	<script src="/js/react/agGridUtil.js?ver=1"></script>
+	<script src="/js/react/agGridUtil.js?ver=01"></script>
+	
+	<script src="/js/react/commonFunctions.js?ver=324"></script>
 
 	<script>
-		var MainGrid = function() {
-			var _this = this;
-			/* grid 영역 정의 */
-			this.gridDiv = "myGrid";
-			/* grid 칼럼 정의 */
-			this.getColumnDefs = function() {
-				var columnDefs = [ {
-					checkboxSelection : true
+		
+		var updateRows 	= []; // 신규,수정
+		var removedRows = []; // 삭제
+		
+		var stockList		= [];	// 재고
+		var stockMap		= {};	// 재고
+		var atchFileList	= [];	// 첨부파일
+		var atchFileMap		= {};	// 첨부파일
+		
+		var mainGrid;	// 메인그리드
+		var columnDefs;	// 그리드 컬럼정보	
+	
+		var fn_makeGrid = function() {
+			// 그리드1 컬럼 정보
+			columnDefs = [ {
+				checkboxSelection : true
+			},
+			{
+				headerName : "제품 코드",
+				field : "optionCode",
+				width : 150,
+				hide : false,
+				editable : true
+			}, 
+			{
+				headerName : "재고명",
+				field : "stockId",
+				width : 200,
+				cellEditor: 'select',
+	            cellEditorParams: {
+	               values: extractValues(stockMap)
+	            },
+	            filter: 'agSetColumnFilter',
+	            refData: stockMap,
+				editable : true
+			},
+			{
+				headerName : "재고량",
+				field : "stockAmt",
+				width : 120,
+				valueGetter: function(params) {
+					var stockId = params.getValue('stockId');
+					var stockAmt = '';
+					for(var stock of stockList) {
+						if(stock.stockId == stockId) {
+							stockAmt = stock.stockAmt;
+							break;
+						}
+					}
+					return stockAmt;
 				},
-				/* {field: "No.", width: 40, minWidth: 40, maxWidth: 40, editable: false}, */
-				{
-					field : "categoryId",
-					width : 0,
-					hide : true,
-					editable : false
-				}, {
-					headerName : "이름",
-					field : "categoryName",
-					width : 100,
-					editable : true
-				}, {
-					headerName : "순서",
-					field : "categoryOrder",
-					width : 100,
-					editable : true,
-					type: "numericColumn"
-				}, {
-					headerName : "사용여부",
-					field : "categoryStatus",
-					width : 100,
-					editable : true
-				}, {
-					field : "rowType",
-					width : 80,
-					hide : true,
-					editable : true
-				}];
-				var gridOpt = CommonGrid.getDefaultGridOpt(columnDefs);
-				gridOpt.rowSelection = 'multiple';
-				/* gridOpt.isRowSelectable = function(rowNode){
-				    return (rowNode.data.country != "Russia")? true:false;
-				} */
-				gridOpt.onRowEditingStarted = function(event) {
-					console.log('never called - not doing row editing');
-				};
-				gridOpt.onRowEditingStopped = function(event) {
-					console.log('never called - not doing row editing');
-				};
-				gridOpt.onCellEditingStarted = function(event) {
-					console.log('cellEditingStarted');
-				};
-				gridOpt.onCellEditingStopped = function(event) {
-					console.log('cellEditingStopped');
-					if(event.data.rowType != "new") event.data.rowType = "updated";
-					event.data.edit = true;
-					gridOpt.api.updateRowData({
-						update : [ event.data ]
-					});
-					console.log(gridOpt.api
-							.getDisplayedRowAtIndex(event.rowIndex).data);
-				};
-
-				return gridOpt;
-			};
-			/* grid 옵션 가져오기 */
-			this.gridOpts = null;
-			/* grid 실행 */
-			this.makeGrid = function(rowData) {
-				_this.gridOpts = _this.getColumnDefs();
-				CommonGrid.makeGridCommon(_this.gridDiv, _this.gridOpts,
-						rowData)
-			};
+				editable : false
+			},
+			{
+				headerName : "파일명",
+				field : "atchFileId",
+				width : 100,
+				cellEditor: 'select',
+	            cellEditorParams: {
+	               values: extractValues(atchFileMap)
+	            },
+	            filter: 'agSetColumnFilter',
+	            refData: atchFileMap,
+				editable : true
+			}, 
+			{
+				headerName : "옵션명",
+				field : "optionName",
+				width : 100,
+				hide : false,
+				editable : true
+			}, 
+			{
+				headerName : "옵션가격",
+				field : "optionPrice",
+				width : 200,
+				hide : false,
+				/* valueFormatter: params => params.data.number.toFixed(0), */
+				editable : true
+			}, 
+			{
+				headerName : "사용여부",
+				field : "optionStatus",
+				width : 100,
+				hide : false,
+				editable : true
+			}, 
+			/* {
+				headerName : "이미지등록",
+				field : "fileUploadButton",
+				cellEditor: 'btnCellRenderer', 
+			    width : 100,
+			    editable : function(params) {
+					return (params.data.rowType == "new")?true:false;
+				}
+			}, */
+			{
+				field : "rowType",
+				width : 0,
+				hide : true,
+				editable : true
+			}];
 			
-			this.getRowIndex = function(node) {
-				return node.rowIndex + 1;
-			};
-		}
-		var mainGrid = new MainGrid();
+			var fn_customColumnSetting = function(gridOpt) {
+				gridOpt.components = {
+					btnCellRenderer: getBtnCellRenderer("파일등록")   
+				};
+				
+				gridOpt.onRowSelected = function(event) {
+					if(event.node.selected == true) {
+						findRowIndex = mainGrid.gridOpts.api.getSelectedNodes(0)[0].rowIndex;
+					}
+					/* // 그리드 컬럼 수정 여부 동적 제어
+					if(event.node.selected == true 
+						&& event.node.data.rowType == "new") {
+						mainGrid.columnDefs[6].editable = true;
+						mainGrid.columnDefs[10].editable = true;
+						
+						while(selectedRowImg.hasChildNodes()) {
+							selectedRowImg.removeChild(selectedRowImg.firstChild);
+						}
+					} else if(event.node.selected == true
+							&& event.node.data.rowType != "new") {
+						mainGrid.columnDefs[6].editable = false;
+						mainGrid.columnDefs[10].editable = false;
+						
+						while(selectedRowImg.hasChildNodes()) {
+							selectedRowImg.removeChild(selectedRowImg.firstChild);
+						}
+						
+						var selectedRow = mainGrid.gridOpts.api.getSelectedNodes(0)[0].data;
+						
+						if(imgExtArr.indexOf(selectedRow.fileExtsn.toLowerCase()) >= 0) {
+							var imgSrc = selectedRow.fileStreCours + selectedRow.streFileNm;
+							var imgTag= document.createElement("img");
+							
+							imgTag.src = imgSrc;
+							
+							selectedRowImg.append(imgTag);	
+						}
+					} */
+				}
+				
+				gridOpt.onCellKeyDown = function(event) {
+					console.log('cellKeyDown');
+				}
+				
+				gridOpt.onCellKeyPress = function(event) {
+					console.log('cellKeyPress');
+				}
+			}
+			
 
-		function onBtStopEditing() {
-			mainGrid.gridOpts.api.stopEditing();
+			// gridDiv, columnDefs, rowSelection, isScroll, fn_customColumnSetting
+			mainGrid = new NewGrid("myGrid", columnDefs, 'multiple', false, fn_customColumnSetting);
+			
+			function onBtStopEditing() {
+				mainGrid.gridOpts.api.stopEditing();
+			}
+			function onBtNextCell() {
+				mainGrid.gridOpts.api.tabToNextCell();
+			}
+			function onBtPreviousCell() {
+				mainGrid.gridOpts.api.tabToPreviousCell();
+			}
+			/*	전체선택	*/
+			function onBtSelectAll() {
+				mainGrid.gridOpts.api.selectAll();
+			}
+			/*	전체선택해제	*/
+			function onBtDeselectAll() {
+				mainGrid.gridOpts.api.deselectAll();
+			}
 		}
-		function onBtNextCell() {
-			mainGrid.gridOpts.api.tabToNextCell();
-		}
-		function onBtPreviousCell() {
-			mainGrid.gridOpts.api.tabToPreviousCell();
-		}
-		/*	전체선택	*/
-		function onBtSelectAll() {
-			mainGrid.gridOpts.api.selectAll();
-		}
-		/*	전체선택해제	*/
-		function onBtDeselectAll() {
-			mainGrid.gridOpts.api.deselectAll();
-		}
+		
 		/*	조회	*/
 		function onBtSearch() {
 			// 조회조건이 있다면 여기서 체크
-			fn_loadData();
+			fn_loadDataRequest();
 		}
 		function fn_serachRows(rowData) {
 			var eGridDiv = document.querySelector('#myGrid');
@@ -219,38 +291,26 @@
 			removedRows = [];
 		}
 		// 데이터 가져오기
-		function fn_loadData() {
-			var httpRequest = new XMLHttpRequest();
-			httpRequest.responseType = 'json';
-
-			httpRequest.open('POST',
-					'/cmm/main/management/getProductCategoryList.do',
-					true);
-			httpRequest.setRequestHeader("Content-Type",
-					"application/x-www-form-urlencoded");
-			httpRequest.send();
-
-			httpRequest.onreadystatechange = function() {
-				if (httpRequest.readyState === 4
-						&& httpRequest.status === 200) {
-					var httpResult = httpRequest.response; //JSON.parse(httpRequest.response);
-					fn_serachRows(httpResult);
-				}
-			};
+		var fn_loadDataRequest = function() {
+			gfn_loadData('/cmm/main/management/getProductOptionList.do')
+			.then(function (datums) {
+				fn_serachRows(datums);
+			})
+			.catch(function (err) {
+				console.error(err.statusText);
+			});
 		}
+		
 		/*	신규	*/
 		function onBtAddBottom() {
 			// 초기값 넣기
-			var maxCategoryOrder = 0;
-			mainGrid.gridOpts.api.forEachNode(function(rowNode, index) {
-				maxCategoryOrder = (+rowNode.data.categoryOrder > +maxCategoryOrder)?rowNode.data.categoryOrder:maxCategoryOrder;
-			});
-			maxCategoryOrder = +maxCategoryOrder + 1;
 			var newRow = {
-				categoryId : null,
-				categoryName : '',
-				categoryOrder : maxCategoryOrder,
-				categoryStatus : 'Y',
+				optionCode : null,
+				stockId : null,
+				atchFileId : null,
+				optionName : null,
+				optionStatus : 'Y',
+				fileUploadButton : '파일등록',
 				rowType : "new"
 			}
 			
@@ -260,8 +320,6 @@
 			});
 		}
 		// 삭제
-		var removedRows = [];
-		
 		function onBtDelete() {
 			fn_deleteRows();
 		}
@@ -280,12 +338,16 @@
 		}
 		
 		/*	저장	*/
-		var updateRows = [];
+		
 		function onBtSave() {
-			// 필수체크
+			fn_saveCheck();
+		}
+		
+		// 저장시 필수체크
+		var fn_saveCheck = function() {
 			var savable = true;
 			var edit_count = 0;
-			mainGrid.gridOpts.api.forEachNode(function(rowNode, index) {
+			/* mainGrid.gridOpts.api.forEachNode(function(rowNode, index) {
 				if(rowNode.data.categoryName == ''
 				|| rowNode.data.categoryOrder == ''
 				|| (rowNode.data.categoryStatus != 'Y' && rowNode.data.categoryStatus != 'N')) {
@@ -295,12 +357,12 @@
 					edit_count++;
 				}
 				edit_count += removedRows.length;
-			});
+			}); */
 			
-			if(edit_count==0) {
+			/* if(edit_count==0) {
 				alert("수정된 값이 없습니다.");
 				return;
-			}
+			} */
 			
 			if(savable) {
 				if(confirm("저장하시겠습니까?")) {
@@ -321,40 +383,79 @@
 			var uploadRows = Object.assign(updateRows, removedRows);
 			
 			$("#updateRows").html(JSON.stringify(uploadRows));
-			fn_uploadData(uploadRows);
+			fn_uploadDataRequest(uploadRows);
 		}
 		
 		// 데이터 내보내기
-		function fn_uploadData(updateRows, removedRows) {
-			var httpRequest = new XMLHttpRequest();
-			httpRequest.responseType = 'json';
-			
-			httpRequest.open('POST',
-					'/cmm/main/management/registProductCategory.do',
-					true);
-			httpRequest.setRequestHeader("Content-Type",
-					"application/json");
-			httpRequest.send(JSON.stringify(updateRows));
-
-			httpRequest.onreadystatechange = function() {
-				if (httpRequest.readyState === 4
-						&& httpRequest.status === 200) {
-					var httpResult = httpRequest.response; //JSON.parse(httpRequest.response);
-					console.log(httpResult);
-					fn_serachRows(httpResult);
-				} else {
-					var httpResult = httpRequest.response; //JSON.parse(httpRequest.response);
-					console.log(httpResult);
-				}
-			};
+		var fn_uploadDataRequest = function(updateRows) {
+			// 그리드 데이터 업로드 요청
+			gfn_uploadData(updateRows, '/cmm/main/management/registProductOption.do')
+			.then(function (datums) {
+				console.log(datums);
+				fn_loadDataRequest();
+				updateRows = [];	// 업데이트 로우맵 초기화
+				alert("저장이 완료되었습니다!");
+			})
+			.catch(function (err) {
+				console.error(err.statusText);
+			});
 		}
+		
+		var stockMapComplete = false;
+		var atchFileMapComplete = false;
+		
+		var fn_setStockMap = function() {
+			stockMap[0] = "재고 없음";
+			
+			for(var stock of stockList) {
+				stockMap[stock.stockId] = stock.stockName;
+			}
+			
+			// 맵 체크
+			fn_checkMap();
+		}
+		
+		var fn_setAtchFileMap = function() {
+			atchFileMap[0] = "이미지 없음";
+			
+			for(var atchFile of atchFileList) {
+				atchFileMap[atchFile.atchFileId] = atchFile.orignlFileNm;
+			}
+			
+			// 맵 체크
+			fn_checkMap();
+		}
+		
+		var fn_checkMap = function() {
+			// 맵 둘다 만들어지면
+			if(stockMap[0] && atchFileMap[0]) {
+				// 그리드 생성
+				fn_makeGrid();
+			}
+		}
+		
 		// setup the grid after the page has finished loading
 		document.addEventListener('DOMContentLoaded',
 			function() {
-				fn_loadData();
+				// 데이터 로드 => 맵 생성 => 그리드 생성
+				
+				// 재고명
+				gfn_commonLoadDataRequest('/cmm/main/management/getStockList.do', stockList, fn_setStockMap);
+				// 파일명
+				gfn_commonLoadDataRequest('/cmm/main/management/getAtchFileListByAtchFileId.do', atchFileList, fn_setAtchFileMap);
+				
+				fn_loadDataRequest();
 			}
 		);
 	</script>
+	
+	<!-- React를 실행. -->
+  	<!-- 주의: 사이트를 배포할 때는 "development.js"를 "production.min.js"로 대체하세요. -->
+  	<script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+  	<script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+	
+	<!-- 만든 React 컴포넌트를 실행. -->
+	<script src="/js/react/commonSearchDiv.js?ver=01"></script>
 </body>
 
 </html>

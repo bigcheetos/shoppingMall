@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ProductDetailDAO">
 	
-	<select id="selectProductDetail" resultMap="ProductDetailResultMap" parameterType = "egovframework.let.cop.management.service.ProductDetailVO">
+	<select id="selectProductDetail" resultMap="ProductDetailResultMap" parameterType = "string">
 			SELECT 
 				A.PRODUCT_ID,
 				A.STOCK_ID,
@@ -43,7 +43,7 @@
 				PRODUCT_ID = #{productId}	
 	</select>
 	
-	<select id="selectCountProductCode" resultType="int" parameterType = "egovframework.let.cop.management.service.ProductDetailVO">
+	<select id="selectCountByProductCode" resultType="int" parameterType = "string">
 		SELECT
 			COUNT(*)
 		FROM

@@ -1,3 +1,4 @@
+// 데이터 불러오기
 var gfn_loadData = function(url) {
   return new Promise((resolve, reject) => {
 	const xhr = new XMLHttpRequest();
@@ -94,6 +95,7 @@ var gfn_commonLoadData = function(url) {
     xhr.send();
   });
 }
+
 var gfn_commonLoadDataRequest = function(url, receivedData, callbackFunction) {
 	gfn_commonLoadData(url)
 	.then(function (datums) {
@@ -114,9 +116,7 @@ var gfn_setCommonData = function(datums, receivedData, callbackFunction) {
 		receivedData.push(newRow);
 	}
 	
-	if(callbackFunction != null 
-	&& callbackFunction != '' 
-	&& callbackFunction != false) {
+	if(typeof callbackFunction == 'function') {
 		callbackFunction();
 	}
 }
