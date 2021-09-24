@@ -137,7 +137,7 @@
 		
 		var fn_closePopup = function(result) {
 			try {
-		        window.opener.fn_popupHandler(this, result);
+		        window.opener.fn_egovFileUploadPopupHandler(this, result);
 		    } catch (err) {}
 		}
 		</script>

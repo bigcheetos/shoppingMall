@@ -466,12 +466,10 @@
 		}
 		
 		// 팝업결과 리턴
-		var fn_popupHandler = function(_this, result) {
-			
+		var fn_egovFileUploadPopupHandler = function(_this, result) {
 			_this.window.close();
 			alert("저장이 완료되었습니다!");
 			fn_loadDataRequest();
-			
 		}
 		
 		// setup the grid after the page has finished loading

@@ -14,6 +14,28 @@
 .bg-lightgray {
 	background: #f4f4f4;
 }
+.set_goods_info_column {
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+    border-bottom: 1px solid #ccc;
+    width: 30%;
+    float: left;
+}
+.set_goods_info_column a:hover {
+    color: #ee5a00;
+    text-decoration: underline;
+}
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
 </style>
 <head>
     <meta charset="UTF-8">
@@ -78,6 +100,7 @@
 						<td>
 							<div style="float:left">
 								<input type="text" id="product_code" name="product_code" title="상품코드" class="form-control" size="20" maxlength="20" value="">
+								<input type="hidden" id="product_id" name="product_id" value="<%=request.getParameter("productId")%>">
 							</div>
 							<div>
 								&nbsp;
@@ -107,7 +130,8 @@
 									<li class="list-group-item">
                                         <div id="prd_image1" class="img_thumb">
                                         <!-- 임시 노이미지  /user/file/sht/upfile_202109101119597720 -->
-                                            <img id="file_prd_image1" src="/user/file/sht/upfile_202109101119597720">
+                                            <img id="product_image_file" src="/user/file/sht/upfile_202109101119597720" style="width:160px; height:160px">
+                                            <input type="hidden" id="atch_file_id" name="atch_file_id" value=''>
                                         </div>
                                         <div class="img_cont">
                                             <div class="blue">대표 이미지(필수)</div>
@@ -267,7 +291,17 @@
 						</td>
 						<td>
 							<div class="item">
-								<input type="text" name="prd_name" title="상품명" class="form-control" size="50" value="" required>
+								<input type="text" name="product_name" id="product_name" title="상품명" class="form-control" size="50" value="" required>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td class="bg-lightgray">
+							상품정보
+						</td>
+						<td>
+							<div class="item">
+								<input type="text" name="product_summary" id="product_summary" title="상품정보" class="form-control" size="50" value="">
 							</div>
 						</td>
 					</tr>
@@ -278,11 +312,11 @@
 						<td>
 							<div class="item">
 								<div style="float:left">
-									<input type="number" min="0" name="prd_price1" title="가격1" class="form-control" style="margin-bottom:4px; text-align:right;" value="0" required>
+									<input type="number" min="0" name="product_price" id="product_price" title="가격1" class="form-control" style="margin-bottom:4px; text-align:right;" value="0" required>
 								</div>
 								 <div>
 									 &nbsp;원
-									 &nbsp;* 명칭은 4~5자가 가장 적절하게 표시됩니다.
+									 <!-- &nbsp;* 명칭은 4~5자가 가장 적절하게 표시됩니다. -->
 								 </div>
 								 
 								<br/>
@@ -327,7 +361,7 @@
 						<td>
 							<div class="item">
 								<div style="float:left">
-									<input type="number" min="0" name="prd_dc_rate" title="할인금액" class="form-control" value="0" style="text-align:right;"/>
+									<input type="number" min="0" name="product_discount_price" id="product_discount_price" title="할인금액" class="form-control" value="0" style="text-align:right;"/>
 								</div>
 								<div>
 									&nbsp;원
@@ -335,24 +369,38 @@
 							</div>
 						</td>
 					</tr>
-						
+					<tr>
+						<td class="bg-lightgray">
+							배송비
+						</td>
+						<td>
+							<div class="item">
+								<div style="float:left">
+									<input type="number" min="0" name="product_deliverypay" id="product_deliverypay" title="배송비" class="form-control" value="0" style="text-align:right;"/>
+								</div>
+								<div>
+									&nbsp;원
+								</div>
+							</div>
+						</td>
+					</tr>	
 					<tr>
 						<td class="bg-lightgray">
 							*원산지
 						</td>
 						<td>
-							<input type="text" name="prd_madein" title="원산지" class="form-control" style="width:100%" value="">
+							<input type="text" name="product_origin" id="product_origin" title="원산지" class="form-control" style="width:100%" value="">
 							
 							<div class="item" style="padding-top:10px;">
 							<a href='/images/food/origin_flower_country.pdf' target='_blank'>
 								<input type="button" class="btn btn-primary" value="꽃 원산지 표시 안내">
 							</a>
-								<input type="button" class="btn btn-primary" value="간편 등록" onClick="$('#pop_set_madein_info').dialog({width:800,height:700});">
+								<input type="button" class="btn btn-primary" value="간편 등록" onClick="fn_openOriginForm()">
 								<!-- <span class="button small"><a href="http://www.roseweb.co.kr/download/files/origin_flower_country.pdf" target="_blank">꽃 원산지 표시 안내</a></span> -->
 								
-								<!-- <span class="button small"><button type="button" onclick="$('#pop_set_madein_info').dialog('open');">간편 등록</button></span> -->
+								<!-- <span class="button small"><button type="button" onclick="$('#pop_set_origin_info').dialog('open');">간편 등록</button></span> -->
 								<!--
-								<span class="blue pointer" onclick="$('#goods_regist_form [name=prd_madein]').val('국내산');">클릭시 자동으로 "국내산" 입력됩니다.</span>
+								<span class="blue pointer" onclick="$('#goods_regist_form [name=product_origin]').val('국내산');">클릭시 자동으로 "국내산" 입력됩니다.</span>
 								-->
 							</div>
 						</td>
@@ -361,7 +409,7 @@
 					<tr>
 						<td colspan="2" style="text-align:center; padding:15px;">
 							<!-- <img src="/common/html/admin/images/common/btn_apply.gif" value="등록하기" class="pointer" onclick="validate()" /> -->
-							<input type="button" class="btn btn-primary" value="등록하기">
+							<input type="button" class="btn btn-primary" value="등록하기" onclick="fn_validate()">
 						</td>
 					</tr>
 					
@@ -369,455 +417,12 @@
 					<tr>
 						<td class="bg-lightgray" style="border-top:1px solid #aaa;">
 							상품재료
-							<br /><a href="javascript:search_goods_info('compose');"></a>
+							<br />
+							<input type="button" class="btn btn-primary" value="보기" onClick="$('#pop_set_goods_info').dialog({width:800,height:500});">
 						</td>
 						<td style="border-top:1px solid #aaa;">
 							<div class="item">
-								<!-- <textarea name="prd_desc_material" cols="50" rows="2" title="상품재료" class="form-control"></textarea> -->
-<!-- <link rel="stylesheet" href="/common/html/daumeditor/css/editor.css" type="text/css"  charset="utf-8" /> -->
-<!-- 
-<script src="/common/html/daumeditor/js/editor_loader.js" type="text/javascript" charset="utf-8"></script>
-<script type="text/javascript">
-// <![CDATA[
-	/*-------- 글 등록할 때 필요한 함수들 시작 ----------*/
-	function saveContent() {
-		Editor.save(); /* 이 함수를 호출하여 글을 등록하면 된다. */
-	}
-
-	function validForm(editor) {
-		/* 본문 내용이 입력되었는지 검사하는 부분 */
-		var _validator = new Trex.Validator();
-		var _content = editor.getContent();
-		if(!_validator.exists(_content)) {
-			alert('내용을 입력하세요');
-			return false;
-		}
-
-		return true;
-	}
-
-	function setForm(editor) {
-		var _formGen = editor.getForm();
-		var _content = editor.getContent();
-
-		_formGen.createField(
-			tx.textarea({
-				/* 본문 내용을 필드를 생성하여 값을 할당하는 부분 */
-				'name': "prd_desc_material",
-				'style': { 'display': "none" }
-			},
-			_content)
-		);
-
-		var _attachments = editor.getAttachments();
-		for(var i=0,len=_attachments.length;i<len;i++) {
-				_formGen.createField(
-					tx.input({
-						'type': "hidden",
-						'name': 'tx_attach_image',
-						'value': _attachments[i].data.imageurl /* 예에서는 이미지경로만 받아서 사용 */
-					})
-				);
-		}
-
-		return true;
-	}
-	/*-------- 글 등록할 때 필요한 함수들 끝 ----------*/
-	// ]]>
-</script>
- -->
-<!-- 에디터 컨테이너 시작 -->
-<!-- <!-- <div id="tx_trex_container" class="tx-editor-container">
-    사이드바
-    <div id="tx_sidebar" class="tx-sidebar">
-        <div class="tx-sidebar-boundary">
-            사이드바 / 첨부
-            <ul class="tx-bar tx-bar-left tx-nav-attach">
-
-
-				
-                <li class="tx-list">
-                    <div unselectable="on" id="tx_file" class="tx-file tx-btn-trans">
-                        <a href="javascript:;" title="파일" class="tx-text">파일</a>
-                    </div>
-                </li>
-				
-
-            </ul>
-            사이드바 / 우측영역
-            <ul class="tx-bar tx-bar-right tx-nav-opt">
-                <li class="tx-list">
-                    <div unselectable="on" class="tx-switchtoggle" id="tx_switchertoggle">
-                        <a href="javascript:;" title="에디터 타입">에디터</a>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </div>
-    툴바 - 기본 시작
-    <div id="tx_toolbar_basic" class="tx-toolbar tx-toolbar-basic">
-        <div class="tx-toolbar-boundary">
-            <ul class="tx-bar tx-bar-left">
-                <li class="tx-list">
-                    <div id="tx_fontfamily" unselectable="on" class="tx-slt-70bg tx-fontfamily">
-                        <a href="javascript:;" title="글꼴">굴림</a>
-                    </div>
-                    <div id="tx_fontfamily_menu" class="tx-fontfamily-menu tx-menu" unselectable="on">
-                    </div>
-                </li>
-            </ul>
-            <ul class="tx-bar tx-bar-left">
-                <li class="tx-list">
-                    <div unselectable="on" class="tx-slt-42bg tx-fontsize" id="tx_fontsize">
-                        <a href="javascript:;" title="글자크기">9pt</a>
-                    </div>
-                    <div id="tx_fontsize_menu" class="tx-fontsize-menu tx-menu" unselectable="on">
-                    </div>
-                </li>
-            </ul>
-
-
-
-            <ul class="tx-bar tx-bar-left tx-group-etc">
-                <li class="tx-list">
-                    <div unselectable="on" class="tx-btn-bg tx-specialchar" id="tx_specialchar">
-                        <a href="javascript:;" class="tx-icon" title="특수문자">특수문자</a>
-                    </div>
-                    <div id="tx_specialchar_menu" class="tx-specialchar-menu tx-menu">
-                    </div>
-                </li>
-                <li class="tx-list">
-                    <div unselectable="on" class="tx-btn-lbg tx-emoticon" id="tx_emoticon">
-                        <a href="javascript:;" class="tx-icon" title="이모티콘">이모티콘</a>
-                    </div>
-                    <div id="tx_emoticon_menu" class="tx-emoticon-menu tx-menu" unselectable="on">
-                    </div>
-                </li>
-                <li class="tx-list">
-                    <div unselectable="on" class="tx-btn-bg tx-link" id="tx_link">
-                        <a href="javascript:;" class="tx-icon" title="링크 (Ctrl+K)">링크</a>
-                    </div>
-                    <div id="tx_link_menu" class="tx-link-menu tx-menu">
-                    </div>
-                </li>
-
-                <li class="tx-list">
-                    <div unselectable="on" class="tx-btn-bg tx-table" id="tx_table">
-                        <a href="javascript:;" class="tx-icon" title="표만들기">표만들기</a>
-                    </div>
-                    <div id="tx_table_menu" class="tx-table-menu tx-menu" unselectable="on">
-                        <div class="tx-menu-inner">
-                            <div class="tx-menu-preview">
-                            </div>
-                            <div class="tx-menu-rowcol">
-                            </div>
-                            <div class="tx-menu-deco">
-                            </div>
-                            <div class="tx-menu-enter">
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li class="tx-list">
-                    <div unselectable="on" class="tx-btn-rbg tx-horizontalrule" id="tx_horizontalrule">
-                        <a href="javascript:;" class="tx-icon" title="구분선">구분선</a>
-                    </div>
-                    <div id="tx_horizontalrule_menu" class="tx-horizontalrule-menu tx-menu" unselectable="on">
-                    </div>
-                </li>
-            </ul>
-
-
-
-
-            <ul class="tx-bar tx-bar-left tx-group-font">
-                <li class="tx-list">
-                    <div unselectable="on" class="tx-btn-lbg tx-bold" id="tx_bold">
-                        <a href="javascript:;" class="tx-icon" title="굵게 (Ctrl+B)">굵게</a>
-                    </div>
-                </li>
-                <li class="tx-list">
-                    <div unselectable="on" class="tx-btn-bg tx-underline" id="tx_underline">
-                        <a href="javascript:;" class="tx-icon" title="밑줄 (Ctrl+U)">밑줄</a>
-                    </div>
-                </li>
-                <li class="tx-list">
-                    <div unselectable="on" class="tx-btn-bg tx-italic" id="tx_italic">
-                        <a href="javascript:;" class="tx-icon" title="기울임 (Ctrl+I)">기울임</a>
-                    </div>
-                </li>
-                <li class="tx-list">
-                    <div unselectable="on" class="tx-btn-bg tx-strike" id="tx_strike">
-                        <a href="javascript:;" class="tx-icon" title="취소선 (Ctrl+D)">취소선</a>
-                    </div>
-                </li>
-                <li class="tx-list">
-                    <div unselectable="on" class="tx-slt-tbg tx-forecolor" style="background-color:#5c7fb0;" id="tx_forecolor">
-                        <a href="javascript:;" class="tx-icon" title="글자색">글자색</a>
-                        <a href="javascript:;" class="tx-arrow" title="글자색 선택">글자색 선택</a>
-                    </div>
-                    <div id="tx_forecolor_menu" class="tx-menu tx-forecolor-menu tx-colorpallete" unselectable="on">
-                    </div>
-                </li>
-                <li class="tx-list">
-                    <div unselectable="on" class="tx-slt-brbg tx-backcolor" style="background-color:#5c7fb0;" id="tx_backcolor">
-                        <a href="javascript:;" class="tx-icon" title="글자 배경색">글자 배경색</a>
-                        <a href="javascript:;" class="tx-arrow" title="글자 배경색 선택">글자 배경색 선택</a>
-                    </div>
-                    <div id="tx_backcolor_menu" class="tx-menu tx-backcolor-menu tx-colorpallete" unselectable="on">
-                    </div>
-                </li>
-            </ul>
-
-
-
-
-			
-			<ul class="tx-bar tx-bar-left">
-                <li class="tx-list">
-                    <div unselectable="on" class="tx-btn-lrbg tx-fullscreen" id="tx_fullscreen">
-                        <a href="javascript:;" class="tx-icon" title="넓게쓰기 (Ctrl+M)">넓게쓰기</a>
-                    </div>
-                </li>
-            </ul>
-            <ul class="tx-bar tx-bar-right">
-                <li class="tx-list">
-                    <div unselectable="on" class="tx-btn-nlrbg tx-advanced" id="tx_advanced">
-                        <a href="javascript:;" class="tx-icon" title="툴바 더보기">툴바 더보기</a>
-                    </div>
-                </li>
-            </ul>
-			
-        </div>
-    </div>
-    툴바 - 기본 끝
-	툴바 - 더보기 시작
-    <div id="tx_toolbar_advanced" class="tx-toolbar tx-toolbar-advanced">
-        <div class="tx-toolbar-boundary">
-            <ul class="tx-bar tx-bar-left tx-group-order">
-            </ul>
-
-			<ul class="tx-bar tx-bar-left">
-                <li class="tx-list">
-                    <div unselectable="on" class="tx-btn-lbg tx-textbox" id="tx_textbox">
-                        <a href="javascript:;" class="tx-icon" title="글상자">글상자</a>
-                    </div>
-                    <div id="tx_textbox_menu" class="tx-textbox-menu tx-menu">
-                    </div>
-                </li>
-                <li class="tx-list">
-                    <div unselectable="on" class="tx-btn-bg tx-quote" id="tx_quote">
-                        <a href="javascript:;" class="tx-icon" title="인용구 (Ctrl+Q)">인용구</a>
-                    </div>
-                    <div id="tx_quote_menu" class="tx-quote-menu tx-menu" unselectable="on">
-                    </div>
-                </li>
-                <li class="tx-list">
-                    <div unselectable="on" class="tx-btn-bg tx-background" id="tx_background">
-                        <a href="javascript:;" class="tx-icon" title="배경색">배경색</a>
-                    </div>
-                    <div id="tx_background_menu" class="tx-menu tx-background-menu tx-colorpallete" unselectable="on">
-                    </div>
-                </li>
-                <li class="tx-list">
-                    <div unselectable="on" class="tx-btn-rbg tx-dictionary" id="tx_dictionary">
-                        <a href="javascript:;" class="tx-icon" title="사전">사전</a>
-                    </div>
-                </li>
-            </ul>
-			<ul class="tx-bar tx-bar-left tx-group-undo">
-                <li class="tx-list">
-                    <div unselectable="on" class="tx-btn-lbg tx-undo" id="tx_undo">
-                        <a href="javascript:;" class="tx-icon" title="실행취소 (Ctrl+Z)">실행취소</a>
-                    </div>
-                </li>
-                <li class="tx-list">
-                    <div unselectable="on" class="tx-btn-rbg tx-redo" id="tx_redo">
-                        <a href="javascript:;" class="tx-icon" title="다시실행 (Ctrl+Y)">다시실행</a>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </div>
-    툴바 - 더보기 끝
-
-	편집영역 시작
-	에디터 Start
-    <div id="tx_canvas" class="tx-canvas">
-        <div id="tx_loading" class="tx-loading">
-            <div>
-                <img src="/common/html/daumeditor/images/icon/editor/loading2.png?rv=1.0.1" width="113" height="21" />
-            </div>
-        </div>
-        <div id="tx_canvas_wysiwyg_holder" class="tx-holder" style="display:block;">
-            <iframe id="tx_canvas_wysiwyg" name="tx_canvas_wysiwyg" allowtransparency="true" frameborder="0">
-            </iframe>
-        </div>
-        <div class="tx-source-deco">
-            <div id="tx_canvas_source_holder" class="tx-holder">
-                <textarea id="tx_canvas_source" rows="30" cols="30">
-                </textarea>
-            </div>
-        </div>
-        <div id="tx_canvas_text_holder" class="tx-holder">
-            <textarea id="tx_canvas_text" rows="30" cols="30">
-            </textarea>
-        </div>
-    </div>
-    높이조절 Start
-    <div id="tx_resizer" class="tx-resize-bar">
-        <div class="tx-resize-bar-bg">
-        </div>
-        <img id="tx_resize_holder" src="/common/html/daumeditor/images/icon/editor/btn_drag01.gif" width="58" height="12" unselectable="on" alt="" />
-    </div>
-    편집영역 끝
-
-	첨부박스 시작
-	파일첨부박스 Start
-    <div id="tx_attach_div" class="tx-attach-div">
-        <div id="tx_attach_txt" class="tx-attach-txt">
-            파일 첨부
-        </div>
-        <div id="tx_attach_box" class="tx-attach-box">
-            <div class="tx-attach-box-inner">
-                <div id="tx_attach_preview" class="tx-attach-preview">
-                    <p>
-                    </p>
-                    <img src="/common/html/daumeditor/images/icon/editor/pn_preview.gif" width="147" height="108" unselectable="on"/>
-                </div>
-                <div class="tx-attach-main">
-                    <div id="tx_upload_progress" class="tx-upload-progress">
-                        <div>
-                            0%
-                        </div>
-                        <p>
-                            파일을 업로드하는 중입니다.
-                        </p>
-                    </div>
-                    <ul class="tx-attach-top">
-                        <li id="tx_attach_delete" class="tx-attach-delete">
-                            <a>전체삭제</a>
-                        </li>
-                        <li id="tx_attach_size" class="tx-attach-size">
-                            파일: <span id="tx_attach_up_size" class="tx-attach-size-up"></span>/<span id="tx_attach_max_size"></span>
-                        </li>
-                        <li id="tx_attach_tools" class="tx-attach-tools">
-                        </li>
-                    </ul>
-                    <ul id="tx_attach_list" class="tx-attach-list">
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-    첨부박스 끝
-</div> -->
-<!-- 에디터 컨테이너 끝 -->
-<!-- 
-<script type="text/javascript">
-	var form_name = "";
-	var canvas_height = "80px";
-	form_name = (form_name == "") ? document.forms[document.forms.length-1].name : form_name;	// 없으면 맨 마지막 form의 이름으로 설정한다.
-	//alert(form_name);
-
-	/*-------- 에디터 로드 시작 ----------*/
-	new Editor({
-		events: {
-			preventUnload: false
-		},
-		txHost: '', /* 런타임 시 리소스들을 로딩할 때 필요한 부분으로, 경로가 변경되면 이 부분 수정이 필요. ex) http://xxx.xxx.com */
-		txPath: '/common/html/daumeditor/', /* 런타임 시 리소스들을 로딩할 때 필요한 부분으로, 경로가 변경되면 이 부분 수정이 필요. ex) /xxx/xxx/ */
-		txVersion: '5.4.0', /* 수정필요없음. */
-		txService: 'sample', /* 수정필요없음. */
-		txProject: 'sample', /* 수정필요없음. 프로젝트가 여러개일 경우만 수정한다. */
-		initializedId: "", /* 대부분의 경우에 빈문자열 */
-		wrapper: "tx_trex_container"+"", /* 에디터를 둘러싸고 있는 레이어 이름(에디터 컨테이너) */
-		form: form_name +"", /* 등록하기 위한 Form 이름 */
-		txIconPath: "/common/html/daumeditor/images/icon/editor/", /*에디터에 사용되는 이미지 디렉터리, 필요에 따라 수정한다. */
-		txDecoPath: "/common/html/daumeditor/images/deco/contents/", /*본문에 사용되는 이미지 디렉터리, 서비스에서 사용할 때는 완성된 컨텐츠로 배포되기 위해 절대경로로 수정한다. */
-		canvas: {
-			styles: {
-				color: "#000", /* 기본 글자색 */
-				fontFamily: "굴림", /* 기본 글자체 */
-				fontSize: "10pt", /* 기본 글자크기 */
-				backgroundColor: "#fff", /*기본 배경색 */
-				lineHeight: "1.5", /*기본 줄간격 */
-				padding: "8px" /* 위지윅 영역의 여백 */
-			}
-		},
-		sidebar: {
-			attacher: {
-				image: {
-			  		multiple: true,
-		      		multipleuse: true,
-		      		checksize: false,
-		      		boxonly: false,
-		      		wysiwygonly: true,
-		      		features: {
-						left:250,
-						top:65,
-						width:450,
-						height:200
-					},
-		      		popPageUrl: "/daumeditor/popup_image"
-				},
-				file: {
-	  				multiple: true,
-		      		multipleuse: true,
-		      		checksize: true,
-		      		boxonly: false,
-		      		wysiwygonly: true,
-		      		features: {
-						left:250,
-						top:65,
-						width:450,
-						height:200
-					},
-		      		popPageUrl: "/daumeditor/popup_file"
-				}
-			}
-		},
-		size: {
-			contentWidth: "" /* 지정된 본문영역의 넓이가 있을 경우에 설정 */
-		}
-	});
-
-	if(canvas_height != "")
-	{
-		Editor.canvas.setCanvasSize({
-	 		height: canvas_height
-		});
-	}
-	/*-------- 에디터 로드 끝 ----------*/
-
-</script>
- -->
-
-
-<textarea id="tx_load_content" cols="80" rows="10" style="display:none;"></textarea>
-<!-- 
-<script type="text/javascript">
-	/*-------- 컨텐츠 불러오기 시작 ----------*/
-	function loadContent() {
-		var attachments = {};
-
-		/* 저장된 컨텐츠를 불러오기 위한 함수 호출 */
-		Editor.modify({
-			"attachments": function() { /* 저장된 첨부가 있을 경우 배열로 넘김, 위의 부분을 수정하고 아래 부분은 수정없이 사용 */
-				var allattachments = [];
-				for(var i in attachments) {
-					allattachments = allattachments.concat(attachments[i]);
-				}
-				return allattachments;
-			}(),
-			"content": $tx("tx_load_content")
-		});
-	}
-	Editor.modify({
-		"content": $tx("tx_load_content")
-	});
-</script>
- -->
+								<textarea id="product_material" name="product_material" cols="50" rows="2" title="상품재료" class="form-control"></textarea>
 							</div>
 						</td>
 					</tr>
@@ -828,7 +433,7 @@
 						</td>
 						<td>
 							<div class="item">
-								<textarea name="prd_desc_size" cols="50" rows="2" title="상품사이즈" class="form-control"></textarea>
+								<textarea name="product_size" id="product_size" cols="50" rows="2" title="상품사이즈" class="form-control"></textarea>
 							</div>
 						</td>
 					</tr>
@@ -839,7 +444,7 @@
 						</td>
 						<td>
 							<div class="item">
-								<textarea name="prd_desc_use" cols="50" rows="2" title="상품용도" class="form-control"></textarea>
+								<textarea name="product_use" id="product_use" cols="50" rows="2" title="상품용도" class="form-control"></textarea>
 							</div>
 						</td>
 					</tr>
@@ -850,7 +455,7 @@
 						</td>
 						<td>
 							<div class="item">
-								<textarea name="prd_desc_intro" cols="50" rows="5" title="상품소개" class="form-control"></textarea>
+								<textarea name="product_introduction" id="product_introduction" cols="50" rows="5" title="상품소개" class="form-control"></textarea>
 							</div>
 						</td>
 					</tr>
@@ -860,8 +465,8 @@
 						</td>
 						<td>
 							<div class="item">
-								<textarea name="prd_notice_delivery" cols="50" rows="5" title="배송안내" class="form-control"></textarea>
-								<div class="blue">+ 입력하지 않으시면, [<a href="/homepage/adm_use_info_modify_form" target="_blank">쇼핑몰관리>상점상세정보>이용안내>배송안내</a>]의 내용이 출력됩니다.</div>
+								<textarea name="product_deliveryguide" id="product_deliveryguide" cols="50" rows="5" title="배송안내" class="form-control"></textarea>
+								<div class="blue">+ 입력하지 않으시면, [<a href="#" target="_blank">배송안내</a>]의 내용이 출력됩니다.</div>
 							</div>
 						</td>
 					</tr>
@@ -871,8 +476,8 @@
 						</td>
 						<td>
 							<div class="item">
-								<textarea name="prd_notice_cancel" cols="50" rows="5" title="주문취소안내" class="form-control"></textarea>
-								<div class="blue">+ 입력하지 않으시면, [<a href="/homepage/adm_use_info_modify_form" target="_blank">쇼핑몰관리>상점상세정보>이용안내>주문취소안내</a>]의 내용이 출력됩니다.</div>
+								<textarea name="product_cancelguide" id="product_cancelguide" cols="50" rows="5" title="주문취소안내" class="form-control"></textarea>
+								<div class="blue">+ 입력하지 않으시면, [<a href="#" target="_blank">주문취소안내</a>]의 내용이 출력됩니다.</div>
 							</div>
 						</td>
 					</tr>
@@ -882,8 +487,8 @@
 						</td>
 						<td>
 							<div class="item">
-								<textarea name="prd_notice_buy" cols="50" rows="5" title="구매시유의사항" class="form-control"></textarea>
-								<div class="blue">+ 입력하지 않으시면, [<a href="/homepage/adm_use_info_modify_form" target="_blank">쇼핑몰관리>상점상세정보>이용안내>구매시유의사항</a>]의 내용이 출력됩니다.</div>
+								<textarea name="product_notice" id="product_notice" cols="50" rows="5" title="구매시유의사항" class="form-control"></textarea>
+								<div class="blue">+ 입력하지 않으시면, [<a href="#" target="_blank">구매시유의사항</a>]의 내용이 출력됩니다.</div>
 							</div>
 						</td>
 					</tr>
@@ -908,8 +513,8 @@
 
 
 <!-- 원산지 팝업 -->
-<div id="pop_set_madein_info" title="원산지 간편 등록" style="display:none;">
-	<form name="set_madein_form" id="set_madein_form">
+<div id="pop_set_origin_info" title="원산지 간편 등록" style="display:none;">
+	<form name="set_origin_form" id="set_origin_form">
 	<div style="clear:both; font-weight:bold; border-bottom:2px solid #ddd; overflow:hidden;margin:5px 0 10px 0;padding-bottom:10px;">
 		
 		<h3>소재 선택</h3>
@@ -948,10 +553,12 @@
 			<label for="set_material10">칼라</label>
 		</div>
 		
-		<div style="width:60%; padding:5px 0; float:left;"><input type="checkbox" name="set_material" value="text" >
+		<div style="width:60%; padding:5px 0; float:left;">
+			<input type="checkbox" name="set_material" value="text" style="float:left;">
 			<input type="text" name="set_material_text" value="" style="width:90%;" class="form-control" />
 		</div>
-		<div style="width:20%; padding:5px 0; float:left;"><input type="checkbox" id="set_material_all" onclick="set_checkbox('#set_madein_form','set_material', this.checked, 'text')" >
+		<div style="width:20%; padding:5px 0; float:left;">
+			<input type="checkbox" id="set_material_all" onclick="fn_setCheckbox('#set_origin_form','set_material', this.checked, 'text')" >
 			<label for="set_material_all">전체</label>
 		</div>
 	</div>
@@ -960,76 +567,648 @@
 		
 		<h3>국가 선택</h3>
 		
-		<div style="width:25%; padding:5px 0; float:left;"><input type="radio" name="set_madein" id="set_madein0" value="국내산" >
-			<label for="set_madein0">국내산</label>
+		<div style="width:25%; padding:5px 0; float:left;"><input type="radio" name="set_origin" id="set_origin0" value="국내산" >
+			<label for="set_origin0">국내산</label>
 		</div>
-		<div style="width:25%; padding:5px 0; float:left;"><input type="radio" name="set_madein" id="set_madein1" value="뉴질랜드" >
-			<label for="set_madein1">뉴질랜드</label>
+		<div style="width:25%; padding:5px 0; float:left;"><input type="radio" name="set_origin" id="set_origin1" value="뉴질랜드" >
+			<label for="set_origin1">뉴질랜드</label>
 		</div>
-		<div style="width:25%; padding:5px 0; float:left;"><input type="radio" name="set_madein" id="set_madein2" value="대만" >
-			<label for="set_madein2">대만</label>
+		<div style="width:25%; padding:5px 0; float:left;"><input type="radio" name="set_origin" id="set_origin2" value="대만" >
+			<label for="set_origin2">대만</label>
 		</div>
-		<div style="width:25%; padding:5px 0; float:left;"><input type="radio" name="set_madein" id="set_madein3" value="말레이시아" >
-			<label for="set_madein3">말레이시아</label>
+		<div style="width:25%; padding:5px 0; float:left;"><input type="radio" name="set_origin" id="set_origin3" value="말레이시아" >
+			<label for="set_origin3">말레이시아</label>
 		</div>
-		<div style="width:25%; padding:5px 0; float:left;"><input type="radio" name="set_madein" id="set_madein4" value="배트남" >
-			<label for="set_madein4">배트남</label>
+		<div style="width:25%; padding:5px 0; float:left;"><input type="radio" name="set_origin" id="set_origin4" value="배트남" >
+			<label for="set_origin4">배트남</label>
 		</div>
-		<div style="width:25%; padding:5px 0; float:left;"><input type="radio" name="set_madein" id="set_madein5" value="브라질" >
-			<label for="set_madein5">브라질</label>
+		<div style="width:25%; padding:5px 0; float:left;"><input type="radio" name="set_origin" id="set_origin5" value="브라질" >
+			<label for="set_origin5">브라질</label>
 		</div>
-		<div style="width:25%; padding:5px 0; float:left;"><input type="radio" name="set_madein" id="set_madein6" value="아프리카" >
-			<label for="set_madein6">아프리카</label>
+		<div style="width:25%; padding:5px 0; float:left;"><input type="radio" name="set_origin" id="set_origin6" value="아프리카" >
+			<label for="set_origin6">아프리카</label>
 		</div>
-		<div style="width:25%; padding:5px 0; float:left;"><input type="radio" name="set_madein" id="set_madein7" value="영국" >
-			<label for="set_madein7">영국</label>
+		<div style="width:25%; padding:5px 0; float:left;"><input type="radio" name="set_origin" id="set_origin7" value="영국" >
+			<label for="set_origin7">영국</label>
 		</div>
-		<div style="width:25%; padding:5px 0; float:left;"><input type="radio" name="set_madein" id="set_madein8" value="오스트레일리아" >
-			<label for="set_madein8">오스트레일리아</label>
+		<div style="width:25%; padding:5px 0; float:left;"><input type="radio" name="set_origin" id="set_origin8" value="오스트레일리아" >
+			<label for="set_origin8">오스트레일리아</label>
 		</div>
-		<div style="width:25%; padding:5px 0; float:left;"><input type="radio" name="set_madein" id="set_madein9" value="이디오피아" >
-			<label for="set_madein9">이디오피아</label>
+		<div style="width:25%; padding:5px 0; float:left;"><input type="radio" name="set_origin" id="set_origin9" value="이디오피아" >
+			<label for="set_origin9">이디오피아</label>
 		</div>
-		<div style="width:25%; padding:5px 0; float:left;"><input type="radio" name="set_madein" id="set_madein10" value="일본" >
-			<label for="set_madein10">일본</label>
+		<div style="width:25%; padding:5px 0; float:left;"><input type="radio" name="set_origin" id="set_origin10" value="일본" >
+			<label for="set_origin10">일본</label>
 		</div>
-		<div style="width:25%; padding:5px 0; float:left;"><input type="radio" name="set_madein" id="set_madein11" value="중국" >
-			<label for="set_madein11">중국</label>
+		<div style="width:25%; padding:5px 0; float:left;"><input type="radio" name="set_origin" id="set_origin11" value="중국" >
+			<label for="set_origin11">중국</label>
 		</div>
-		<div style="width:25%; padding:5px 0; float:left;"><input type="radio" name="set_madein" id="set_madein12" value="케냐" >
-			<label for="set_madein12">케냐</label>
+		<div style="width:25%; padding:5px 0; float:left;"><input type="radio" name="set_origin" id="set_origin12" value="케냐" >
+			<label for="set_origin12">케냐</label>
 		</div>
-		<div style="width:25%; padding:5px 0; float:left;"><input type="radio" name="set_madein" id="set_madein13" value="태국" >
-			<label for="set_madein13">태국</label>
+		<div style="width:25%; padding:5px 0; float:left;"><input type="radio" name="set_origin" id="set_origin13" value="태국" >
+			<label for="set_origin13">태국</label>
 		</div>
-		<div style="width:25%; padding:5px 0; float:left;"><input type="radio" name="set_madein" id="set_madein14" value="콜롬비아" >
-			<label for="set_madein14">콜롬비아</label>
+		<div style="width:25%; padding:5px 0; float:left;"><input type="radio" name="set_origin" id="set_origin14" value="콜롬비아" >
+			<label for="set_origin14">콜롬비아</label>
 		</div>
-		<div style="width:25%; padding:5px 0; float:left;"><input type="radio" name="set_madein" id="set_madein15" value="필리핀" >
-			<label for="set_madein15">필리핀</label>
+		<div style="width:25%; padding:5px 0; float:left;"><input type="radio" name="set_origin" id="set_origin15" value="필리핀" >
+			<label for="set_origin15">필리핀</label>
 		</div>
-		<div style="width:25%; padding:5px 0; float:left;"><input type="radio" name="set_madein" id="set_madein16" value="호주" >
-			<label for="set_madein16">호주</label>
+		<div style="width:25%; padding:5px 0; float:left;"><input type="radio" name="set_origin" id="set_origin16" value="호주" >
+			<label for="set_origin16">호주</label>
 		</div>
 		
-		<div style="width:75%; padding:5px 0; float:left;"><input type="radio" name="set_madein" value="text" >
-			<input type="text" name="set_madein_text" value="" style="width:90%;" class="form-control" />
+		<div style="width:75%; padding:5px 0; float:left;">
+			<input type="radio" name="set_origin" value="text" style="float:left;">
+			<input type="text" name="set_origin_text" value="" style="width:90%;" class="form-control" />
 		</div>
 	</div>
 		
 	<div style="clear:both; font-weight:bold; overflow:hidden;margin:0 0 10px 0;padding-bottom:10px;">
-		원산지 : <input type="text" name="prd_madein" value="" style="width:90%;" class="form-control" />
+		원산지 : <input type="text" name="product_origin" value="" style="width:90%;" class="form-control" />
 	</div>
 	
 	<div style="text-align:center;">
 		<button type="button" class="btn btn-primary" onclick="fn_setOrigin()">추가</button>
 		&nbsp;&nbsp;&nbsp;
 		<button type="button" class="btn btn-primary" onclick="fn_resetOrigin();">초기화</button>
+		&nbsp;&nbsp;&nbsp;
+		<button type="button" class="btn btn-primary" onclick="fn_applyOrigin();">적용</button>
+		&nbsp;&nbsp;&nbsp;
+		<button type="button" class="btn btn-primary" onclick="$('#pop_set_origin_info').dialog('close')">닫기</button>
 	</div>
 	</form>
-
 </div>
+<!-- 원산지 팝업 끝 -->
 
+<!-- 상품재료 팝업 -->
+<div id="pop_set_goods_info" title="상품재료 등록" style="display:none;">
+	<form name="set_goods_form" id="set_goods_form">
+	<div style="width: auto; min-height: 0px; height: 343px;" class="ui-dialog-content">
+	<p style="clear:both; padding:5px 0;margin:5px 0;">* 내용을 클릭하면 추가됩니다.</p>
+		<div id="goods_info_list" style="display: block;">
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('거베라'); return false;">거베라</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('계절꽃'); return false;">계절꽃</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('고급도자기분'); return false;">고급도자기분</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('고급리본'); return false;">고급리본</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('고급바구니'); return false;">고급바구니</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('고급포장재'); return false;">고급포장재</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('곱슬버들'); return false;">곱슬버들</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('공작소국'); return false;">공작소국</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('과꽃'); return false;">과꽃</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('과일'); return false;">과일</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('글라디올라스'); return false;">글라디올라스</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('금어초'); return false;">금어초</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('나리'); return false;">나리</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('난받침'); return false;">난받침</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('난잎'); return false;">난잎</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('노란장미'); return false;">노란장미</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('노무라'); return false;">노무라</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('뉴카리'); return false;">뉴카리</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('다알리아'); return false;">다알리아</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('대국화'); return false;">대국화</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('도시루'); return false;">도시루</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('리시얀사스'); return false;">리시얀사스</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('리아트리스'); return false;">리아트리스</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('마르코폴로'); return false;">마르코폴로</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('마리안느'); return false;">마리안느</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('명자란'); return false;">명자란</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('몬스테라'); return false;">몬스테라</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('미니장미'); return false;">미니장미</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('미디오'); return false;">미디오</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('미색장미'); return false;">미색장미</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('미스티블루'); return false;">미스티블루</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('백합'); return false;">백합</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('베어그라스'); return false;">베어그라스</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('보키지장미'); return false;">보키지장미</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('불로초'); return false;">불로초</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('붉은장미'); return false;">붉은장미</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('석죽'); return false;">석죽</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('소국'); return false;">소국</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('소철잎'); return false;">소철잎</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('수선화'); return false;">수선화</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('스타게이져'); return false;">스타게이져</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('스타티스'); return false;">스타티스</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('스토크'); return false;">스토크</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('스프링겔리'); return false;">스프링겔리</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('쏠리스트'); return false;">쏠리스트</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('아스파라것'); return false;">아스파라것</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('아이리스'); return false;">아이리스</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('안개'); return false;">안개</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('양란'); return false;">양란</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('연보라장미'); return false;">연보라장미</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('와네끼'); return false;">와네끼</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('와인'); return false;">와인</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('집시꽃'); return false;">집시꽃</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('천일홍'); return false;">천일홍</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('청지목'); return false;">청지목</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('카네이션'); return false;">카네이션</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('카네이션(스프레이)'); return false;">카네이션(스프레이)</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('카라'); return false;">카라</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('칼라아이비'); return false;">칼라아이비</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('케'); return false;">케</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('튜울립'); return false;">튜울립</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('패랭이'); return false;">패랭이</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('퍼퓨륨'); return false;">퍼퓨륨</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('편백'); return false;">편백</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('핑크장미'); return false;">핑크장미</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('해바라기'); return false;">해바라기</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('후리지아'); return false;">후리지아</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('흰장미'); return false;">흰장미</a>
+			</div>
+		</div>
+	</div>
+	</form>
+</div>
+<!-- 상품재료 팝업 끝-->
+
+<div id="pop_set_goods_info" title="상품정보 등록" style="display:none;">
+	<form name="set_goods_form" id="set_goods_form">
+	<div style="width: auto; min-height: 0px; height: 343px;" class="ui-dialog-content">
+	<p style="clear:both; padding:5px 0;margin:5px 0;">* 내용을 클릭하면 추가됩니다.</p>
+	<!-- 상품사이즈 팝업 -->
+		<div id="goods_info_list" style="display: block;">
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('거베라'); return false;">거베라</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('계절꽃'); return false;">계절꽃</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('고급도자기분'); return false;">고급도자기분</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('고급리본'); return false;">고급리본</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('고급바구니'); return false;">고급바구니</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('고급포장재'); return false;">고급포장재</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('곱슬버들'); return false;">곱슬버들</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('공작소국'); return false;">공작소국</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('과꽃'); return false;">과꽃</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('과일'); return false;">과일</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('글라디올라스'); return false;">글라디올라스</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('금어초'); return false;">금어초</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('나리'); return false;">나리</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('난받침'); return false;">난받침</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('난잎'); return false;">난잎</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('노란장미'); return false;">노란장미</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('노무라'); return false;">노무라</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('뉴카리'); return false;">뉴카리</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('다알리아'); return false;">다알리아</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('대국화'); return false;">대국화</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('도시루'); return false;">도시루</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('리시얀사스'); return false;">리시얀사스</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('리아트리스'); return false;">리아트리스</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('마르코폴로'); return false;">마르코폴로</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('마리안느'); return false;">마리안느</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('명자란'); return false;">명자란</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('몬스테라'); return false;">몬스테라</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('미니장미'); return false;">미니장미</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('미디오'); return false;">미디오</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('미색장미'); return false;">미색장미</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('미스티블루'); return false;">미스티블루</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('백합'); return false;">백합</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('베어그라스'); return false;">베어그라스</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('보키지장미'); return false;">보키지장미</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('불로초'); return false;">불로초</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('붉은장미'); return false;">붉은장미</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('석죽'); return false;">석죽</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('소국'); return false;">소국</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('소철잎'); return false;">소철잎</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('수선화'); return false;">수선화</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('스타게이져'); return false;">스타게이져</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('스타티스'); return false;">스타티스</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('스토크'); return false;">스토크</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('스프링겔리'); return false;">스프링겔리</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('쏠리스트'); return false;">쏠리스트</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('아스파라것'); return false;">아스파라것</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('아이리스'); return false;">아이리스</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('안개'); return false;">안개</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('양란'); return false;">양란</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('연보라장미'); return false;">연보라장미</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('와네끼'); return false;">와네끼</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('와인'); return false;">와인</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('집시꽃'); return false;">집시꽃</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('천일홍'); return false;">천일홍</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('청지목'); return false;">청지목</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('카네이션'); return false;">카네이션</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('카네이션(스프레이)'); return false;">카네이션(스프레이)</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('카라'); return false;">카라</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('칼라아이비'); return false;">칼라아이비</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('케'); return false;">케</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('튜울립'); return false;">튜울립</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('패랭이'); return false;">패랭이</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('퍼퓨륨'); return false;">퍼퓨륨</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('편백'); return false;">편백</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('핑크장미'); return false;">핑크장미</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('해바라기'); return false;">해바라기</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('후리지아'); return false;">후리지아</a>
+			</div>
+			<div class="set_goods_info_column">
+				<a href="javascript:void(0);"
+					onclick="fn_setGoodsInfo('흰장미'); return false;">흰장미</a>
+			</div>
+		</div>
+	</div>
+	<!-- 상품사이즈 팝업 -->
+	</form>
+</div>
 
 </section>
     <!-- Footer Section Begin -->
@@ -1046,7 +1225,7 @@
     <script src="/js/owl.carousel.min.js"></script>
     <script src="/js/main.js"></script>
     
-    <script src="/js/react/commonFunctions.js?ver=3245"></script>
+    <script src="/js/react/commonFunctions.js?ver=1145"></script>
     <script>
 	
 	var productTypeList	= [];	// 타입
@@ -1057,7 +1236,23 @@
 	
 	var imgFileList = []; 	// 이미지파일
 	
-	var productCode = document.querySelector('#product_code');
+	const productCode = document.querySelector('#product_code');
+	const productId = document.querySelector('#product_id');
+	const productName = document.querySelector('#product_name');
+	const productSummary = document.querySelector('#product_summary');
+	const productPrice = document.querySelector('#product_price');
+	const productDiscountPrice = document.querySelector('#product_discount_price');
+	const productDeliverypay = document.querySelector('#product_deliverypay');
+	const productOrigin = document.querySelector('#product_origin');
+	
+	const productMaterial = document.querySelector('#product_material');
+	const productSize = document.querySelector('#product_size');
+	const productIntroduction = document.querySelector('#product_introduction');
+	const productUse = document.querySelector('#product_use');
+	const productDeliveryguide = document.querySelector('#product_deliveryguide');
+	const productCancelguide = document.querySelector('#product_cancelguide');
+	const productNotice = document.querySelector('#product_notice');
+	
 	
 	// 타입세팅
 	var fn_setProductTypeMap = function() {
@@ -1156,6 +1351,7 @@
 				alert("["+productCode.value+"]는 이미 사용중인 코드입니다.");
 			} else if (datums.returnValue == "false"){
 				alert("["+productCode.value+"]는 사용가능한 코드입니다.");
+				
 			} else {
 				alert("영문과 숫자(일부특수문자:-,_)로 조합된 4-20자리 문자로 입력해 주십시오.");
 			}
@@ -1168,26 +1364,114 @@
 	
 	// 원산지 등록
 	
-	// 원산지 등록 추가 체크
-	var fn_setOrigin = function() {
-		// 폼명, 체크박스 경로
-		var checkboxList = document.getElementById('set_madein_form').querySelectorAll('[name=set_material_all]');
-		var hasChecked = false;
+	// 간편 등록 버튼
+	var fn_openOriginForm = function() {
+		var registFormText = document.querySelector('form#goods_regist_form input[name=product_origin]');
+		var madeinFormText = document.querySelector('form#set_origin_form input[name=product_origin]');
 		
-		for(var i = 0; i < checkboxList.length; i++) {
-			if(checkboxList[i].checked) {
-				hasChecked = true;
-				break;
-			}
+		$('#pop_set_origin_info').dialog({width:800,height:700});
+		fn_resetOrigin();
+		
+		madeinFormText.value = registFormText.value; 
+		
+	}
+	
+	// 간편 등록 추가버튼
+	var fn_setOrigin = function() {
+		var materialCheckedList = document.querySelectorAll('form#set_origin_form input[name=set_material]:checked');
+		var originChecked 		= document.querySelector('form#set_origin_form input[name=set_origin]:checked');
+		var productOrigin		= document.querySelector('form#set_origin_form input[name=product_origin]');
+		var returnFunction		= false;
+		
+		var inputStr = '';
+		
+		if(materialCheckedList.length < 1) {
+			alert('소재를 선택하세요.');
+			return;
 		}
 		
-		if(!hasChecked) {
-			alert("체크해야 합니다.");
+		if(originChecked < 1) {
+			alert('원산지를 선택하세요.');
 			return;
+		}
+		
+		materialCheckedList.forEach(function(el) {
+			if(el.id == '') {
+				if(el.nextElementSibling.value == '') {
+					alert('소재를 입력하세요.');
+					returnFunction = true;
+					return;
+				} else {
+					inputStr += ', ' + el.nextElementSibling.value;
+				}
+			} else {
+				inputStr += ', ' + el.nextElementSibling.textContent;	
+			}
+		})
+		
+		if(returnFunction) return;
+		
+		if(originChecked.id == '') {
+			if(originChecked.nextElementSibling.value == '') {
+				alert('원산지를 입력하세요.');
+				returnFunction = true;
+				return;
+			} else {
+				inputStr += ' : ' + originChecked.nextElementSibling.value;
+			}
+		} else {
+			inputStr += ' : ' + originChecked.nextElementSibling.textContent;
+		}
+		
+		if(returnFunction) return;
+		
+		if(productOrigin.value.length > 0) {
+			productOrigin.value = productOrigin.value + inputStr;
+		} else {
+			productOrigin.value = inputStr.substring(1);
 		}
 	}
 	
-	//업무버튼
+	// 간편 등록 초기화버튼
+	var fn_resetOrigin = function() {
+		var checkedList 	= document.querySelectorAll('form#set_origin_form input:checked');
+		var materialText	= document.querySelector('form#set_origin_form input[name=set_material_text]');
+		var madeinText		= document.querySelector('form#set_origin_form input[name=set_origin_text]');
+		var productOrigin	= document.querySelector('form#set_origin_form input[name=product_origin]');
+		
+		checkedList.forEach(function(el) {
+			el.checked = false;
+		})
+		materialText.value  = '';
+		madeinText.value 	= '';
+		productOrigin.value = '';
+	}
+	
+	// 간편 등록 적용버튼
+	var fn_applyOrigin = function() {
+		var registFormText = document.querySelector('form#goods_regist_form input[name=product_origin]');
+		var madeinFormText = document.querySelector('form#set_origin_form input[name=product_origin]');
+		
+		registFormText.value = madeinFormText.value; 
+		
+		$('#pop_set_origin_info').dialog('close');
+		
+		alert('원산지의 정보가 적용되었습니다.'
+		+ '\n' + '상품정보를 저장해야 수정한 내용이 반영됩니다.');
+	}
+	
+	// 상품재료 등록
+	var fn_setGoodsInfo = function(goods) {
+		var productMaterial = document.querySelector('#product_material');
+		
+		if(productMaterial.value.length == 0) {
+			productMaterial.value = goods;	
+		} else {
+			productMaterial.value += ", " + goods;	
+		}
+	}
+	
+	// 이미지 업로드 버튼
 	var fn_btnImgUploadOnClicked = function() {
 		var url = '/cmm/fms/EgovFileUploadPopup.do';
 		var winWidth = 700;
@@ -1208,9 +1492,10 @@
 	}
 	
 	// 팝업결과 리턴
-	var fn_uploadPopupHandler = function(_this, result) {
+	var fn_egovFileUploadPopupHandler = function(_this, result) {
 		_this.window.close();
-		alert("저장이 완료되었습니다!");		
+		alert("저장이 완료되었습니다!");
+		fn_getImgFile(result);
 	}
 	
 	//제공이미지 팝업 클릭
@@ -1234,17 +1519,161 @@
 	}
 	
 	// 팝업결과 리턴
-	var fn_selectPopupHandler = function(_this, result) {
+	var fn_imgFilePopupHandler = function(_this, result) {
 		_this.window.close();
-		alert("저장이 완료되었습니다!");
+		fn_getImgFile(result.atchFileId);
 	}
 	
 	var fn_getImgFile = function(atchFileId) {
-		gfn_commonLoadDataRequest('/cmm/fms/getImgFileList.do?atchFileId='atchFileId, imgFileList, fn_setImg);
+		imgFileList = [];
+		gfn_commonLoadDataRequest('/cmm/fms/getImgFileList.do?atchFileId='+atchFileId, imgFileList, fn_setImg);
 	}
 	
 	var fn_setImg = function() {
+		document.querySelector("#product_image_file").src = '';
+		document.querySelector("#product_image_file").src = imgFileList[0].fileStreCours + imgFileList[0].streFileNm;
+		document.querySelector("#atch_file_id").value = imgFileList[0].atchFileId;
+	}
+	
+	// 체크박스 세팅
+	// fn_set_checkbox('#set_origin_form','set_material', this.checked, 'text') 
+	var fn_setCheckbox = function(formName, checkboxName, thisChecked, exclusions) {
+		var checkboxList = document.querySelectorAll("form"+formName+" input[name="+checkboxName+"]");
 		
+		for(checkbox of checkboxList) {
+			if(checkbox.value != exclusions) {
+				checkbox.checked = thisChecked;
+			}
+		}
+	}
+	
+	// 필수체크
+	var fn_validate = function() {
+		var checkedCategoryList = document.querySelectorAll('div#category_areas input[name=category_names]:checked');
+		var atchFileId = document.querySelector('#atch_file_id');	// 여러개 받도록 수정해야 함
+		
+		var filteredProductPrice = gfn_filterInt(productPrice.value);
+		var filteredDiscountPrice = gfn_filterInt(productDiscountPrice.value);
+		var filteredDeliverypay = gfn_filterInt(productDeliverypay.value);
+		
+		if(checkedCategoryList.length < 1) {
+			alert('카테고리를 선택하세요.');
+			return;
+		}
+		
+		if(productName.value.length < 1) {
+			alert('상품명을 입력해 주십시오.');
+			return;
+		}
+		
+		if(atchFileId.value.length < 1) {
+			alert('첫번째 상품 이미지는 필수입니다.')
+			return;
+		}
+		
+		if(productPrice.value.length < 1) {
+			alert('판매금액을 입력하세요.');
+			return;
+		}
+		
+		if(!filteredProductPrice
+		|| filteredProductPrice <= 0
+		|| filteredProductPrice >= 9999900) {
+			alert('가격은 0~9,999,900까지의 숫자만 입력 가능합니다.');
+			return;
+		}
+		
+		if(!filteredDiscountPrice
+		|| filteredDiscountPrice <= 0
+		|| filteredDiscountPrice >= 9999900) {
+			alert('할인가는 0~9,999,900까지의 숫자만 입력 가능합니다.');
+			return;
+		}
+		
+		if(!filteredDeliverypay
+		|| filteredDeliverypay <= 0
+		|| filteredDeliverypay >= 9999900) {
+			alert('할인가는 0~9,999,900까지의 숫자만 입력 가능합니다.');
+			return;
+		}
+		
+		if(productOrigin.value.length < 1) {
+			alert('원산지 정보는 필수 입력 항목입니다.');
+			return;
+		}
+		
+		// 서버에 넘길 데이터 세팅
+		var categoryStr = '';
+		
+		checkedCategoryList.forEach(function(el) {
+			categoryStr += el.id.replace('category_','') + ',';
+		})
+		
+		var updateFormData = [{
+			productId : productId.value,
+			productCode : productCode.value,
+			
+			checkedCategoryList : categoryStr,
+			atchFileId : atchFileId.value,
+			
+			productName : productName.value,
+			productSummary : productSummary.value,
+			productPrice : productPrice.value,
+			productDiscountPrice : productDiscountPrice.value,
+			productDeliverypay : productDeliverypay.value,
+			productOrigin : productOrigin.value,
+			
+			productMaterail : productMaterial.value,
+			productSize : productSize.value,
+			productIntroduction : productIntroduction.value,
+			productUse : productUse.value,
+			productDeliveryguide : productDeliveryguide.value,
+			productCancelguide : productCancelguide.value,
+			productNotice : productNotice.value
+		}]
+		
+		fn_uploadFormDataRequest(updateFormData);
+	}
+	
+	var fn_uploadFormDataRequest = function(data) {
+		// 폼 데이터 업로드 요청
+		gfn_uploadData(data, '/cmm/main/management/registProductDetail.do')
+		.then(function (datums) {
+			console.log(datums);
+		})
+		.catch(function (err) {
+			console.error(err.statusText);
+		});
+	}
+	
+	// 상품코드 값 가져오기
+	var fn_loadDataRequest = function(requestedProductId) {
+		gfn_loadData('', '/cmm/main/management/getProductDetail.do?productId='+requestedProductId)
+		.then(function (datums) {
+			fn_setDataForm(datums);
+		})
+		.catch(function (err) {
+			console.error(err.statusText);
+		});
+	}
+	
+	var fn_setDataForm = function(data) {
+		productCode.value = data.productCode;
+		productId.value = data.product_id;
+		productName.value = data.product_name;
+		productSummary.value = data.product_summary;
+		productPrice.value = data.product_price;
+		productDiscountPrice.value = data.product_discount_price;
+		productDeliverypay.value = data.product_deliverypay;
+		productOrigin.value = data.product_origin;
+		
+		productMaterial.value = data.product_material;
+		productSize.value = data.product_size;
+		productIntroduction.value = data.product_introduction;
+		productUse.value = data.product_use;
+		productDeliveryguide.value = data.product_deliveryguide;
+		productCancelguide.value = data.product_cancelguide;
+		productNotice.value = data.product_notice;
 	}
 	
 	// setup the grid after the page has finished loading
@@ -1252,6 +1681,12 @@
 		function() {
 			// 타입 불러오기
 			gfn_commonLoadDataRequest('/cmm/main/management/getProductTypeList.do', productTypeList, fn_setProductTypeMap);
+			
+			if(productId.value != 'null') {
+				fn_loadDataRequest();
+			} else {
+				productId.value = ''
+			}
 		}
 	);
 </script>

@@ -1,14 +1,13 @@
 package egovframework.let.cop.management.web;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,6 +22,7 @@ import egovframework.com.cmm.service.EgovFileMngService;
 import egovframework.com.cmm.service.FileVO;
 import egovframework.let.cop.management.service.EgovManagementService;
 import egovframework.let.cop.management.service.ProductCategoryVO;
+import egovframework.let.cop.management.service.ProductDetailVO;
 import egovframework.let.cop.management.service.ProductOptionVO;
 import egovframework.let.cop.management.service.ProductTypeVO;
 import egovframework.let.cop.management.service.ProductVO;
@@ -354,7 +354,7 @@ public class EgovManagementRestController {
      * 옵션 추가/삭제/수정 저장
      *
      * @param paramList, request, model
-     * @return List<ProductOptionVO>
+     * @return String
      */
     @RequestMapping("/cmm/main/management/registProductOption.do")
     @ResponseBody
@@ -396,5 +396,57 @@ public class EgovManagementRestController {
     	returnMap.put("returnValue", returnValue);
     	
     	return returnMap;
+    }
+    
+    /**
+     * 옵션 목록 조회
+     *
+     * @param request, model
+     * @return List<ProductOptionVO>
+     */
+    @RequestMapping("/cmm/main/management/getProductDetail.do")
+    public ProductDetailVO getProductDetail(HttpServletRequest request, ModelMap model) throws Exception {
+    	
+    	String productId = request.getParameter("productId");
+    	
+    	ProductDetailVO productDetailVO = managementService.getProductDetailByProductId(productId);
+    	
+    	return productDetailVO;
+    }
+    
+    /**
+     * 폼디테일 신규/수정 저장
+     *
+     * @param paramList, request, model
+     * @return String
+     */
+    @ResponseBody
+    @RequestMapping("/cmm/main/management/registProductDetail.do")
+    public String registProductDetail(@RequestBody  List<Map<String, Object>> paramList, HttpServletRequest request, ModelMap model) throws Exception {
+    	
+    	
+    	/*for(Map<String, Object> param : paramList) {
+    		Set<String> keySet = param.keySet();
+    		
+    		for(String key : keySet) {
+    			System.out.println("key: " + key);
+    			System.out.println("value: " + param.get(key));
+    			System.out.println();
+    		}
+    	}*/
+    	
+    	String message = "";
+    	
+    	if(paramList != null) {
+    		try {
+    			managementService.saveProductDetail(paramList);
+    			message = "success";
+    		} catch(Exception e) {
+    			e.printStackTrace();
+    			message = "fail";
+    		}
+    	}
+    	
+    	return message;
     }
 }

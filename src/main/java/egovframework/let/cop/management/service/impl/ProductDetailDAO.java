@@ -1,5 +1,7 @@
 package egovframework.let.cop.management.service.impl;
 
+import java.util.Map;
+
 import org.springframework.stereotype.Repository;
 
 import egovframework.com.cmm.service.impl.EgovComAbstractDAO;
@@ -61,5 +63,51 @@ public class ProductDetailDAO extends EgovComAbstractDAO{
      */
 	public void deleteProductDetail(ProductDetailVO productDetailVO) throws Exception {
 		delete("ProductDetailDAO.deleteProductDetail", productDetailVO);
+	}
+	
+	// 이미지파일 연결
+	/**
+     * 제품에 사용된 이미지파일을 추가한다.
+     *
+     * @param Map<String, String> map
+     * @return 
+     * @throws Exception
+     */
+	public void insertProductDetailToAtchFile(Map<String, String> map) throws Exception {
+		insert("ProductDetailDAO.insertProductDetailToAtchFile", map);
+	}
+	
+	/**
+     * 제품에 사용된 이미지파일을 삭제한다.
+     *
+     * @param Map<String, String> map
+     * @return 
+     * @throws Exception
+     */
+	public void deleteProductDetailToAtchFile(Map<String, String> map) throws Exception {
+		insert("ProductDetailDAO.deleteProductDetailToAtchFile", map);
+	}
+	
+	// 카테고리 연결
+	/**
+     * 제품에 사용된 이미지파일을 추가한다.
+     *
+     * @param Map<String, String> map
+     * @return 
+     * @throws Exception
+     */
+	public void insertProductDetailToProductCategory(Map<String, String> map) throws Exception {
+		insert("ProductDetailDAO.insertProductDetailToProductCategory", map);
+	}
+	
+	/**
+     * 제품에 사용된 이미지파일을 삭제한다.
+     *
+     * @param Map<String, String> map
+     * @return 
+     * @throws Exception
+     */
+	public void deleteProductDetailToProductCategory(Map<String, String> map) throws Exception {
+		insert("ProductDetailDAO.deleteProductDetailToProductCategory", map);
 	}
 }

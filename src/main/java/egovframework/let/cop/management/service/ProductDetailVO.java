@@ -40,13 +40,13 @@ public class ProductDetailVO implements Serializable{
 	private String productBestcnt;
 	
 	private String productCode;
-	private String productContent;
+	private String productMaterial;
 	private String productSize;
 	private String productIntroduction;
-	private String productPurpose;
-	private String productGuide;
-	private String productCancelGuide;
-	private String productPrecausion;
+	private String productUse;
+	private String productDeliveryguide;
+	private String productCancelguide;
+	private String productNotice;
 	private String detailStatus;
 	private String detailRegid;
 	private String detailUpdid;
@@ -90,147 +90,195 @@ public class ProductDetailVO implements Serializable{
 	public String getProductId() {
 		return productId;
 	}
+
 	public void setProductId(String productId) {
 		this.productId = productId;
 	}
+
 	public String getStockId() {
 		return stockId;
 	}
+
 	public void setStockId(String stockId) {
 		this.stockId = stockId;
 	}
+
 	public String getProductName() {
 		return productName;
 	}
+
 	public void setProductName(String productName) {
 		this.productName = productName;
 	}
+
 	public String getProductSummary() {
 		return productSummary;
 	}
+
 	public void setProductSummary(String productSummary) {
 		this.productSummary = productSummary;
 	}
+
 	public String getProductPrice() {
 		return productPrice;
 	}
+
 	public void setProductPrice(String productPrice) {
 		this.productPrice = productPrice;
 	}
+
 	public String getProductDiscountPrice() {
 		return productDiscountPrice;
 	}
+
 	public void setProductDiscountPrice(String productDiscountPrice) {
 		this.productDiscountPrice = productDiscountPrice;
 	}
+
 	public String getProductOrigin() {
 		return productOrigin;
 	}
+
 	public void setProductOrigin(String productOrigin) {
 		this.productOrigin = productOrigin;
 	}
+
 	public String getProductDeliverypay() {
 		return productDeliverypay;
 	}
+
 	public void setProductDeliverypay(String productDeliverypay) {
 		this.productDeliverypay = productDeliverypay;
 	}
+
 	public String getProductStatus() {
 		return productStatus;
 	}
+
 	public void setProductStatus(String productStatus) {
 		this.productStatus = productStatus;
 	}
+
 	public String getProductRdcnt() {
 		return productRdcnt;
 	}
+
 	public void setProductRdcnt(String productRdcnt) {
 		this.productRdcnt = productRdcnt;
 	}
+
 	public String getProductBestcnt() {
 		return productBestcnt;
 	}
+
 	public void setProductBestcnt(String productBestcnt) {
 		this.productBestcnt = productBestcnt;
 	}
+
 	public String getProductCode() {
 		return productCode;
 	}
+
 	public void setProductCode(String productCode) {
 		this.productCode = productCode;
 	}
-	public String getProductContent() {
-		return productContent;
+
+	public String getProductMaterial() {
+		return productMaterial;
 	}
-	public void setProductContent(String productContent) {
-		this.productContent = productContent;
+
+	public void setProductMaterial(String productMaterial) {
+		this.productMaterial = productMaterial;
 	}
+
 	public String getProductSize() {
 		return productSize;
 	}
+
 	public void setProductSize(String productSize) {
 		this.productSize = productSize;
 	}
+
 	public String getProductIntroduction() {
 		return productIntroduction;
 	}
+
 	public void setProductIntroduction(String productIntroduction) {
 		this.productIntroduction = productIntroduction;
 	}
-	public String getProductPurpose() {
-		return productPurpose;
+
+	public String getProductUse() {
+		return productUse;
 	}
-	public void setProductPurpose(String productPurpose) {
-		this.productPurpose = productPurpose;
+
+	public void setProductUse(String productUse) {
+		this.productUse = productUse;
 	}
-	public String getProductGuide() {
-		return productGuide;
+
+	public String getProductDeliveryguide() {
+		return productDeliveryguide;
 	}
-	public void setProductGuide(String productGuide) {
-		this.productGuide = productGuide;
+
+	public void setProductDeliveryguide(String productDeliveryguide) {
+		this.productDeliveryguide = productDeliveryguide;
 	}
-	public String getProductCancelGuide() {
-		return productCancelGuide;
+
+	public String getProductCancelguide() {
+		return productCancelguide;
 	}
-	public void setProductCancelGuide(String productCancelGuide) {
-		this.productCancelGuide = productCancelGuide;
+
+	public void setProductCancelguide(String productCancelguide) {
+		this.productCancelguide = productCancelguide;
 	}
-	public String getProductPrecausion() {
-		return productPrecausion;
+
+	public String getProductNotice() {
+		return productNotice;
 	}
-	public void setProductPrecausion(String productPrecausion) {
-		this.productPrecausion = productPrecausion;
+
+	public void setProductNotice(String productNotice) {
+		this.productNotice = productNotice;
 	}
+
 	public String getDetailStatus() {
 		return detailStatus;
 	}
+
 	public void setDetailStatus(String detailStatus) {
 		this.detailStatus = detailStatus;
 	}
+
 	public String getDetailRegid() {
 		return detailRegid;
 	}
+
 	public void setDetailRegid(String detailRegid) {
 		this.detailRegid = detailRegid;
 	}
+
 	public String getDetailUpdid() {
 		return detailUpdid;
 	}
+
 	public void setDetailUpdid(String detailUpdid) {
 		this.detailUpdid = detailUpdid;
 	}
+
 	public String getDetailRegdate() {
 		return detailRegdate;
 	}
+
 	public void setDetailRegdate(String detailRegdate) {
 		this.detailRegdate = detailRegdate;
 	}
+
 	public String getDetailUpddate() {
 		return detailUpddate;
 	}
+
 	public void setDetailUpddate(String detailUpddate) {
 		this.detailUpddate = detailUpddate;
 	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}

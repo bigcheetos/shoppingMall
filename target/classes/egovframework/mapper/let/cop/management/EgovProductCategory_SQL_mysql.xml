@@ -54,7 +54,7 @@
 	
 	<delete id="deleteCategory">
 		DELETE
-			FROM PRODUCT_CATEGORY
+		FROM PRODUCT_CATEGORY
 		WHERE
 			CATEGORY_ID = #{categoryId}
 	</delete>

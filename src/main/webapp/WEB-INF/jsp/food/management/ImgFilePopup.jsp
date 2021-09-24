@@ -293,6 +293,22 @@
 			});
 		}
 		
+		// 선택완료 클릭시
+		
+		var onBtSelect = function() {
+			if(mainGrid.gridOpts.api.getSelectedNodes(0).length>0) {
+				fn_closePopup(mainGrid.gridOpts.api.getSelectedNodes(0)[0].data);	
+			} else {
+				alert("이미지를 선택하십시오.");	
+			}
+		}
+		
+		var fn_closePopup = function(result) {
+			try {
+		        window.opener.fn_imgFilePopupHandler(this, result);
+		    } catch (err) {}
+		}
+		
 		// setup the grid after the page has finished loading
 		document.addEventListener('DOMContentLoaded',
 			function() {

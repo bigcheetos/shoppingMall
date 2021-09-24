@@ -120,3 +120,9 @@ var gfn_setCommonData = function(datums, receivedData, callbackFunction) {
 		callbackFunction();
 	}
 }
+
+var gfn_filterInt = function (value) {
+	if(/^(\-|\+)?([0-9]+|Infinity)$/.test(value))
+		return Number(value);
+	return NaN;
+}

@@ -19,6 +19,12 @@
 	content: '';
 	clear: both;
 }
+
+.gridColumn {
+	color: black; text-decoration: none; outline: none;
+}
+.gridColumn :hover, .gridColumn:active {text-decoration: none; color:#fff; background-color:#f59000;}
+
 </style>
 <head>
     <meta charset="UTF-8">
@@ -154,7 +160,10 @@
 				headerName : "제품명",
 				field : "productName",
 				width : 200,
-				editable : true
+				cellRenderer: function(params) {
+			      return '<a class="gridColumn" href="/cmm/main/management/productRegist.do?productId='+params.data.productId+'" target="_blank">'+ params.value+'</a>'
+			  	},
+				editable : false
 			}, 
 			{
 				headerName : "제품요약",

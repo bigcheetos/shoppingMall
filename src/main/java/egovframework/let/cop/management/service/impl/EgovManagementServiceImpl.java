@@ -1,5 +1,6 @@
 package egovframework.let.cop.management.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +17,7 @@ import egovframework.let.cop.management.service.ProductVO;
 import egovframework.let.cop.management.service.StockIoVO;
 import egovframework.let.cop.management.service.StockVO;
 import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
+import egovframework.rte.fdl.string.EgovStringUtil;
 
 /**
  * 카테고리 관리를 위한 서비스 구현 클래스
@@ -177,33 +179,82 @@ public class EgovManagementServiceImpl extends EgovAbstractServiceImpl implement
 	public void saveProductDetail(List<Map<String, Object>> paramList) throws Exception {
 		// TODO Auto-generated method stub
 		
-		// 신규인지 수정인지 체크
-		// 작업중...
-		/*for(Map<String, Object> param : paramList) {
-    		String rowType = String.valueOf(param.get("rowType"));
-    		
-    		ProductDetailVO productDetailVO = new ProductDetailVO();
-    		
-    		ProductVO productVO = productDetailVO.getProductVO();
-    		
-    		// 신규 추가
-    		if(rowType.equals("new")) {
-    			// DB에서 다음 아이디 가져오기
-    			productDetailVO.setProductId(getProductNextId());
-    			addProductDetail(productDetailVO);
-    		// 수정
-			} else if(rowType.equals("updated")) {
-				modifyProductDetail(productDetailVO);
-			// 삭제
-			} else if(rowType.equals("removed")) {
-				removeProductDetail(productDetailVO);
+		for(Map<String, Object> param : paramList) {
+			
+			boolean isInsert = false;
+			
+			if(EgovStringUtil.isEmpty(String.valueOf(param.get("productId")))) {
+				isInsert = true;
 			}
-    	}*/
-		/*ProductVO productVO = productDetailVO.getProductVO();
-		
-		productDetailDAO.insertProductDetail(productDetailVO);*/
-		
-		
+			
+			ProductDetailVO productDetailVO = new ProductDetailVO();
+    		/*ProductVO productVO = new ProductVO();*/
+    		String productCode = String.valueOf(param.get("productCode"));
+    		String productId = getProductNextId();
+    		
+			productDetailVO.setProductId(productId);
+			productDetailVO.setProductCode(productCode);
+			productDetailVO.setProductMaterial(String.valueOf(param.get("productMaterial")));
+			productDetailVO.setProductSize(String.valueOf(param.get("productSize")));
+			productDetailVO.setProductIntroduction(String.valueOf(param.get("productIntroduction")));
+			productDetailVO.setProductUse(String.valueOf(param.get("productUse")));
+			productDetailVO.setProductDeliveryguide(String.valueOf(param.get("productDeliveryguide")));
+			productDetailVO.setProductCancelguide(String.valueOf(param.get("productCancelGuide")));
+			productDetailVO.setProductNotice(String.valueOf(param.get("productNotice")));
+			
+			productDetailVO.setProductId(productId);
+			productDetailVO.setProductName(String.valueOf(param.get("productName")));
+			productDetailVO.setProductSummary(String.valueOf(param.get("productSummary")));
+			productDetailVO.setProductPrice(String.valueOf(param.get("productPrice")));
+			productDetailVO.setProductDiscountPrice(String.valueOf(param.get("productDiscountPrice")));
+			productDetailVO.setProductDeliverypay(String.valueOf(param.get("productDeliverypay")));
+			productDetailVO.setProductOrigin(String.valueOf(param.get("productOrigin")));
+			
+			
+			ProductVO productVO = productDetailVO.getProductVO();
+			/*productVO.setProductId(productId);
+			productVO.setProductName(String.valueOf(param.get("productName")));
+			productVO.setProductSummary(String.valueOf(param.get("productSummary")));
+			productVO.setProductPrice(String.valueOf(param.get("productPrice")));
+			productVO.setProductDiscountPrice(String.valueOf(param.get("productDiscountPrice")));
+			productVO.setProductDeliverypay(String.valueOf(param.get("productDeliverypay")));
+			productVO.setProductOrigin(String.valueOf(param.get("productOrigin")));*/
+			
+			String[] categoryIdList = String.valueOf(param.get("checkedCategoryList")).split(",");
+			String[] atchFileIdList = String.valueOf(param.get("atchFileId")).split(",");
+			
+			if(isInsert) {
+				addProduct(productVO);
+				addProductDetail(productDetailVO);
+			}
+			for(String categoryId : categoryIdList) {
+				Map<String, String> categoryMap = new HashMap<>();
+				categoryMap.put("productCode", productCode);
+				categoryMap.put("categoryId", categoryId);
+				
+				if(isInsert) {
+					addProductDetailToProductCategory(categoryMap);
+				} else {
+					removeProductDetailToProductCategory(categoryMap);
+					addProductDetailToProductCategory(categoryMap);
+				}
+			}
+			
+			int i = 0;
+			for(String atchFileId : atchFileIdList) {
+				Map<String, String> atchFileMap = new HashMap<>();
+				atchFileMap.put("productCode", productCode);
+				atchFileMap.put("atchFileId", atchFileId);
+				atchFileMap.put("usePurpose", (i++==0)?"main":"sub");
+				
+				if(isInsert) {
+					addProductDetailToAtchFile(atchFileMap);
+				} else {
+					removeProductDetailToAtchFile(atchFileMap);
+					addProductDetailToAtchFile(atchFileMap);
+				}
+			}
+    	}
 	}
 
 	@Override
@@ -222,6 +273,31 @@ public class EgovManagementServiceImpl extends EgovAbstractServiceImpl implement
 	public void removeProductDetail(ProductDetailVO productDetailVO) throws Exception {
 		// TODO Auto-generated method stub
 		productDetailDAO.deleteProductDetail(productDetailVO);
+	}
+	
+
+	@Override
+	public void addProductDetailToAtchFile(Map<String, String> map) throws Exception {
+		// TODO Auto-generated method stub
+		productDetailDAO.insertProductDetailToAtchFile(map);
+	}
+
+	@Override
+	public void removeProductDetailToAtchFile(Map<String, String> map) throws Exception {
+		// TODO Auto-generated method stub
+		productDetailDAO.deleteProductDetailToAtchFile(map);
+	}
+
+	@Override
+	public void addProductDetailToProductCategory(Map<String, String> map) throws Exception {
+		// TODO Auto-generated method stub
+		productDetailDAO.insertProductDetailToProductCategory(map);
+	}
+
+	@Override
+	public void removeProductDetailToProductCategory(Map<String, String> map) throws Exception {
+		// TODO Auto-generated method stub
+		productDetailDAO.deleteProductDetailToProductCategory(map);
 	}
 	
 	/**

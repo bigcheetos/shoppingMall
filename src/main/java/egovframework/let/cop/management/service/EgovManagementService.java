@@ -135,6 +135,42 @@ public interface EgovManagementService {
 	 */
 	public void removeProductDetail(ProductDetailVO productDetailVO) throws Exception;
 	
+	/**
+	 * 제품 상세에 연결된 첨부파일을 추가한다.
+	 * @return
+	 * 
+	 * @param Map<String, String> map
+	 * @exception Exception Exception
+	 */
+	public void addProductDetailToAtchFile(Map<String, String> map) throws Exception;
+	
+	/**
+	 * 제품 상세에 연결된 첨부파일을 삭제한다.
+	 * @return
+	 * 
+	 * @param Map<String, String> map
+	 * @exception Exception Exception
+	 */
+	public void removeProductDetailToAtchFile(Map<String, String> map) throws Exception;
+	
+	/**
+	 * 제품 상세에 연결된 카테고리를 추가한다.
+	 * @return
+	 * 
+	 * @param Map<String, String> map
+	 * @exception Exception Exception
+	 */
+	public void addProductDetailToProductCategory(Map<String, String> map) throws Exception;
+	
+	/**
+	 * 제품 상세에 연결된 카테고리를 삭제한다.
+	 * @return
+	 * 
+	 * @param Map<String, String> map
+	 * @exception Exception Exception
+	 */
+	public void removeProductDetailToProductCategory(Map<String, String> map) throws Exception;
+	
 	/** 제품 상세 끝 **/
 	/** 카테고리 시작 **/
 	
