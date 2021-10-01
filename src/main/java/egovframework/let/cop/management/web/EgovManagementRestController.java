@@ -1,8 +1,10 @@
 package egovframework.let.cop.management.web;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.annotation.Resource;
@@ -408,10 +410,61 @@ public class EgovManagementRestController {
     public ProductDetailVO getProductDetail(HttpServletRequest request, ModelMap model) throws Exception {
     	
     	String productId = request.getParameter("productId");
+    	if(EgovStringUtil.isEmpty(productId)) return null;
     	
     	ProductDetailVO productDetailVO = managementService.getProductDetailByProductId(productId);
     	
+    	if(Objects.isNull(productDetailVO)) {
+    		ProductVO productVO = managementService.getProductByProductId(productId);
+    		productDetailVO = new ProductDetailVO();
+    		productDetailVO.setProductVO(productVO);
+    	}
+    	
     	return productDetailVO;
+    }
+    
+    /**
+     * 제품코드와 연결된 카테고리 조회
+     *
+     * @param request, model
+     * @return List<Map<String, String>>
+     */
+    @RequestMapping("/cmm/main/management/getProductDetailToProductCategory.do")
+    public List<Map<String, Object>> getProductDetailToProductCategory(HttpServletRequest request, ModelMap model) throws Exception {
+    	
+    	
+    	String productCode = request.getParameter("productCode");
+    	
+    	List<Map<String, Object>> returnMapList = new ArrayList<Map<String, Object>>();
+    	
+    	if(!EgovStringUtil.isEmpty(productCode)) {
+    		returnMapList = managementService.getProductDetailToProductCategoryByProductCode(productCode);
+    	}
+    	
+    	
+    	return returnMapList;
+    }
+    
+    /**
+     * 제품코드와 연결된 이미지파일 조회
+     *
+     * @param request, model
+     * @return List<Map<String, Object>>
+     */
+    @RequestMapping("/cmm/main/management/getProductDetailToAtchFile.do")
+    public List<Map<String, Object>> getProductDetailToAtchFile(HttpServletRequest request, ModelMap model) throws Exception {
+    	
+    	
+    	String productCode = request.getParameter("productCode");
+    	
+    	List<Map<String, Object>> returnMapList = new ArrayList<Map<String, Object>>();
+    	
+    	if(!EgovStringUtil.isEmpty(productCode)) {
+    		returnMapList = managementService.getProductDetailToAtchFileByProductCode(productCode);
+    	}
+    	
+    	
+    	return returnMapList;
     }
     
     /**

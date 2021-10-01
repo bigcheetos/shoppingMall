@@ -13,6 +13,21 @@
 }
 .bg-lightgray {
 	background: #f4f4f4;
+	width:16.7%;
+}
+.set_goods_info{
+	padding-bottom: 5px;
+    margin-bottom: 5px;
+    border-bottom: 1px solid #ccc;
+}
+.set_goods_info a:hover {
+    color: #ee5a00;
+    text-decoration: underline;
+}
+.set_goods_info a:focus {
+	text-decoration: solid;
+    outline: groove;
+    color: black;
 }
 .set_goods_info_column {
     padding-bottom: 5px;
@@ -24,6 +39,27 @@
 .set_goods_info_column a:hover {
     color: #ee5a00;
     text-decoration: underline;
+}
+.set_goods_info_column a:focus {
+	text-decoration: solid;
+    outline: groove;
+    color: black;
+}
+.set_goods_info_category {
+    display: block;
+    float: left;
+    width: 18%;
+}
+.list-group-item {
+    display: table;
+    float: left;
+    width: 50%;
+    padding-top: 3px;
+    margin-bottom: 3px;
+    border-top: 1px solid #ddd;
+}
+.clear {
+	clear: both;
 }
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
@@ -126,23 +162,21 @@ input[type=number] {
 						</td>
 						<td style="padding-right:0;">
 							<div id="my_image_file">
-								<ul class="prd_img_file list-group" style="width:100%;">
-									<li class="list-group-item">
-                                        <div id="prd_image1" class="img_thumb">
-                                        <!-- 임시 노이미지  /user/file/sht/upfile_202109101119597720 -->
-                                            <img id="product_image_file" src="/user/file/sht/upfile_202109101119597720" style="width:160px; height:160px">
-                                            <input type="hidden" id="atch_file_id" name="atch_file_id" value=''>
+								<ul class="list-group prd_img_file" style="display: block; width: 100%;">
+									<li class="list-group-item li-product-image" style="height:280px">
+                                        <div id="div_product_img_1" class="img_thumb">
+                                            <img id="product_img_1" src="/images/food/product/noimage.png" style="width:160px;">
+                                            <input type="hidden" id="atch_file_id_1" name="atch_file_id_1" value=''>
                                         </div>
                                         <div class="img_cont">
                                             <div class="blue">대표 이미지(필수)</div>
                                             <div class="file">
-                                                <!-- <input class ="btn" name="prd_image1" id="prd_image1" type="file" title="상품 이미지"> -->
-                                                <input type="button" class="btn btn-secondary" onclick="fn_btnImgUploadOnClicked()" value="파일선택"/>
-                                                <input type="button" class="btn btn-secondary" onclick="fn_btnImgSelectorOnClicked()" value="제공이미지 사용"/>
+                                                <input type="button" class="btn btn-secondary btn-img-upload" onclick="fn_btnImgUploadOnClicked(1)" value="파일선택"/>
+                                                <input type="button" class="btn btn-secondary btn-img-select" onclick="fn_btnImgSelectorOnClicked(1)" value="제공이미지 사용"/>
                                             </div>
                                         </div>
 									</li>
-                                    <li class="list-group-item">
+                                    <li class="list-group-item" style="height:280px">
                                         <div class="img_thumb" style="width:0;"></div>
                                         <div class="img_cont">
                                             <div class="blue">
@@ -150,9 +184,8 @@ input[type=number] {
                                                 <!-- * 적용하기 후 등록한 상품 <b>이미지 회전</b> 가능 -->
                                             </div>
                                         </div>
-									</li>
-									<li class="list-group-item">
-                                        <input type="button" class="btn btn-secondary" value="+추가 이미지">
+                                        <hr>
+                                        <input type="button" class="btn btn-secondary" value="+추가 이미지" onclick="fn_addImgList(1)">
 									</li>
                                     <!-- <li>
                                         <div id="prd_image2" class="img_thumb">
@@ -418,7 +451,7 @@ input[type=number] {
 						<td class="bg-lightgray" style="border-top:1px solid #aaa;">
 							상품재료
 							<br />
-							<input type="button" class="btn btn-primary" value="보기" onClick="$('#pop_set_goods_info').dialog({width:800,height:500});">
+							<input type="button" class="btn btn-primary" value="보기" onClick="fn_setGoodsInfoList('material')">
 						</td>
 						<td style="border-top:1px solid #aaa;">
 							<div class="item">
@@ -429,7 +462,8 @@ input[type=number] {
 					<tr>
 						<td class="bg-lightgray">
 							상품사이즈
-							<br /><a href="javascript:search_goods_info('size');">
+							<br />
+							<input type="button" class="btn btn-primary" value="보기" onClick="fn_setGoodsInfoList('size')">
 						</td>
 						<td>
 							<div class="item">
@@ -440,7 +474,7 @@ input[type=number] {
 					<tr>
 						<td class="bg-lightgray">
 							상품용도
-							<br /><a href="javascript:search_goods_info('use');"></a>
+							<br /><input type="button" class="btn btn-primary" value="보기" onClick="fn_setGoodsInfoList('use')">
 						</td>
 						<td>
 							<div class="item">
@@ -451,7 +485,7 @@ input[type=number] {
 					<tr>
 						<td class="bg-lightgray">
 							상품소개
-							<br /><a href="javascript:search_goods_info('intro');"></a>
+							<br /><input type="button" class="btn btn-primary" value="보기" onClick="fn_setGoodsInfoList('introduction')">
 						</td>
 						<td>
 							<div class="item">
@@ -466,7 +500,7 @@ input[type=number] {
 						<td>
 							<div class="item">
 								<textarea name="product_deliveryguide" id="product_deliveryguide" cols="50" rows="5" title="배송안내" class="form-control"></textarea>
-								<div class="blue">+ 입력하지 않으시면, [<a href="#" target="_blank">배송안내</a>]의 내용이 출력됩니다.</div>
+								<div class="blue">+ 입력하지 않으시면, [<a href="javascript:void(0);" onclick="fn_setGoodsInfoList('deliveryguide'); return false;">배송안내</a>]의 내용이 출력됩니다.</div>
 							</div>
 						</td>
 					</tr>
@@ -477,7 +511,7 @@ input[type=number] {
 						<td>
 							<div class="item">
 								<textarea name="product_cancelguide" id="product_cancelguide" cols="50" rows="5" title="주문취소안내" class="form-control"></textarea>
-								<div class="blue">+ 입력하지 않으시면, [<a href="#" target="_blank">주문취소안내</a>]의 내용이 출력됩니다.</div>
+								<div class="blue">+ 입력하지 않으시면, [<a href="javascript:void(0);" onclick="fn_setGoodsInfoList('cancelguide'); return false;">주문취소안내</a>]의 내용이 출력됩니다.</div>
 							</div>
 						</td>
 					</tr>
@@ -488,7 +522,7 @@ input[type=number] {
 						<td>
 							<div class="item">
 								<textarea name="product_notice" id="product_notice" cols="50" rows="5" title="구매시유의사항" class="form-control"></textarea>
-								<div class="blue">+ 입력하지 않으시면, [<a href="#" target="_blank">구매시유의사항</a>]의 내용이 출력됩니다.</div>
+								<div class="blue">+ 입력하지 않으시면, [<a href="javascript:void(0);" onclick="fn_setGoodsInfoList('notice'); return false;">구매시유의사항</a>]의 내용이 출력됩니다.</div>
 							</div>
 						</td>
 					</tr>
@@ -496,7 +530,7 @@ input[type=number] {
 					<tr>
 						<td colspan="2"  style="text-align:center; padding-top:15px;">
 							<!-- <img src="/common/html/admin/images/common/btn_apply.gif" value="등록하기" class="pointer" onclick="validate()" /> -->
-							<input type="button" class="btn btn-primary" value="등록하기">
+							<input type="button" class="btn btn-primary" value="등록하기" onclick="fn_validate()">
 						</td>
 					</tr>
 				</table>
@@ -642,573 +676,18 @@ input[type=number] {
 </div>
 <!-- 원산지 팝업 끝 -->
 
-<!-- 상품재료 팝업 -->
+<!-- 상품정보 팝업 -->
 <div id="pop_set_goods_info" title="상품재료 등록" style="display:none;">
 	<form name="set_goods_form" id="set_goods_form">
-	<div style="width: auto; min-height: 0px; height: 343px;" class="ui-dialog-content">
+	<div id="pop_goods_info" style="width: auto; min-height: 0px; height: 343px;" class="ui-dialog-content">
 	<p style="clear:both; padding:5px 0;margin:5px 0;">* 내용을 클릭하면 추가됩니다.</p>
 		<div id="goods_info_list" style="display: block;">
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('거베라'); return false;">거베라</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('계절꽃'); return false;">계절꽃</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('고급도자기분'); return false;">고급도자기분</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('고급리본'); return false;">고급리본</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('고급바구니'); return false;">고급바구니</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('고급포장재'); return false;">고급포장재</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('곱슬버들'); return false;">곱슬버들</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('공작소국'); return false;">공작소국</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('과꽃'); return false;">과꽃</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('과일'); return false;">과일</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('글라디올라스'); return false;">글라디올라스</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('금어초'); return false;">금어초</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('나리'); return false;">나리</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('난받침'); return false;">난받침</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('난잎'); return false;">난잎</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('노란장미'); return false;">노란장미</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('노무라'); return false;">노무라</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('뉴카리'); return false;">뉴카리</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('다알리아'); return false;">다알리아</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('대국화'); return false;">대국화</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('도시루'); return false;">도시루</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('리시얀사스'); return false;">리시얀사스</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('리아트리스'); return false;">리아트리스</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('마르코폴로'); return false;">마르코폴로</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('마리안느'); return false;">마리안느</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('명자란'); return false;">명자란</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('몬스테라'); return false;">몬스테라</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('미니장미'); return false;">미니장미</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('미디오'); return false;">미디오</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('미색장미'); return false;">미색장미</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('미스티블루'); return false;">미스티블루</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('백합'); return false;">백합</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('베어그라스'); return false;">베어그라스</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('보키지장미'); return false;">보키지장미</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('불로초'); return false;">불로초</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('붉은장미'); return false;">붉은장미</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('석죽'); return false;">석죽</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('소국'); return false;">소국</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('소철잎'); return false;">소철잎</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('수선화'); return false;">수선화</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('스타게이져'); return false;">스타게이져</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('스타티스'); return false;">스타티스</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('스토크'); return false;">스토크</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('스프링겔리'); return false;">스프링겔리</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('쏠리스트'); return false;">쏠리스트</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('아스파라것'); return false;">아스파라것</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('아이리스'); return false;">아이리스</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('안개'); return false;">안개</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('양란'); return false;">양란</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('연보라장미'); return false;">연보라장미</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('와네끼'); return false;">와네끼</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('와인'); return false;">와인</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('집시꽃'); return false;">집시꽃</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('천일홍'); return false;">천일홍</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('청지목'); return false;">청지목</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('카네이션'); return false;">카네이션</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('카네이션(스프레이)'); return false;">카네이션(스프레이)</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('카라'); return false;">카라</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('칼라아이비'); return false;">칼라아이비</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('케'); return false;">케</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('튜울립'); return false;">튜울립</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('패랭이'); return false;">패랭이</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('퍼퓨륨'); return false;">퍼퓨륨</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('편백'); return false;">편백</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('핑크장미'); return false;">핑크장미</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('해바라기'); return false;">해바라기</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('후리지아'); return false;">후리지아</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('흰장미'); return false;">흰장미</a>
-			</div>
+			<!-- 내부는 동적으로 생성 -->
 		</div>
 	</div>
 	</form>
 </div>
-<!-- 상품재료 팝업 끝-->
-
-<div id="pop_set_goods_info" title="상품정보 등록" style="display:none;">
-	<form name="set_goods_form" id="set_goods_form">
-	<div style="width: auto; min-height: 0px; height: 343px;" class="ui-dialog-content">
-	<p style="clear:both; padding:5px 0;margin:5px 0;">* 내용을 클릭하면 추가됩니다.</p>
-	<!-- 상품사이즈 팝업 -->
-		<div id="goods_info_list" style="display: block;">
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('거베라'); return false;">거베라</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('계절꽃'); return false;">계절꽃</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('고급도자기분'); return false;">고급도자기분</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('고급리본'); return false;">고급리본</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('고급바구니'); return false;">고급바구니</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('고급포장재'); return false;">고급포장재</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('곱슬버들'); return false;">곱슬버들</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('공작소국'); return false;">공작소국</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('과꽃'); return false;">과꽃</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('과일'); return false;">과일</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('글라디올라스'); return false;">글라디올라스</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('금어초'); return false;">금어초</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('나리'); return false;">나리</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('난받침'); return false;">난받침</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('난잎'); return false;">난잎</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('노란장미'); return false;">노란장미</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('노무라'); return false;">노무라</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('뉴카리'); return false;">뉴카리</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('다알리아'); return false;">다알리아</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('대국화'); return false;">대국화</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('도시루'); return false;">도시루</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('리시얀사스'); return false;">리시얀사스</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('리아트리스'); return false;">리아트리스</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('마르코폴로'); return false;">마르코폴로</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('마리안느'); return false;">마리안느</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('명자란'); return false;">명자란</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('몬스테라'); return false;">몬스테라</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('미니장미'); return false;">미니장미</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('미디오'); return false;">미디오</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('미색장미'); return false;">미색장미</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('미스티블루'); return false;">미스티블루</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('백합'); return false;">백합</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('베어그라스'); return false;">베어그라스</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('보키지장미'); return false;">보키지장미</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('불로초'); return false;">불로초</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('붉은장미'); return false;">붉은장미</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('석죽'); return false;">석죽</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('소국'); return false;">소국</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('소철잎'); return false;">소철잎</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('수선화'); return false;">수선화</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('스타게이져'); return false;">스타게이져</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('스타티스'); return false;">스타티스</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('스토크'); return false;">스토크</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('스프링겔리'); return false;">스프링겔리</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('쏠리스트'); return false;">쏠리스트</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('아스파라것'); return false;">아스파라것</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('아이리스'); return false;">아이리스</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('안개'); return false;">안개</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('양란'); return false;">양란</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('연보라장미'); return false;">연보라장미</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('와네끼'); return false;">와네끼</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('와인'); return false;">와인</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('집시꽃'); return false;">집시꽃</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('천일홍'); return false;">천일홍</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('청지목'); return false;">청지목</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('카네이션'); return false;">카네이션</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('카네이션(스프레이)'); return false;">카네이션(스프레이)</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('카라'); return false;">카라</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('칼라아이비'); return false;">칼라아이비</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('케'); return false;">케</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('튜울립'); return false;">튜울립</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('패랭이'); return false;">패랭이</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('퍼퓨륨'); return false;">퍼퓨륨</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('편백'); return false;">편백</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('핑크장미'); return false;">핑크장미</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('해바라기'); return false;">해바라기</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('후리지아'); return false;">후리지아</a>
-			</div>
-			<div class="set_goods_info_column">
-				<a href="javascript:void(0);"
-					onclick="fn_setGoodsInfo('흰장미'); return false;">흰장미</a>
-			</div>
-		</div>
-	</div>
-	<!-- 상품사이즈 팝업 -->
-	</form>
-</div>
+<!-- 상품정보 팝업 끝-->
 
 </section>
     <!-- Footer Section Begin -->
@@ -1225,7 +704,8 @@ input[type=number] {
     <script src="/js/owl.carousel.min.js"></script>
     <script src="/js/main.js"></script>
     
-    <script src="/js/react/commonFunctions.js?ver=1145"></script>
+    <script src="/js/react/commonFunctions.js?ver=133245"></script>
+    <script src="/js/common/productInformation.js?ver=12"></script>
     <script>
 	
 	var productTypeList	= [];	// 타입
@@ -1235,7 +715,13 @@ input[type=number] {
 	var productCategoryMap	= {};	// 카테고리
 	
 	var imgFileList = []; 	// 이미지파일
+	var imgFileIndex = 1;	// 이미지파일 순번
 	
+	var findIdIndex = 0;	// 이미지파일 버튼 인덱스
+	
+	const div_goodsInfoList = document.querySelector('#goods_info_list');	// 상품 정보 팝업 
+	
+	// 폼 데이터 겟,셋 관련
 	const productCode = document.querySelector('#product_code');
 	const productId = document.querySelector('#product_id');
 	const productName = document.querySelector('#product_name');
@@ -1460,23 +946,275 @@ input[type=number] {
 		+ '\n' + '상품정보를 저장해야 수정한 내용이 반영됩니다.');
 	}
 	
-	// 상품재료 등록
-	var fn_setGoodsInfo = function(goods) {
-		var productMaterial = document.querySelector('#product_material');
+	// 상품정보 팝업 내용 생성
+	var fn_setGoodsInfoList = function(goods) {
+		// div_goodsInfoList: 동적으로 생성한 컴포넌트의 부모 팝업 div
+		var goodsInfoList = [];
+		var goodsText = '';
+		var textareaId = '';
 		
-		if(productMaterial.value.length == 0) {
-			productMaterial.value = goods;	
+		// 상품재료
+		switch(goods) {
+			// 상품재료
+			case 'material': 
+				goodsInfoList = gfn_getMaterialList();
+				textareaId = 'product_material';
+				break;
+			// 상품사이즈
+			case 'size' :
+				goodsInfoList = gfn_getSizeList();
+				textareaId = 'product_size';
+				break;
+			// 상품용도
+			case 'use' :
+				goodsInfoList = gfn_getUseList();
+				textareaId = 'product_use';
+				break;
+			// 상품소개
+			case 'introduction' :
+				goodsInfoList = gfn_getIntroductionList();
+				textareaId = 'product_introduction';
+				break;
+			// 배송안내
+			case 'deliveryguide' :
+				goodsText = gfn_getDeliveryguide();
+				textareaId = 'product_deliveryguide';
+				break;
+			// 주문취소안내
+			case 'cancelguide' :
+				goodsText = gfn_getCancelguide();
+				textareaId = 'product_cancelguide';
+				break;
+			// 구매시유의사항
+			case 'notice' :
+				goodsText = gfn_getNotice();
+				textareaId = 'product_notice';
+				break;
+			default :
+				return;
+		}
+		
+		// 기존 데이터 지우기
+		while(div_goodsInfoList.hasChildNodes()) {
+			div_goodsInfoList.removeChild(div_goodsInfoList.firstChild);
+		}
+		// 데이터 생성
+		if(goods=="material" || goods=="size" || goods=="use") {
+			for(let goodsInfo of goodsInfoList) {
+				var div_goodsInfo = document.createElement("div");
+				var a_goodsInfo = document.createElement("a");
+				
+				div_goodsInfo.className = "set_goods_info_column";
+				a_goodsInfo.href = "javascript:void(0)";
+				a_goodsInfo.innerText = goodsInfo;
+				
+				a_goodsInfo.addEventListener('click', function() {
+					fn_setGoodsInfo(textareaId, goodsInfo);
+				});
+				
+				div_goodsInfo.appendChild(a_goodsInfo);
+				div_goodsInfoList.appendChild(div_goodsInfo);
+			}
+		} else if(goods=="introduction") {
+			for(let goodsInfo of goodsInfoList) {
+				var label_goodsInfo = document.createElement("label");
+				var input_goodsInfo = document.createElement("input");
+				
+				label_goodsInfo.className = "set_goods_info_category";
+				label_goodsInfo.innerText = goodsInfo;
+				input_goodsInfo.type = "radio";
+				input_goodsInfo.name = "set_goods_info_category";
+				
+				label_goodsInfo.addEventListener('click', function() {
+					fn_setGoodsIntroductionInfo(textareaId, goodsInfo);
+				});
+				
+				label_goodsInfo.prepend(input_goodsInfo);
+				div_goodsInfoList.appendChild(label_goodsInfo);	
+			}
 		} else {
-			productMaterial.value += ", " + goods;	
+			var a_goodsInfo = document.createElement("a");
+			var p_goodsInfo = document.createElement("p");
+			
+			a_goodsInfo.href = "javascript:void(0)";
+			
+			p_goodsInfo.innerHTML = goodsText;
+			
+			a_goodsInfo.appendChild(p_goodsInfo);
+			div_goodsInfoList.appendChild(a_goodsInfo);
+			
+			a_goodsInfo.addEventListener('click', function() {
+				fn_setGoodsText(textareaId, goodsText);
+			});
+		}
+		
+		$('#pop_set_goods_info').dialog({width:800,height:500});
+	}
+	
+	// 상품정보 팝업 내용 클릭시
+	var fn_setGoodsInfo = function(paramedTextareaId, goods) {
+		var textareaId = document.querySelector('#'+paramedTextareaId);
+		
+		if(textareaId.value.length == 0) {
+			textareaId.value = goods;	
+		} else {
+			textareaId.value += ", " + goods;	
 		}
 	}
 	
+	// 배송안내 팝업에서 상품카테고리 클릭시  
+	var fn_setGoodsIntroductionInfo = function(paramedTextareaId, goods) {
+		var goodsIntroductionInfoList = [];
+		var div_goodsIntroductionInfoList = document.querySelector('#goods_introduction_info_list');
+		var div_clear = div_goodsInfoList.querySelector('.clear');
+		
+		switch(goods) {
+			case '꽃바구니' :
+				goodsIntroductionInfoList = gfn_getIntroductionBasket();
+				break;
+			case '꽃다발' :
+				goodsIntroductionInfoList = gfn_getIntroductionBouquet();
+				break;
+			case '축하화한' :
+				goodsIntroductionInfoList = gfn_getIntroductionHwreath();
+				break;
+			case '근조화한' :
+				goodsIntroductionInfoList = gfn_getIntroductionDwreath();
+				break;
+			case '관엽/화분' :
+				goodsIntroductionInfoList = gfn_getIntroductionFoliage();
+				break;
+			case '동양란' :
+				goodsIntroductionInfoList = gfn_getIntroductionEorchid();
+				break;
+			case '서양란' :
+				goodsIntroductionInfoList = gfn_getIntroductionWorchid();
+				break;
+			case '꽃상자' :
+				goodsIntroductionInfoList = gfn_getIntroductionBox();
+				break;
+			default :
+				return;
+		}
+		
+		
+		// 없으면
+		if(!div_goodsIntroductionInfoList) {
+			div_goodsIntroductionInfoList = document.createElement('div');
+			div_goodsIntroductionInfoList.id = 'goods_introduction_info_list';
+		}
+		if(!div_clear) {
+			div_clear = document.createElement('div');
+			div_clear.className = 'clear';
+		}
+		
+		while(div_goodsIntroductionInfoList.hasChildNodes()) {
+			div_goodsIntroductionInfoList.removeChild(div_goodsIntroductionInfoList.firstChild);
+		}
+		
+		for(let goodsIntroduction of goodsIntroductionInfoList) {
+			var div_goodsIntroduction = document.createElement("div");
+			var a_goodsIntroduction = document.createElement("a");
+			
+			div_goodsIntroduction.className = "set_goods_info";
+			a_goodsIntroduction.href = "javascript:void(0)";
+			a_goodsIntroduction.innerText = goodsIntroduction;
+			
+			a_goodsIntroduction.addEventListener('click', function() {
+				fn_setGoodsInfo(paramedTextareaId, goodsIntroduction);
+			});
+			
+			div_goodsIntroduction.appendChild(a_goodsIntroduction);
+			div_goodsIntroductionInfoList.appendChild(div_goodsIntroduction);
+		}
+		
+		div_goodsInfoList.appendChild(div_clear);
+		div_goodsInfoList.appendChild(div_goodsIntroductionInfoList);
+	}
+	
+	var fn_setGoodsText = function(paramedTextareaId, goodsText) {
+		var textareaId = document.querySelector('#'+paramedTextareaId);
+		textareaId.value = goodsText;
+	}
+	
+	// 추가이미지 동적으로 생성
+	var fn_addImgList = function() {
+		
+		if(imgFileIndex>=10) return;
+		
+		imgFileIndex++;
+		
+		var li = document.createElement("li");
+		var div_product_img = document.createElement("div");
+		var img = document.createElement("img");
+		var input_hidden = document.createElement("input");
+		var div_img_cont = document.createElement("div");
+		var div_blue = document.createElement("div");
+		var div_file = document.createElement("div");
+		var input_button_upload = document.createElement("input");
+		var span = document.createElement("span");
+		var input_button_select = document.createElement("input");
+		
+		li.className = "list-group-item li-product-image";
+		div_product_img.id = "div_product_img_"+imgFileIndex;
+		div_product_img.className = "img_thumb";
+		img.id = "product_img_"+imgFileIndex;
+		img.src = "/images/food/product/noimage.png";
+		img.style.width = "160px";
+		img.style.height = "160px";
+		input_hidden.type = "hidden";
+		input_hidden.id = "atch_file_id_"+imgFileIndex;
+		input_hidden.name = "atch_file_id_"+imgFileIndex;
+		input_hidden.value = "";
+		div_img_cont.className = "img_cont";
+		div_blue.className = "blue";
+		div_blue.innerText = "상세 이미지("+imgFileIndex+")";
+		div_file.className = "file";
+		input_button_upload.type = "button";
+		input_button_upload.className = "btn btn-secondary btn-img-upload";
+		input_button_upload.value = "파일선택";
+		span.innerText = " ";
+		input_button_select.type = "button";
+		input_button_select.className = "btn btn-secondary btn-img-select";
+		input_button_select.value = "제공이미지 사용";
+		
+		div_product_img.appendChild(img);
+		div_product_img.appendChild(input_hidden);
+		
+		div_file.appendChild(input_button_upload);
+		div_file.appendChild(span);
+		div_file.appendChild(input_button_select);
+		
+		div_img_cont.appendChild(div_blue);
+		div_img_cont.appendChild(div_file);
+		
+		li.appendChild(div_product_img);
+		li.appendChild(div_img_cont);
+		
+		// 생성된 li 컴포넌트 이미지 ul에 붙이기
+		document.querySelector(".li-product-image").parentNode.appendChild(li);
+		
+		// button addEvent
+		var currentIndex = imgFileIndex;
+		
+		input_button_upload.addEventListener('click', function() {
+			fn_btnImgUploadOnClicked(currentIndex);
+		});
+		
+		input_button_select.addEventListener('click', function() {
+			fn_btnImgSelectorOnClicked(currentIndex);
+		});
+	}
+	
+	
+	
 	// 이미지 업로드 버튼
-	var fn_btnImgUploadOnClicked = function() {
+	var fn_btnImgUploadOnClicked = function(imgFileIndex) {
 		var url = '/cmm/fms/EgovFileUploadPopup.do';
 		var winWidth = 700;
 		var winHeight = 300;
 		var popupOption = "width="+winWidth+",height="+winHeight;
+		findIdIndex = imgFileIndex;
 		
 		if(window.showModalDialog == undefined){  
 			window.showModalDialog = function(url,mixedVar,features){  
@@ -1499,11 +1237,12 @@ input[type=number] {
 	}
 	
 	//제공이미지 팝업 클릭
-	var fn_btnImgSelectorOnClicked = function() {
+	var fn_btnImgSelectorOnClicked = function(imgFileIndex) {
 		var url = '/cmm/main/management/viewImgFilePopup.do';
 		var winWidth = 700;
 		var winHeight = 600;
 		var popupOption = "width="+winWidth+",height="+winHeight;
+		findIdIndex = imgFileIndex;
 		
 		if(window.showModalDialog == undefined){  
 			window.showModalDialog = function(url,mixedVar,features){  
@@ -1526,13 +1265,17 @@ input[type=number] {
 	
 	var fn_getImgFile = function(atchFileId) {
 		imgFileList = [];
+		// 호출할 url, 서버에서 받아온 이미지 데이터 담을 곳, callback함수
 		gfn_commonLoadDataRequest('/cmm/fms/getImgFileList.do?atchFileId='+atchFileId, imgFileList, fn_setImg);
 	}
 	
 	var fn_setImg = function() {
-		document.querySelector("#product_image_file").src = '';
-		document.querySelector("#product_image_file").src = imgFileList[0].fileStreCours + imgFileList[0].streFileNm;
-		document.querySelector("#atch_file_id").value = imgFileList[0].atchFileId;
+		document.querySelector("#product_img_"+findIdIndex).src = '';
+		document.querySelector("#product_img_"+findIdIndex).src = imgFileList[0].fileStreCours + imgFileList[0].streFileNm;
+		document.querySelector("#atch_file_id_"+findIdIndex).value = imgFileList[0].atchFileId;
+		
+		// 초기화
+		findIdIndex = 0;
 	}
 	
 	// 체크박스 세팅
@@ -1550,7 +1293,7 @@ input[type=number] {
 	// 필수체크
 	var fn_validate = function() {
 		var checkedCategoryList = document.querySelectorAll('div#category_areas input[name=category_names]:checked');
-		var atchFileId = document.querySelector('#atch_file_id');	// 여러개 받도록 수정해야 함
+		var atchFileList 		= document.querySelector('.prd_img_file').querySelectorAll('input[type=hidden]');
 		
 		var filteredProductPrice = gfn_filterInt(productPrice.value);
 		var filteredDiscountPrice = gfn_filterInt(productDiscountPrice.value);
@@ -1566,7 +1309,7 @@ input[type=number] {
 			return;
 		}
 		
-		if(atchFileId.value.length < 1) {
+		if(atchFileList[0].value.length < 1) {
 			alert('첫번째 상품 이미지는 필수입니다.')
 			return;
 		}
@@ -1576,24 +1319,24 @@ input[type=number] {
 			return;
 		}
 		
-		if(!filteredProductPrice
-		|| filteredProductPrice <= 0
-		|| filteredProductPrice >= 9999900) {
+		if(isNaN(gfn_filterInt(filteredProductPrice))
+		|| filteredProductPrice < 0
+		|| filteredProductPrice > 9999900) {
 			alert('가격은 0~9,999,900까지의 숫자만 입력 가능합니다.');
 			return;
 		}
 		
-		if(!filteredDiscountPrice
-		|| filteredDiscountPrice <= 0
-		|| filteredDiscountPrice >= 9999900) {
+		if(isNaN(gfn_filterInt(filteredDiscountPrice))
+		|| filteredDiscountPrice < 0
+		|| filteredDiscountPrice > 9999900) {
 			alert('할인가는 0~9,999,900까지의 숫자만 입력 가능합니다.');
 			return;
 		}
 		
-		if(!filteredDeliverypay
-		|| filteredDeliverypay <= 0
-		|| filteredDeliverypay >= 9999900) {
-			alert('할인가는 0~9,999,900까지의 숫자만 입력 가능합니다.');
+		if(isNaN(gfn_filterInt(filteredDeliverypay))
+		|| filteredDeliverypay < 0
+		|| filteredDeliverypay > 9999900) {
+			alert('배송비는 0~9,999,900까지의 숫자만 입력 가능합니다.');
 			return;
 		}
 		
@@ -1604,9 +1347,13 @@ input[type=number] {
 		
 		// 서버에 넘길 데이터 세팅
 		var categoryStr = '';
+		var atchFileStr = '';
 		
 		checkedCategoryList.forEach(function(el) {
 			categoryStr += el.id.replace('category_','') + ',';
+		})
+		atchFileList.forEach(function(el) {
+			if(el.value) atchFileStr += el.value + ',';
 		})
 		
 		var updateFormData = [{
@@ -1614,7 +1361,7 @@ input[type=number] {
 			productCode : productCode.value,
 			
 			checkedCategoryList : categoryStr,
-			atchFileId : atchFileId.value,
+			atchFileList : atchFileStr,
 			
 			productName : productName.value,
 			productSummary : productSummary.value,
@@ -1623,13 +1370,13 @@ input[type=number] {
 			productDeliverypay : productDeliverypay.value,
 			productOrigin : productOrigin.value,
 			
-			productMaterail : productMaterial.value,
-			productSize : productSize.value,
-			productIntroduction : productIntroduction.value,
-			productUse : productUse.value,
-			productDeliveryguide : productDeliveryguide.value,
-			productCancelguide : productCancelguide.value,
-			productNotice : productNotice.value
+			productMaterial 	 : productMaterial.value,
+			productSize 		 : productSize.value,
+			productIntroduction  : productIntroduction.value,
+			productUse 			 : productUse.value,
+			productDeliveryguide : gfn_isEmpty(productDeliveryguide.value)?gfn_getDeliveryguide():productDeliveryguide.value,
+			productCancelguide 	 : gfn_isEmpty(productCancelguide.value)?gfn_getCancelguide():productCancelguide.value,
+			productNotice 		 : gfn_isEmpty(productNotice.value)?gfn_getNotice():productNotice.value
 		}]
 		
 		fn_uploadFormDataRequest(updateFormData);
@@ -1640,40 +1387,70 @@ input[type=number] {
 		gfn_uploadData(data, '/cmm/main/management/registProductDetail.do')
 		.then(function (datums) {
 			console.log(datums);
+			// 제품 관리로 이동
+			if(!alert("저장이 완료되었습니다.")) location.href="/cmm/main/management/productManagement.do";
 		})
 		.catch(function (err) {
 			console.error(err.statusText);
 		});
 	}
 	
-	// 상품코드 값 가져오기
-	var fn_loadDataRequest = function(requestedProductId) {
-		gfn_loadData('', '/cmm/main/management/getProductDetail.do?productId='+requestedProductId)
+	// 값 가져오기
+	var fn_loadDataRequest = function(url, callbackFunc) {
+		gfn_loadData(url)
 		.then(function (datums) {
-			fn_setDataForm(datums);
+			callbackFunc(datums);
 		})
 		.catch(function (err) {
 			console.error(err.statusText);
 		});
 	}
 	
+	// 카테고리 체크
+	var fn_setCheckedCategoryList = function(checkedCategoryList) {
+		for(var checkedCategory of checkedCategoryList) {
+			var categoryId = document.querySelector('#category_'+checkedCategory.CATEGORY_ID);
+			categoryId.checked = true;
+		}
+	}
+	
+	// 불러온 이미지 세팅
+	var fn_setImgFileSrc = function(imgFileList) {
+		var setImgIndex = 1;
+		for(var imgFile of imgFileList) {
+			// 이미지가 더 있을 경우 이미지 리스트 동적 생성
+			if(setImgIndex!=1) {fn_addImgList(setImgIndex);}
+			document.querySelector("#product_img_"+setImgIndex).src = imgFile.FILE_COURS_NM;
+			document.querySelector("#atch_file_id_"+setImgIndex).value = imgFile.ATCH_FILE_ID;
+			setImgIndex++;
+		}
+	}
+	
+	// 데이터 값 세팅
 	var fn_setDataForm = function(data) {
-		productCode.value = data.productCode;
-		productId.value = data.product_id;
-		productName.value = data.product_name;
-		productSummary.value = data.product_summary;
-		productPrice.value = data.product_price;
-		productDiscountPrice.value = data.product_discount_price;
-		productDeliverypay.value = data.product_deliverypay;
-		productOrigin.value = data.product_origin;
+		productCode.value 			= gfn_isEmpty(data.productCode)?"":data.productCode;
+		productCode.readOnly		= gfn_isEmpty(data.productCode)?false:true;
+		productId.value 			= gfn_isEmpty(data.productId)?"":data.productId;
+		productName.value 			= gfn_isEmpty(data.productName)?"":data.productName;
+		productSummary.value		= gfn_isEmpty(data.productSummary)?"":data.productSummary;
+		productPrice.value  		= gfn_isEmpty(data.productPrice)?"":data.productPrice;
+		productDiscountPrice.value 	= gfn_isEmpty(data.productDiscountPrice)?"":data.productDiscountPrice;
+		productDeliverypay.value 	= gfn_isEmpty(data.productDeliverypay)?"":data.productDeliverypay;
+		productOrigin.value 		= gfn_isEmpty(data.productOrigin)?"":data.productOrigin;
 		
-		productMaterial.value = data.product_material;
-		productSize.value = data.product_size;
-		productIntroduction.value = data.product_introduction;
-		productUse.value = data.product_use;
-		productDeliveryguide.value = data.product_deliveryguide;
-		productCancelguide.value = data.product_cancelguide;
-		productNotice.value = data.product_notice;
+		productMaterial.value 		= gfn_isEmpty(data.productMaterial)?"":data.productMaterial;
+		productSize.value 			= gfn_isEmpty(data.productSize)?"":data.productSize;
+		productIntroduction.value 	= gfn_isEmpty(data.productIntroduction)?"":data.productIntroduction;
+		productUse.value 			= gfn_isEmpty(data.productUse)?"":data.productUse;
+		productDeliveryguide.value  = gfn_isEmpty(data.productDeliveryguide)?"":data.productDeliveryguide;
+		productCancelguide.value 	= gfn_isEmpty(data.productCancelguide)?"":data.productCancelguide;
+		productNotice.value 		= gfn_isEmpty(data.productNotice)?"":data.productNotice;
+		
+		if(!gfn_isEmpty(data.productCode)) {
+			fn_loadDataRequest('/cmm/main/management/getProductDetailToProductCategory.do?productCode='+data.productCode, fn_setCheckedCategoryList);
+			fn_loadDataRequest('/cmm/main/management/getProductDetailToAtchFile.do?productCode='+data.productCode, fn_setImgFileSrc);	
+		}
+		
 	}
 	
 	// setup the grid after the page has finished loading
@@ -1683,7 +1460,7 @@ input[type=number] {
 			gfn_commonLoadDataRequest('/cmm/main/management/getProductTypeList.do', productTypeList, fn_setProductTypeMap);
 			
 			if(productId.value != 'null') {
-				fn_loadDataRequest();
+				fn_loadDataRequest('/cmm/main/management/getProductDetail.do?productId='+productId.value, fn_setDataForm);
 			} else {
 				productId.value = ''
 			}

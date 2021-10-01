@@ -126,3 +126,11 @@ var gfn_filterInt = function (value) {
 		return Number(value);
 	return NaN;
 }
+
+var gfn_isEmpty = function(value) {
+    if(typeof value == "undefined" || value == "undefined" ||value == null || value == "null" ||value == "") {
+    	return true;
+    } else {
+    	return false;
+    }
+}

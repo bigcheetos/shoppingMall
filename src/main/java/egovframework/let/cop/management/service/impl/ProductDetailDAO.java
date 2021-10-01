@@ -1,5 +1,6 @@
 package egovframework.let.cop.management.service.impl;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Repository;
@@ -18,18 +19,83 @@ public class ProductDetailDAO extends EgovComAbstractDAO{
      * @throws Exception
      */
 	public ProductDetailVO selectProductDetailByProductId(String productId) throws Exception {
-		return selectOne("ProductDetailDAO.selectProductDetailByProductId");
+		return selectOne("ProductDetailDAO.selectProductDetailByProductId", productId);
 	}
 	
 	/**
-     * 제품 디테일을 코드값이 존재하는지 확인하기 위해 code와 일치하는 숫자를 가져온다.
+     * 제품 디테일과 연결된 카테고리를 조회 한다.
+     *
+     * @param String
+     * @return Map<String, Object>
+     * @throws Exception
+     */
+	public List<Map<String, Object>> selectProductDetailToProductCategoryByProductCode(String productCode) throws Exception {
+		return selectList("ProductDetailDAO.selectProductDetailToProductCategoryByProductCode", productCode);
+	}
+	
+	/**
+     * 제품 디테일과 연결된 이미지파일을 조회 한다.
+     *
+     * @param String
+     * @return List
+     * @throws Exception
+     */
+	public List<Map<String, Object>> selectProductDetailToAtchFileByProductCode(String productCode) throws Exception {
+		return selectList("ProductDetailDAO.selectProductDetailToAtchFileByProductCode", productCode);
+	}
+
+	/**
+     * 제품Id를 이용하여 제품 디테일과 연결된 대표 이미지파일만 조회 한다.
+     *
+     * @param String
+     * @return Map<String, Object>
+     * @throws Exception
+     */
+	public Map<String, Object> selectMainImgByProductId(String productId) throws Exception {
+		return selectOne("ProductDetailDAO.selectMainImgByProductId", productId);
+	}
+	
+	/**
+     * 제품Id를 이용하여 제품 디테일과 연결된 이미지리스트를 조회 한다.
+     *
+     * @param String
+     * @return List
+     * @throws Exception
+     */
+	public List<Map<String, Object>> selectImgListByProductId(String productId) throws Exception {
+		return selectList("ProductDetailDAO.selectImgListByProductId", productId);
+	}
+	
+	/**
+     * 제품Id를 이용하여 제품 디테일과 연결된 카테고리 리스트를 조회 한다.
+     *
+     * @param String
+     * @return List
+     * @throws Exception
+     */
+	public List<Map<String, Object>> selectCheckedCategoryListByProductId(String productId) throws Exception {
+		return selectList("ProductDetailDAO.selectCheckedCategoryListByProductId", productId);
+	}
+	/**
+     * 제품 상세 테이블에 상품코드값이 일치하는 수를 가져온다.
      *
      * @param String
      * @return int
      * @throws Exception
      */
 	public int countByProductCode(String productCode) throws Exception {
-		return selectOne("ProductDetailDAO.selectCountByProductCode");
+		return selectOne("ProductDetailDAO.selectCountByProductCode", productCode);
+	}
+	
+	/**
+     * 제품 상세 테이블에 상품ID값이 일치하는 수를 가져온다.
+     *
+     * @param String
+     * @return int
+     * @throws Exception
+     */
+	public int countByProductId(String productId) throws Exception {
+		return selectOne("ProductDetailDAO.selectCountByProductId", productId);
 	}
 	
 	/**

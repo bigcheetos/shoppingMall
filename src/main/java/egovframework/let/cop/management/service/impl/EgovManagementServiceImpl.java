@@ -72,6 +72,17 @@ public class EgovManagementServiceImpl extends EgovAbstractServiceImpl implement
 	}
 
 	/**
+     * 제품Id로 제품을 하나 조회한다.
+     *
+     * @see egovframework.let.cop.management.service.EgovManagementService
+     */
+	@Override
+	public ProductVO getProductByProductId(String productId) throws Exception {
+		// TODO Auto-generated method stub
+		return productDAO.selectProductByProductId(productId);
+	}
+	
+	/**
      * 제품 Id의 다음 값을 조회 한다.
      *
      * @see egovframework.let.cop.management.service.EgovManagementService
@@ -93,11 +104,17 @@ public class EgovManagementServiceImpl extends EgovAbstractServiceImpl implement
 		// TODO Auto-generated method stub
 		
 		for(Map<String, Object> param : paramList) {
+			String paramedStockId = String.valueOf(param.get("stockId")); 
+			
+			if(EgovStringUtil.isNull(paramedStockId)||paramedStockId=="null") {
+				paramedStockId = "0";
+			}
+			
     		String rowType = String.valueOf(param.get("rowType"));
     		
     		ProductVO productVO = new ProductVO();
     		productVO.setProductId(String.valueOf(param.get("productId")));
-    		productVO.setStockId(String.valueOf(param.get("stockId")));
+    		productVO.setStockId(paramedStockId);
     		
     		productVO.setProductName(String.valueOf(param.get("productName")));
     		productVO.setProductSummary(String.valueOf(param.get("productSummary")));
@@ -117,6 +134,19 @@ public class EgovManagementServiceImpl extends EgovAbstractServiceImpl implement
 				modifyProduct(productVO);
 			// 삭제
 			} else if(rowType.equals("removed")) {
+				String productId = productVO.getProductId();
+				if(checkProductIdFromProductDetail(productId)) {
+					ProductDetailVO productDetailVO = getProductDetailByProductId(productId);
+					String productCode = productDetailVO.getProductCode();
+					HashMap<String, String> productDetailMap = new HashMap<>();
+					
+					productDetailMap.put("productCode", productCode);
+					
+					removeProductDetail(productDetailVO);
+					removeProductDetailToAtchFile(productDetailMap);
+					removeProductDetailToProductCategory(productDetailMap);
+				}
+				
 				removeProduct(productVO);
 			}
     	}
@@ -166,40 +196,88 @@ public class EgovManagementServiceImpl extends EgovAbstractServiceImpl implement
 	@Override
 	public ProductDetailVO getProductDetailByProductId(String productId) throws Exception {
 		// TODO Auto-generated method stub
+		
 		return productDetailDAO.selectProductDetailByProductId(productId);
 	}
 
+	/**
+     * 제품상세와 연결된 카테고리를 조회 한다.
+     *
+     * @see egovframework.let.cop.management.service.EgovManagementService
+     */
+	@Override
+	public List<Map<String, Object>> getProductDetailToProductCategoryByProductCode(String productCode) throws Exception {
+		// TODO Auto-generated method stub
+		return productDetailDAO.selectProductDetailToProductCategoryByProductCode(productCode);
+	}
+
+	/**
+     * 제품상세와 연결된 이미지파일을 조회 한다.
+     *
+     * @see egovframework.let.cop.management.service.EgovManagementService
+     */
+	@Override
+	public List<Map<String, Object>> getProductDetailToAtchFileByProductCode(String productCode) throws Exception {
+		// TODO Auto-generated method stub
+		return productDetailDAO.selectProductDetailToAtchFileByProductCode(productCode);
+	}
+	
+	/**
+     * 제품코드가 있는지 확인한다.
+     *
+     * @see egovframework.let.cop.management.service.EgovManagementService
+     */
 	@Override
 	public boolean checkProductCode(String productCode) throws Exception {
 		// TODO Auto-generated method stub
 		return productDetailDAO.countByProductCode(productCode)>0;
 	}
-
+	
+	/**
+     * 제품Id가 있는지 확인한다.
+     *
+     * @see egovframework.let.cop.management.service.EgovManagementService
+     */
+	@Override
+	public boolean checkProductIdFromProductDetail(String productId) throws Exception {
+		// TODO Auto-generated method stub
+		return productDetailDAO.countByProductId(productId)>0;
+	}
+	
+	/**
+     * 제품상세를 저장한다.
+     *
+     * @see egovframework.let.cop.management.service.EgovManagementService
+     */
 	@Override
 	public void saveProductDetail(List<Map<String, Object>> paramList) throws Exception {
 		// TODO Auto-generated method stub
 		
 		for(Map<String, Object> param : paramList) {
 			
-			boolean isInsert = false;
+			String paramedProductId = String.valueOf(param.get("productId"));
+			String paramedProductCode = String.valueOf(param.get("productCode"));
 			
-			if(EgovStringUtil.isEmpty(String.valueOf(param.get("productId")))) {
-				isInsert = true;
-			}
+			boolean hasParamedProductId = !EgovStringUtil.isEmpty(paramedProductId);
+			boolean hasParamedProductCode = !EgovStringUtil.isEmpty(paramedProductCode);
 			
-			ProductDetailVO productDetailVO = new ProductDetailVO();
-    		/*ProductVO productVO = new ProductVO();*/
-    		String productCode = String.valueOf(param.get("productCode"));
-    		String productId = getProductNextId();
+			String productId = hasParamedProductId?paramedProductId:getProductNextId();	// 패러미터 받은게 없으면 DB의 제품ID 최고값 + 1
+    		String productCode = hasParamedProductCode?paramedProductCode:productId;	// 패러미터 받은게 없으면 제품ID값과 동일하게
     		
-			productDetailVO.setProductId(productId);
+    		ProductDetailVO productDetailVO = new ProductDetailVO();
+			ProductVO productVO = new ProductVO();
+			
+    		int productCategoryIndex = 0;
+    		int atchFileIndex = 0;
+    		
+    		productDetailVO.setProductId(productId);
 			productDetailVO.setProductCode(productCode);
 			productDetailVO.setProductMaterial(String.valueOf(param.get("productMaterial")));
 			productDetailVO.setProductSize(String.valueOf(param.get("productSize")));
 			productDetailVO.setProductIntroduction(String.valueOf(param.get("productIntroduction")));
 			productDetailVO.setProductUse(String.valueOf(param.get("productUse")));
 			productDetailVO.setProductDeliveryguide(String.valueOf(param.get("productDeliveryguide")));
-			productDetailVO.setProductCancelguide(String.valueOf(param.get("productCancelGuide")));
+			productDetailVO.setProductCancelguide(String.valueOf(param.get("productCancelguide")));
 			productDetailVO.setProductNotice(String.valueOf(param.get("productNotice")));
 			
 			productDetailVO.setProductId(productId);
@@ -210,49 +288,58 @@ public class EgovManagementServiceImpl extends EgovAbstractServiceImpl implement
 			productDetailVO.setProductDeliverypay(String.valueOf(param.get("productDeliverypay")));
 			productDetailVO.setProductOrigin(String.valueOf(param.get("productOrigin")));
 			
-			
-			ProductVO productVO = productDetailVO.getProductVO();
-			/*productVO.setProductId(productId);
-			productVO.setProductName(String.valueOf(param.get("productName")));
-			productVO.setProductSummary(String.valueOf(param.get("productSummary")));
-			productVO.setProductPrice(String.valueOf(param.get("productPrice")));
-			productVO.setProductDiscountPrice(String.valueOf(param.get("productDiscountPrice")));
-			productVO.setProductDeliverypay(String.valueOf(param.get("productDeliverypay")));
-			productVO.setProductOrigin(String.valueOf(param.get("productOrigin")));*/
-			
 			String[] categoryIdList = String.valueOf(param.get("checkedCategoryList")).split(",");
-			String[] atchFileIdList = String.valueOf(param.get("atchFileId")).split(",");
+			String[] atchFileIdList = String.valueOf(param.get("atchFileList")).split(",");
 			
-			if(isInsert) {
+			// 패러미터로 받은 제품ID가 있는지 체크 -> 제품에 신규/수정 데이터 넣기
+			if(!hasParamedProductId) {
+				productVO = productDetailVO.getProductVO();
+				productVO.setProductStatus("작성중");
+				
 				addProduct(productVO);
-				addProductDetail(productDetailVO);
+			} else {
+				productVO = productDAO.selectProductByProductId(productId);
+				
+				productVO.setProductName(productDetailVO.getProductName());
+				productVO.setProductSummary(productDetailVO.getProductSummary());
+				productVO.setProductPrice(productDetailVO.getProductPrice());
+				productVO.setProductDiscountPrice(productDetailVO.getProductDiscountPrice());
+				productVO.setProductDeliverypay(productDetailVO.getProductDeliverypay());
+				productVO.setProductOrigin(productDetailVO.getProductOrigin());
+				
+				modifyProduct(productVO);
 			}
+			
+			// 패러미터로 받은 제품코드가 제품상세 테이블에 있는지 체크 -> 제품상세에 신규/수정 데이터 넣기
+			if(!checkProductIdFromProductDetail(productId)) {
+				addProductDetail(productDetailVO);
+			} else {
+				modifyProductDetail(productDetailVO);
+			}
+			
+			// 카테고리 연결 테이블에 데이터 넣기
 			for(String categoryId : categoryIdList) {
 				Map<String, String> categoryMap = new HashMap<>();
 				categoryMap.put("productCode", productCode);
 				categoryMap.put("categoryId", categoryId);
 				
-				if(isInsert) {
-					addProductDetailToProductCategory(categoryMap);
-				} else {
-					removeProductDetailToProductCategory(categoryMap);
-					addProductDetailToProductCategory(categoryMap);
-				}
+				if(productCategoryIndex==0) removeProductDetailToProductCategory(categoryMap);
+				addProductDetailToProductCategory(categoryMap);
+				
+				productCategoryIndex++;
 			}
 			
-			int i = 0;
+			// 첨부파일 연결 테이블에 데이터 넣기
 			for(String atchFileId : atchFileIdList) {
 				Map<String, String> atchFileMap = new HashMap<>();
 				atchFileMap.put("productCode", productCode);
 				atchFileMap.put("atchFileId", atchFileId);
-				atchFileMap.put("usePurpose", (i++==0)?"main":"sub");
+				atchFileMap.put("usePurpose", (atchFileIndex==0)?"main":"sub");
 				
-				if(isInsert) {
-					addProductDetailToAtchFile(atchFileMap);
-				} else {
-					removeProductDetailToAtchFile(atchFileMap);
-					addProductDetailToAtchFile(atchFileMap);
-				}
+				if(atchFileIndex==0) removeProductDetailToAtchFile(atchFileMap);
+				addProductDetailToAtchFile(atchFileMap);
+				
+				atchFileIndex++;
 			}
     	}
 	}

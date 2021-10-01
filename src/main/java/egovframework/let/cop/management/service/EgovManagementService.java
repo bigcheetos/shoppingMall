@@ -24,8 +24,8 @@ public interface EgovManagementService {
 	
 	/** 제품 시작 **/
 	/**
-	 * 제품에 대하여 내용을 조회 한다.
-	 * @return
+	 * 제품목록을 조회 한다.
+	 * @return List
 	 * 
 	 * @param 
 	 * @exception Exception Exception
@@ -33,8 +33,17 @@ public interface EgovManagementService {
 	public List<ProductVO> getProductListAll() throws Exception;
 	
 	/**
+	 * 제품Id를 이용하여 제품을 하나 조회 한다.
+	 * @return ProductVO
+	 * 
+	 * @param String
+	 * @exception Exception Exception
+	 */
+	public ProductVO getProductByProductId(String productId) throws Exception;
+	
+	/**
 	 * 제품의 ID 최대값 다음을 조회 한다.
-	 * @return
+	 * @return String
 	 * 
 	 * @param 
 	 * @exception Exception Exception
@@ -43,7 +52,7 @@ public interface EgovManagementService {
 	
 	/**
 	 * 컨트롤러에서 넘겨받은 제품 리스트를 신규, 수정, 삭제로 분류하여 저장한다.
-	 * @return String
+	 * @return
 	 * 
 	 * @param List<Map<String, Object>> paramList
 	 * @exception Exception Exception
@@ -63,7 +72,7 @@ public interface EgovManagementService {
 	 * 제품을 수정한다.
 	 * @return
 	 * 
-	 * @param 
+	 * @param ProductVO
 	 * @exception Exception Exception
 	 */
 	public void modifyProduct(ProductVO productVO) throws Exception;
@@ -72,7 +81,7 @@ public interface EgovManagementService {
 	 * 제품을 제거한다.
 	 * @return
 	 * 
-	 * @param 
+	 * @param ProductVO
 	 * @exception Exception Exception
 	 */
 	public void removeProduct(ProductVO productVO) throws Exception;
@@ -91,6 +100,24 @@ public interface EgovManagementService {
 	public ProductDetailVO getProductDetailByProductId(String productId) throws Exception;
 	
 	/**
+	 * 제품 상세와 연결된 카테고리를 조회한다.
+	 * @return Map<String, Object>
+	 * 
+	 * @param String
+	 * @exception Exception Exception
+	 */
+	public List<Map<String, Object>> getProductDetailToProductCategoryByProductCode(String productCode) throws Exception;
+	
+	/**
+	 * 제품 상세와 연결된 이미지파일을 조회한다.
+	 * @return Map<String, Object>
+	 * 
+	 * @param String
+	 * @exception Exception Exception
+	 */
+	public List<Map<String, Object>> getProductDetailToAtchFileByProductCode(String productCode) throws Exception;
+	
+	/**
 	 * 제품 상세코드가 데이터베이스에 존재하는지 확인한다.
 	 * @return boolean
 	 * 
@@ -98,6 +125,15 @@ public interface EgovManagementService {
 	 * @exception Exception Exception
 	 */
 	public boolean checkProductCode(String productCode) throws Exception;
+	
+	/**
+	 * 제품 상세Id가 데이터베이스에 존재하는지 확인한다.
+	 * @return boolean
+	 * 
+	 * @param String
+	 * @exception Exception Exception
+	 */
+	public boolean checkProductIdFromProductDetail(String productId) throws Exception;
 	
 	/**
 	 * 제품 상세를 저장한다.

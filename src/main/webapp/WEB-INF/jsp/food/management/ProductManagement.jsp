@@ -137,6 +137,7 @@
 	            },
 	            filter: 'agSetColumnFilter',
 	            refData: stockMap,
+	            hide:true,
 				editable : true
 			},
 			{
@@ -154,6 +155,7 @@
 					}
 					return stockAmt;
 				},
+				hide:true,
 				editable : false
 			},
 			{
@@ -396,8 +398,8 @@
 			// $("#updateRows").html(JSON.stringify(uploadRows));
 			fn_uploadDataRequest(uploadRows);
 		}
-		// 
 		
+		// fn_requestDataToUpload
 		var fn_uploadDataRequest = function(uploadRows) {
 			// 그리드 데이터 업로드 요청
 			gfn_uploadData(updateRows, '/cmm/main/management/registProduct.do')
