@@ -20,17 +20,31 @@ public class MberManageDAO extends EgovComAbstractDAO{
      * @return List<MberManageVO> 기업회원 목록정보
      */
     @SuppressWarnings("unchecked")
-	public List<MberManageVO> selectMberList(UserDefaultVO userSearchVO){
-        return (List<MberManageVO>) list("mberManageDAO.selectMberList", userSearchVO);
+	public List<MberManageVO> selectMberList(MberManageVO mberManageVO){
+        return (List<MberManageVO>) list("userManageDAO.selectMberList", mberManageVO);
     }
+    public void insertMber(MberManageVO regReq){
+        insert("userManageDAO.insertMber", regReq);
+    	
+    }
+    public MberManageVO selectMemberList(MberManageVO mberManageVO) {
 
+		return selectOne("userManageDAO.selectMemberList", mberManageVO);
+	}
+    public MberManageVO selectByEmail(String emailId){
+		return (MberManageVO)selectOne("userManageDAO.selectByEmail", emailId);
+	}
+    
+    public MberManageVO selectMberInfo(MberManageVO mberManageVO){
+		return (MberManageVO)selectOne("userManageDAO.selectMberInfo", mberManageVO);
+	}
     /**
      * 일반회원 총 갯수를 조회한다.
      * @param userSearchVO 검색조건
      * @return int 일반회원총갯수
      */
     public int selectMberListTotCnt(UserDefaultVO userSearchVO) {
-        return (Integer)selectOne("mberManageDAO.selectMberListTotCnt", userSearchVO);
+        return (Integer)selectOne("userManageDAO.selectMberListTotCnt", userSearchVO);
     }
 
     /**
@@ -41,15 +55,8 @@ public class MberManageDAO extends EgovComAbstractDAO{
         delete("mberManageDAO.deleteMber_S", delId);
     }
 
-    /**
-     * 일반회원의 기본정보를 화면에서 입력하여 항목의 정합성을 체크하고 데이터베이스에 저장
-     * @param mberManageVO 일반회원 등록정보
-     * @return String 등록결과
-     */
-    public String insertMber(MberManageVO mberManageVO){
-        return String.valueOf((int)insert("userManageDAO.insertMber_S", mberManageVO));
-    }
-
+   
+    
     /**
      * 기 등록된 사용자 중 검색조건에 맞는일반회원의 정보를 데이터베이스에서 읽어와 화면에 출력
      * @param mberId 상세조회대상 일반회원아이디

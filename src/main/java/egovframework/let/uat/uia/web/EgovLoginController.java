@@ -2,6 +2,7 @@ package egovframework.let.uat.uia.web;
 
 import egovframework.com.cmm.EgovMessageSource;
 import egovframework.com.cmm.LoginVO;
+import egovframework.com.cmm.service.EgovCmmUseService;
 import egovframework.com.cmm.util.EgovUserDetailsHelper;
 import egovframework.let.uat.uia.service.EgovLoginService;
 
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 
+import admin.user.com.service.MberManageVO;
+
 
 @Controller
 public class EgovLoginController {
@@ -34,6 +37,11 @@ public class EgovLoginController {
 	/** EgovPropertyService */
 	@Resource(name = "propertiesService")
 	protected EgovPropertyService propertiesService;
+
+	
+	/** EgovCmmUseService */
+	@Resource(name = "EgovCmmUseService")
+	private EgovCmmUseService cmmUseService;
 
 	/** TRACE */
 	@Resource(name = "leaveaTrace")
@@ -59,56 +67,57 @@ public class EgovLoginController {
 	 */
 	@RequestMapping(value = "/uat/uia/actionLogin.do")
 	public String actionLogin(@ModelAttribute("loginVO") LoginVO loginVO, HttpServletRequest request, ModelMap model) throws Exception {
-		System.out.println(loginVO.getId()); 
-		System.out.println(loginVO.getPassword()); 
-		System.out.println(loginVO.getMemLev()); 
-		
-		// 1. 일반 로그인 처리
+
 		LoginVO resultVO = loginService.actionLogin(loginVO);
+		System.out.println(resultVO.getEmailId());
 
-		boolean loginPolicyYn = true;
-
-		if (resultVO != null && resultVO.getId() != null && !resultVO.getId().equals("") && loginPolicyYn) {
-
+		if (resultVO != null && resultVO.getEmailId() != null && !resultVO.getEmailId().equals("")) {
 			request.getSession().setAttribute("LoginVO", resultVO);
-			
-			if(resultVO.getMemLev().equals("0")) {
-				return "forward:/cmm/forwardPage.do";
-
-			}else {
+			if(resultVO.getMemGubun().equals("M")) {
+				resultVO.setMemName(resultVO.getMemName());
 				return "forward:/cmm/main/mainPage.do";
-			}
-			
-		}else {
-			
-			System.out.println(resultVO.getId()); 
-			System.out.println(resultVO.getPassword()); 
-			System.out.println(resultVO.getMemLev());
+
+			}else if(resultVO.getMemGubun().equals("A")) {
+				resultVO.setMemName(resultVO.getMemName());
+		    	model.addAttribute("memGubun",resultVO.getEmailId());
+				return "forward:/cmm/main/adminMain.do";
+			}				
+		}else {			
 			model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
 			return "cmm/uat/uia/LoginUsr";
 		}
-
+		return "";
+		
 	}
 
 	/**
 	 * 로그인 후 메인화면으로 들어간다
 	 * @param
+	 * @return 
 	 * @return 로그인 페이지
 	 * @exception Exception
 	 */
-	@RequestMapping(value = "/uat/uia/actionMain.do")
-	public String actionMain(ModelMap model) throws Exception {
+	/*@RequestMapping(value = "/uat/uia/actionMain.do")
+	public String actionMain(@ModelAttribute("loginVO") LoginVO loginVO, ModelMap model) throws Exception {
 
-		// 1. 사용자 인증 처리
-		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
-		if (!isAuthenticated) {
+		System.out.println(loginVO.getEmailId());
+		
+		if(loginVO.getMemGubun().equals("M")) {
+			loginVO.setMemName(loginVO.getMemName());
+			return "forward:/cmm/main/mainPage.do";
+
+		}else if(loginVO.getMemGubun().equals("A")) {
+			loginVO.setMemName(loginVO.getMemName());
+
+	    	model.addAttribute("memGubun",loginVO.getEmailId());
+
+			return "forward:/cmm/main/adminMain.do";
+		}else {
 			model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
-			return "cmm/uat/uia/EgovLoginUsr";
+			return "cmm/uat/uia/LoginUsr";
 		}
-
-		// 2. 메인 페이지 이동
-		return "forward:/cmm/main/mainPage.do";
-	}
+		
+	}*/
 
 	/**
 	 * 로그아웃한다.

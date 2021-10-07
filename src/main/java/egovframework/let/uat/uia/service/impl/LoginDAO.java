@@ -19,6 +19,7 @@ public class LoginDAO extends EgovComAbstractDAO {
 	
 		
 		return (LoginVO) selectOne("loginDAO.actionLogin", vo);
+
 	}
 
 	/**
