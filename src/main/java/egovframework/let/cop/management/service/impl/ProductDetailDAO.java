@@ -29,8 +29,30 @@ public class ProductDetailDAO extends EgovComAbstractDAO{
      * @return Map<String, Object>
      * @throws Exception
      */
-	public List<Map<String, Object>> selectProductDetailToProductCategoryByProductCode(String productCode) throws Exception {
-		return selectList("ProductDetailDAO.selectProductDetailToProductCategoryByProductCode", productCode);
+	public List<Map<String, Object>> selectCheckedCategoryListByProductCode(String productCode) throws Exception {
+		return selectList("ProductDetailDAO.selectCheckedCategoryListByProductCode", productCode);
+	}
+	
+	/**
+     * 제품코드로 옵션목록을 조회 한다.
+     *
+     * @param String
+     * @return Map<String, Object>
+     * @throws Exception
+     */
+	public List<Map<String, Object>> selectOptionListByProductCode(String productCode) throws Exception {
+		return selectList("ProductDetailDAO.selectOptionListByProductCode", productCode);
+	}
+	
+	/**
+     * 제품Id로 옵션목록을 조회 한다.
+     *
+     * @param String
+     * @return Map<String, Object>
+     * @throws Exception
+     */
+	public List<Map<String, Object>> selectOptionListByProductId(String productId) throws Exception {
+		return selectList("ProductDetailDAO.selectOptionListByProductId", productId);
 	}
 	
 	/**
@@ -40,8 +62,8 @@ public class ProductDetailDAO extends EgovComAbstractDAO{
      * @return List
      * @throws Exception
      */
-	public List<Map<String, Object>> selectProductDetailToAtchFileByProductCode(String productCode) throws Exception {
-		return selectList("ProductDetailDAO.selectProductDetailToAtchFileByProductCode", productCode);
+	public List<Map<String, Object>> selectImgFileListByProductCode(String productCode) throws Exception {
+		return selectList("ProductDetailDAO.selectImgFileListByProductCode", productCode);
 	}
 
 	/**
@@ -176,4 +198,28 @@ public class ProductDetailDAO extends EgovComAbstractDAO{
 	public void deleteProductDetailToProductCategory(Map<String, String> map) throws Exception {
 		insert("ProductDetailDAO.deleteProductDetailToProductCategory", map);
 	}
+	
+	// 옵션 연결
+	/**
+     * 제품에 사용된 옵션을 추가한다.
+     *
+     * @param Map<String, String> map
+     * @return 
+     * @throws Exception
+     */
+	public void insertProductDetailToProductOption(Map<String, String> map) throws Exception {
+		insert("ProductDetailDAO.insertProductDetailToProductOption", map);
+	}
+	
+	/**
+     * 제품에 사용된 옵션을 삭제한다.
+     *
+     * @param Map<String, String> map
+     * @return 
+     * @throws Exception
+     */
+	public void deleteProductDetailToProductOption(Map<String, String> map) throws Exception {
+		insert("ProductDetailDAO.deleteProductDetailToProductOption", map);
+	}
+	
 }

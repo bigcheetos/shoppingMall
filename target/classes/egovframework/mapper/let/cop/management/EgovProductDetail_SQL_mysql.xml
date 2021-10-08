@@ -43,121 +43,6 @@
 				A.PRODUCT_ID = #{productId}	
 	</select>
 	
-	<select id="selectProductDetailToAtchFileByProductCode" resultType="map" parameterType = "string">
-		SELECT
-			A.ATCH_FILE_ID,
-			A.PRODUCT_CODE,
-			A.USE_PURPOSE,
-			CONCAT(B.FILE_STRE_COURS, B.STRE_FILE_NM) AS FILE_COURS_NM
-		FROM
-			PRODUCT_DETAIL_TO_ATCH_FILE A
-		INNER JOIN
-			ATCH_FILE_DETAIL B
-		ON
-			A.ATCH_FILE_ID = B.ATCH_FILE_ID
-		WHERE
-			PRODUCT_CODE = #{productCode}
-	</select>
-	
-	<select id="selectProductDetailToProductCategoryByProductCode" resultType="map" parameterType = "string">
-		SELECT
-			PRODUCT_CODE,
-			CATEGORY_ID
-		FROM
-			PRODUCT_DETAIL_TO_PRODUCT_CATEGORY
-		WHERE
-			PRODUCT_CODE = #{productCode}
-	</select>
-	
-	<select id="selectMainImgByProductId" resultType="map" parameterType = "string">
-		SELECT
-			A.ATCH_FILE_ID,
-			A.PRODUCT_CODE,
-			A.USE_PURPOSE,
-			CONCAT(E.FILE_STRE_COURS, E.STRE_FILE_NM) AS FILE_COURS_NM
-		FROM
-			PRODUCT_DETAIL_TO_ATCH_FILE A
-		INNER JOIN
-			(SELECT 
-				C.PRODUCT_ID, 
-                D.PRODUCT_CODE
-			FROM
-				PRODUCT C
-			INNER JOIN
-				PRODUCT_DETAIL D
-			ON
-				C.PRODUCT_ID = D.PRODUCT_ID
-			WHERE
-				C.PRODUCT_ID = #{productId}
-			) B
-		ON
-			A.PRODUCT_CODE = B.PRODUCT_CODE
-		INNER JOIN
-			ATCH_FILE_DETAIL E
-        ON
-			A.ATCH_FILE_ID = E.ATCH_FILE_ID
-		WHERE
-			A.USE_PURPOSE  = 'main'
-	</select>
-	
-	<select id="selectImgListByProductId" resultType="map" parameterType = "string">
-		SELECT
-			A.ATCH_FILE_ID,
-			A.PRODUCT_CODE,
-			A.USE_PURPOSE,
-			CONCAT(E.FILE_STRE_COURS, E.STRE_FILE_NM) AS FILE_COURS_NM
-		FROM
-			PRODUCT_DETAIL_TO_ATCH_FILE A
-		INNER JOIN
-			(SELECT 
-				C.PRODUCT_ID, 
-                D.PRODUCT_CODE
-			FROM
-				PRODUCT C
-			INNER JOIN
-				PRODUCT_DETAIL D
-			ON
-				C.PRODUCT_ID = D.PRODUCT_ID
-			WHERE
-				C.PRODUCT_ID = #{productId}
-			) B
-		ON
-			A.PRODUCT_CODE = B.PRODUCT_CODE
-		INNER JOIN
-			ATCH_FILE_DETAIL E
-        ON
-			A.ATCH_FILE_ID = E.ATCH_FILE_ID
-	</select>
-	
-	<select id="selectCheckedCategoryListByProductId" resultType="map" parameterType = "string">
-		SELECT
-			B.PRODUCT_ID,
-            A.PRODUCT_CODE,
-			A.CATEGORY_ID,
-            E.CATEGORY_NAME
-		FROM
-			PRODUCT_DETAIL_TO_PRODUCT_CATEGORY A
-		INNER JOIN
-			(SELECT 
-				C.PRODUCT_ID, 
-                D.PRODUCT_CODE
-			FROM
-				PRODUCT C
-			INNER JOIN
-				PRODUCT_DETAIL D
-			ON
-				C.PRODUCT_ID = D.PRODUCT_ID
-			WHERE
-				C.PRODUCT_ID = #{productId}
-			) B
-		ON
-			A.PRODUCT_CODE = B.PRODUCT_CODE
-		INNER JOIN
-			PRODUCT_CATEGORY E
-        ON
-			A.CATEGORY_ID = E.CATEGORY_ID
-	</select>
-	
 	<select id="selectCountByProductCode" resultType="int" parameterType = "string">
 		SELECT
 			COUNT(*) AS CNT
@@ -239,7 +124,83 @@
 			PRODUCT_CODE = #{productCode}
 	</delete>
 	
-	<!-- 이미지파일 연결 -->
+	<!-- 이미지파일 관련 -->
+	<select id="selectImgFileListByProductCode" resultType="map" parameterType = "string">
+		SELECT
+			A.ATCH_FILE_ID								as atchFileId,
+			A.PRODUCT_CODE								as productCode,
+			A.USE_PURPOSE								as usePurpose,
+			CONCAT(B.FILE_STRE_COURS, B.STRE_FILE_NM) 	as fileCoursNm
+		FROM
+			PRODUCT_DETAIL_TO_ATCH_FILE A
+		INNER JOIN
+			ATCH_FILE_DETAIL B
+		ON
+			A.ATCH_FILE_ID = B.ATCH_FILE_ID
+		WHERE
+			PRODUCT_CODE = #{productCode}
+	</select>
+	
+	<select id="selectMainImgByProductId" resultType="map" parameterType = "string">
+		SELECT
+			A.ATCH_FILE_ID								as atchFileId,
+			A.PRODUCT_CODE								as productCode,
+			A.USE_PURPOSE								as usePurpose,
+			CONCAT(E.FILE_STRE_COURS, E.STRE_FILE_NM) 	as fileCoursNm
+		FROM
+			PRODUCT_DETAIL_TO_ATCH_FILE A
+		INNER JOIN
+			(SELECT 
+				C.PRODUCT_ID, 
+                D.PRODUCT_CODE
+			FROM
+				PRODUCT C
+			INNER JOIN
+				PRODUCT_DETAIL D
+			ON
+				C.PRODUCT_ID = D.PRODUCT_ID
+			WHERE
+				C.PRODUCT_ID = #{productId}
+			) B
+		ON
+			A.PRODUCT_CODE = B.PRODUCT_CODE
+		INNER JOIN
+			ATCH_FILE_DETAIL E
+        ON
+			A.ATCH_FILE_ID = E.ATCH_FILE_ID
+		WHERE
+			A.USE_PURPOSE  = 'main'
+	</select>
+	
+	<select id="selectImgListByProductId" resultType="map" parameterType = "string">
+		SELECT
+			A.ATCH_FILE_ID								as atchFileId,
+			A.PRODUCT_CODE								as productCode,
+			A.USE_PURPOSE								as usePurpose,
+			CONCAT(E.FILE_STRE_COURS, E.STRE_FILE_NM) 	as fileCoursNm
+		FROM
+			PRODUCT_DETAIL_TO_ATCH_FILE A
+		INNER JOIN
+			(SELECT 
+				C.PRODUCT_ID, 
+                D.PRODUCT_CODE
+			FROM
+				PRODUCT C
+			INNER JOIN
+				PRODUCT_DETAIL D
+			ON
+				C.PRODUCT_ID = D.PRODUCT_ID
+			WHERE
+				C.PRODUCT_ID = #{productId}
+			) B
+		ON
+			A.PRODUCT_CODE = B.PRODUCT_CODE
+		INNER JOIN
+			ATCH_FILE_DETAIL E
+        ON
+			A.ATCH_FILE_ID = E.ATCH_FILE_ID
+	</select>
+	
 	<insert id="insertProductDetailToAtchFile">
 			INSERT INTO
 				PRODUCT_DETAIL_TO_ATCH_FILE
@@ -263,8 +224,46 @@
 			PRODUCT_CODE = #{productCode}
 	</delete>
 	
+	<!-- 카테고리 관련 -->
+	<select id="selectCheckedCategoryListByProductCode" resultType="map" parameterType = "string">
+		SELECT
+			PRODUCT_CODE	as productCode,
+			CATEGORY_ID		as categoryId
+		FROM
+			PRODUCT_DETAIL_TO_PRODUCT_CATEGORY
+		WHERE
+			PRODUCT_CODE = #{productCode}
+	</select>
 	
-	<!-- 카테고리 연결 -->
+	<select id="selectCheckedCategoryListByProductId" resultType="map" parameterType = "string">
+		SELECT
+			B.PRODUCT_ID	as productId,
+            A.PRODUCT_CODE	as productCode,
+			A.CATEGORY_ID	as categoryId,
+            E.CATEGORY_NAME	as categoryName
+		FROM
+			PRODUCT_DETAIL_TO_PRODUCT_CATEGORY A
+		INNER JOIN
+			(SELECT 
+				C.PRODUCT_ID, 
+                D.PRODUCT_CODE
+			FROM
+				PRODUCT C
+			INNER JOIN
+				PRODUCT_DETAIL D
+			ON
+				C.PRODUCT_ID = D.PRODUCT_ID
+			WHERE
+				C.PRODUCT_ID = #{productId}
+			) B
+		ON
+			A.PRODUCT_CODE = B.PRODUCT_CODE
+		INNER JOIN
+			PRODUCT_CATEGORY E
+        ON
+			A.CATEGORY_ID = E.CATEGORY_ID
+	</select>
+	
 	<insert id="insertProductDetailToProductCategory">
 			INSERT INTO
 				PRODUCT_DETAIL_TO_PRODUCT_CATEGORY
@@ -282,6 +281,74 @@
 	<delete id="deleteProductDetailToProductCategory">
 		DELETE
 		FROM PRODUCT_DETAIL_TO_PRODUCT_CATEGORY
+		WHERE
+			PRODUCT_CODE = #{productCode}
+	</delete>
+	
+	<!-- 옵션과 연결 -->
+	<select id="selectOptionListByProductCode" resultType="map" parameterType = "string">
+		SELECT
+			A.PRODUCT_CODE		as productCode,
+		    A.OPTION_CODE		as optionCode,
+		    IFNULL(B.OPTION_NAME,REPLACE(SUBSTRING_INDEX(A.OPTION_CODE, 'string_string_', 2),'string_string_name_',''))	as optionName,
+			IFNULL(B.OPTION_PRICE,REPLACE(SUBSTRING_INDEX(A.OPTION_CODE, 'string_string_', -1),'price_',''))			as optionPrice
+		FROM
+			PRODUCT_DETAIL_TO_PRODUCT_OPTION A
+		LEFT JOIN
+			PRODUCT_OPTION B
+		ON
+			A.OPTION_CODE = B.OPTION_CODE
+		WHERE
+			PRODUCT_CODE = #{productCode}
+	</select>
+	
+	<select id="selectOptionListByProductId" resultType="map" parameterType = "string">
+		SELECT
+			B.PRODUCT_ID																								as productId,
+			A.PRODUCT_CODE																								as productCode,
+			A.OPTION_CODE																								as optionCode,
+			IFNULL(E.OPTION_NAME,REPLACE(SUBSTRING_INDEX(A.OPTION_CODE, 'string_string_', 2),'string_string_name_',''))	as optionName,
+			IFNULL(E.OPTION_PRICE,REPLACE(SUBSTRING_INDEX(A.OPTION_CODE, 'string_string_', -1),'price_',''))			as optionPrice
+		FROM
+			PRODUCT_DETAIL_TO_PRODUCT_OPTION A
+		INNER JOIN
+			(SELECT 
+				C.PRODUCT_ID, 
+				D.PRODUCT_CODE
+			FROM
+				PRODUCT C
+			INNER JOIN
+				PRODUCT_DETAIL D
+			ON
+				C.PRODUCT_ID = D.PRODUCT_ID
+			WHERE
+				C.PRODUCT_ID = #{productId}
+			) B
+		ON
+			A.PRODUCT_CODE = B.PRODUCT_CODE
+		LEFT JOIN
+			PRODUCT_OPTION E
+		ON
+			A.OPTION_CODE = E.OPTION_CODE;
+	</select>
+	
+	<insert id="insertProductDetailToProductOption">
+			INSERT INTO
+				PRODUCT_DETAIL_TO_PRODUCT_OPTION
+			(
+				PRODUCT_CODE,
+				OPTION_CODE
+			)
+			VALUES
+			(
+				#{productCode},
+				#{optionCode}
+			)
+	</insert>
+	
+	<delete id="deleteProductDetailToProductOption">
+		DELETE
+		FROM PRODUCT_DETAIL_TO_PRODUCT_OPTION
 		WHERE
 			PRODUCT_CODE = #{productCode}
 	</delete>

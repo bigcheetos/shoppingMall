@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -353,6 +352,40 @@ public class EgovManagementRestController {
     }
     
     /**
+     * 판매중인 옵션 목록 조회
+     *
+     * @param request, model
+     * @return List<ProductOptionVO>
+     */
+    @RequestMapping("/cmm/main/management/getProductOptionListOnSale.do")
+    public List<ProductOptionVO> getProductOptionListOnSale(HttpServletRequest request, ModelMap model) throws Exception {
+    	
+    	List<ProductOptionVO> optionList = managementService.getOptionListOnSale();
+    	
+    	return optionList;
+    }
+    
+    /**
+     * 제품 코드로 옵션 목록 조회
+     *
+     * @param request, model
+     * @return List<ProductOptionVO>
+     */
+    @RequestMapping("/cmm/main/management/getProductDetailToProductOption.do")
+    public List<Map<String, Object>> getProductOptionListByProductCode(HttpServletRequest request, ModelMap model) throws Exception {
+    	String productCode = request.getParameter("productCode");
+    	
+    	List<Map<String, Object>> returnMapList = new ArrayList<Map<String, Object>>();
+    	
+    	if(!EgovStringUtil.isEmpty(productCode)) {
+    		returnMapList = managementService.getOptionListByProductCode(productCode);
+    	}
+    	
+    	
+    	return returnMapList;
+    }
+    
+    /**
      * 옵션 추가/삭제/수정 저장
      *
      * @param paramList, request, model
@@ -438,7 +471,7 @@ public class EgovManagementRestController {
     	List<Map<String, Object>> returnMapList = new ArrayList<Map<String, Object>>();
     	
     	if(!EgovStringUtil.isEmpty(productCode)) {
-    		returnMapList = managementService.getProductDetailToProductCategoryByProductCode(productCode);
+    		returnMapList = managementService.getCheckedCategoryListByProductCode(productCode);
     	}
     	
     	
@@ -453,16 +486,13 @@ public class EgovManagementRestController {
      */
     @RequestMapping("/cmm/main/management/getProductDetailToAtchFile.do")
     public List<Map<String, Object>> getProductDetailToAtchFile(HttpServletRequest request, ModelMap model) throws Exception {
-    	
-    	
     	String productCode = request.getParameter("productCode");
     	
     	List<Map<String, Object>> returnMapList = new ArrayList<Map<String, Object>>();
     	
     	if(!EgovStringUtil.isEmpty(productCode)) {
-    		returnMapList = managementService.getProductDetailToAtchFileByProductCode(productCode);
+    		returnMapList = managementService.getImgFileListByProductCode(productCode);
     	}
-    	
     	
     	return returnMapList;
     }

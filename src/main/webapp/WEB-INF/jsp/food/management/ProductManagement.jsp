@@ -163,7 +163,7 @@
 				field : "productName",
 				width : 200,
 				cellRenderer: function(params) {
-			      return '<a class="gridColumn" href="/cmm/main/management/productRegist.do?productId='+params.data.productId+'" target="_blank">'+ params.value+'</a>'
+			      return '<a class="gridColumn" href="/cmm/main/management/productRegist.do?productId='+params.data.productId+'">'+ params.value+'</a>'
 			  	},
 				editable : false
 			}, 

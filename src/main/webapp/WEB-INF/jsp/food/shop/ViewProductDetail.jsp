@@ -232,8 +232,8 @@
    	<div class="left-wrap">
           <div class="img-wrap">
           	<c:forEach var="imgMap" items="${productDetailMap.imgMapList }" varStatus="status">
-          		<c:if test="${imgMap.USE_PURPOSE eq 'main' }">
-          			<div class="main_img"><img src="${imgMap.FILE_COURS_NM }" onerror="this.src='/images/gdimg/noimage.gif';" /></div>
+          		<c:if test="${imgMap.usePurpose eq 'main' }">
+          			<div class="main_img"><img src="${imgMap.fileCoursNm }" onerror="this.src='/images/food/product/noimage.png';" /></div>
           		</c:if>
           	</c:forEach>
           	  <div class="sub_img">
@@ -241,7 +241,7 @@
                   <!-- loop// -->
                   <c:forEach var="imgMap" items="${productDetailMap.imgMapList }" varStatus="status">
                   	<li class="active"><div class="black_bg"></div>
-          			<img src="${imgMap.FILE_COURS_NM }" style="width:88px;height:105.73px;" onerror="this.src='/images/gdimg/noimage.gif';" /></li>
+          			<img src="${imgMap.fileCoursNm }" style="width:88px;height:105.73px;" onerror="this.src='/images/food/product/noimage.png';" /></li>
           		  </c:forEach>  
                   <!-- //loop -->
                   </ul>
@@ -252,8 +252,8 @@
               <!-- <span id='tagString' name='tagString'></span> -->
               <span class='tagString'>
               <c:forEach var="checkedCategory" items="${productDetailMap.checkedCategoryList }" varStatus="status">
-              		<a rel='tag' href='/cmm/main/shop/discountShop.do?categoryId=${checkedCategory.CATEGORY_ID }'>
-              			${checkedCategory.CATEGORY_NAME }
+              		<a rel='tag' href='/cmm/main/shop/discountShop.do?categoryId=${checkedCategory.categoryId }'>
+              			${checkedCategory.categoryName }
               		</a>
               </c:forEach>
               </span>
@@ -303,25 +303,43 @@
                       		${productDetailMap.productDetailVO.productCode }
                       </td>
                   </tr>
+                  
                   <tr>
                       <th>구매수량</th>
                       <td>
                           <div class="count clfix">
                           		<input type="hidden" name="productDiscountPrice" id="productDiscountPrice" value="${productDetailMap.productDetailVO.productDiscountPrice }">
                           		<input type="number" name="productAmount" id="productAmount" value=0 min=1 max=9999>
-                              <!-- <span class="button down_btn" onclick="decreaseCount(document.getElementById('8010000705_CNT'));recalcuratePrice('149000','14900');">-</span>
-                              <input type="text" name="8010000705_CNT" id="8010000705_CNT" size="3" maxlength="3" value="1" class="prod_cnt" option="number" required="required"  onfocus="this.select();" onkeydown="onlyNumber(event);" onblur="if(this.value==0||this.value=='') { this.value='1'; } else { this.value = parseInt(this.value); } recalcuratePrice('149000','14900');" onkeyup="recalcuratePrice('149000','14900');" />
-                              <span class="button up_btn" onclick="increaseCount(document.getElementById('8010000705_CNT'));recalcuratePrice('149000','14900');">+</span> -->
                           </div>
                       </td>
                   </tr>
+                  <c:if test="${!empty productDetailMap.optionList}">
+                      <tr>
+	                  	<th>옵션상품</th>
+	                  	<td>
+	                  		<select id="productOption" class="form-select">
+	                  		<c:forEach var="option" items="${productDetailMap.optionList }" varStatus="status">
+			              		<option data-option-code="${option.optionCode }" data-option-name ="${option.optionName }" 
+			              		data-option-price ="${option.optionPrice }" value="${option.optionPrice }">
+			              		${option.optionName } &nbsp;( ${option.optionPrice }원)</option>
+			              	</c:forEach>
+			              	</select>
+			              	&nbsp;
+			              	&nbsp;
+			              	<input type="button" class="btn btn-secondary" value="+" style="width:36px; height:36px" onClick="fn_addOption()">
+	                  	</td>
+	                  </tr>
+                  </c:if>
                   </tbody>
               </table>
-              <p class="total">총 상품금액
+              <div class="total-payment">
+              	<p class="total">총 상품금액
+              	
+              	
                       <em class="big"><span id="productPayment">0</span>원</em>
-                      <!-- <input type="text" id="ixproductPrice" value="0" style="display:none;" />
-                      <input type="text" id="ixproductOriginPrice" value="0" style="display:none;" /> -->
-              </p>
+              	</p>
+              </div>
+              
           </div>
           <div class="btn-wrap clfix">
                   <div id="imgInCart"  class="button basket_btn3 button-01" onclick="return false;">바로 구매</div>
@@ -337,7 +355,7 @@
       				<tr>
 	      				<td align="left" valign="top">
 	      					<br>
-	      					<img alt src="${imgMap.FILE_COURS_NM }" style="width: 1048px; height: auto; max-width: 1050px;">
+	      					<img alt src="${imgMap.fileCoursNm }" style="width: 1048px; height: auto; max-width: 1050px;">
 	      				</td>
 	      			</tr>
       			</c:forEach>
@@ -419,6 +437,68 @@
 	// 마우스오버에 따른 메인이미지 변동 이벤트
 	var fn_setMainImg = function(subImg) {
 		mainImg.src = subImg.src;
+	}
+	
+	// 옵션 클릭시 이벤트
+	var fn_addOption = function() {
+		var optionData = productOption.options[productOption.selectedIndex].dataset;
+		
+		// 같은 옵션이 이미 리스트에 있는 지 체크
+		var existedOptionList = document.querySelectorAll('.option-list')
+		if(existedOptionList.length > 0) {
+			for(var existedOption of existedOptionList) {
+				if(existedOption.dataset.optionCode == optionData.optionCode) {
+					alert('이미 존재하는 옵션입니다.');
+					return;
+				}
+			}
+		}
+		
+		var br = document.createElement('br');
+		var div_option = document.createElement('div');
+		var img = document.createElement('img')
+		var p_optionName = document.createElement('span');
+		var p_optionPrice = document.createElement('span');
+		var input_optionAmount = document.createElement('input');
+		var input_cancel = document.createElement('input');
+		
+		div_option.dataset.optionName = optionData.optionName;
+		div_option.dataset.optionCode = optionData.optionCode;
+		div_option.dataset.optionPrice = optionData.optionPrice;
+		div_option.style.background = '	#F5F5F5';
+		div_option.className = 'border option-list';
+		
+		img.src = '/images/food/product/noimage.png';
+		p_optionName.innerText = optionData.optionName;
+		p_optionName.className = 'h6';
+		p_optionPrice.innerText = optionData.optionPrice + '원';
+		input_optionAmount.type = 'number';
+		input_optionAmount.name = 'optionAmount';
+		input_optionAmount.value = 1;
+		input_optionAmount.min = 1;
+		input_optionAmount.max = 9999;
+		input_cancel.type = 'button';
+		input_cancel.className = 'btn border';
+		input_cancel.value = 'X';
+		
+		input_optionAmount.addEventListener('change', function(event){
+			p_optionPrice.innerText = (input_optionAmount.value * 1*optionData.optionPrice) + '원';
+		});
+		
+		input_cancel.addEventListener('click', function(event) {
+			br.remove();
+			div_option.remove();
+		});
+		
+		div_option.appendChild(img);
+		div_option.appendChild(p_optionName);
+		div_option.appendChild(document.createElement('hr'));
+		div_option.appendChild(input_optionAmount);
+		div_option.appendChild(p_optionPrice);
+		div_option.appendChild(input_cancel);
+		
+		document.querySelector('.total-payment').appendChild(br);
+		document.querySelector('.total-payment').appendChild(div_option);
 	}
 	
 	// after the page has finished loading

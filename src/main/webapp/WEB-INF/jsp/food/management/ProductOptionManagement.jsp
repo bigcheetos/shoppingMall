@@ -34,7 +34,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet"> <!--CDN 링크 -->
 
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Category</title>
+    <title>옵션상품</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
@@ -59,7 +59,9 @@
 <section class="category">
 	<div class="container">
 	<!-- 버튼 -->
-	<div id="commonSearchDiv_container"></div>
+	<div id="commonSearchDiv_container" 
+	data-btn_select_all="on" data-btn_deselect_all="on" data-btn_custom=""
+	data-btn_search="on" data-btn_add="on" data-btn_save="on" data-btn_delete="on"></div>
     
     <div id="updateRows" style="height:100px;border:1px solid #f4f4f4;margin:5px 0"></div>
     
@@ -89,9 +91,9 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/locale/ko.min.js" integrity="sha512-3kMAxw/DoCOkS6yQGfQsRY1FWknTEzdiz8DOwWoqf+eGRN45AmjS2Lggql50nCe9Q6m5su5dDZylflBY2YjABQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	<script src="https://unpkg.com/ag-grid/dist/ag-grid.min.js"></script>
-	<script src="/js/react/agGridUtil.js?ver=01"></script>
+	<script src="/js/react/agGridUtil.js?ver=112"></script>
 	
-	<script src="/js/react/commonFunctions.js?ver=324"></script>
+	<script src="/js/react/commonFunctions.js?ver=1"></script>
 
 	<script>
 		
@@ -118,6 +120,21 @@
 				hide : false,
 				editable : true
 			}, 
+			{
+				headerName : "옵션명",
+				field : "optionName",
+				width : 100,
+				hide : false,
+				editable : true
+			}, 
+			{
+				headerName : "옵션가격",
+				field : "optionPrice",
+				width : 200,
+				hide : false,
+				/* valueFormatter: params => params.data.number.toFixed(0), */
+				editable : true
+			},
 			{
 				headerName : "재고명",
 				field : "stockId",
@@ -157,21 +174,6 @@
 	            },
 	            filter: 'agSetColumnFilter',
 	            refData: atchFileMap,
-				editable : true
-			}, 
-			{
-				headerName : "옵션명",
-				field : "optionName",
-				width : 100,
-				hide : false,
-				editable : true
-			}, 
-			{
-				headerName : "옵션가격",
-				field : "optionPrice",
-				width : 200,
-				hide : false,
-				/* valueFormatter: params => params.data.number.toFixed(0), */
 				editable : true
 			}, 
 			{
@@ -236,18 +238,8 @@
 						}
 					} */
 				}
-				
-				gridOpt.onCellKeyDown = function(event) {
-					console.log('cellKeyDown');
-				}
-				
-				gridOpt.onCellKeyPress = function(event) {
-					console.log('cellKeyPress');
-				}
 			}
 			
-
-			// gridDiv, columnDefs, rowSelection, isScroll, fn_customColumnSetting
 			mainGrid = new NewGrid("myGrid", columnDefs, 'multiple', false, fn_customColumnSetting);
 			
 			function onBtStopEditing() {
@@ -267,6 +259,16 @@
 			function onBtDeselectAll() {
 				mainGrid.gridOpts.api.deselectAll();
 			}
+			
+			// 이벤트 등록
+			const btnSelectAll = document.querySelector('.btn-select-all');
+			const btnDeselectAll = document.querySelector('.btn-deselect-all');
+			btnSelectAll.addEventListener('click', function(event){
+				onBtSelectAll();
+		    });
+			btnDeselectAll.addEventListener('click', function(event){
+				onBtDeselectAll();
+		    });
 		}
 		
 		/*	조회	*/
@@ -455,7 +457,7 @@
   	<script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
 	
 	<!-- 만든 React 컴포넌트를 실행. -->
-	<script src="/js/react/commonSearchDiv.js?ver=01"></script>
+	<script src="/js/react/commonSearchDiv.js?ver=08"></script>
 </body>
 
 </html>

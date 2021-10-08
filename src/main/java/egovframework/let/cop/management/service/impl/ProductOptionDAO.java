@@ -22,10 +22,32 @@ public class ProductOptionDAO extends EgovComAbstractDAO{
 	}
 	
 	/**
-     * 옵션 최고값 다음 Id를 조회한다.
+     * 판매 가능한 옵션 목록을 조회 한다.
      *
      * @param 
-     * @return String
+     * @return List<ProductOptionVO>
+     * @throws Exception
+     */
+	public List<ProductOptionVO> selectOptionListOnSale() throws Exception {
+		return selectList("ProductOptionDAO.selectOptionListOnSale");
+	}
+	
+	/**
+     * 옵션을 조회 한다.
+     *
+     * @param String
+     * @return ProductOptionVO
+     * @throws Exception
+     */
+	public ProductOptionVO selectOptionByOptionCode(String optionCode) throws Exception {
+		return selectOne("ProductOptionDAO.selectOptionByOptionCode", optionCode);
+	}
+	
+	/**
+     * 옵션 최고값 다음 Id를 조회한다.
+     *
+     * @param String
+     * @return int
      * @throws Exception
      */
 	public int countByOptionCode(String optionCode) throws Exception {

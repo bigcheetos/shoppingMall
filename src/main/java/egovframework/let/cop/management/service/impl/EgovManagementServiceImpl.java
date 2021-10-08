@@ -1,5 +1,9 @@
 package egovframework.let.cop.management.service.impl;
 
+import java.io.InputStream;
+import java.io.StringBufferInputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,6 +11,10 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
+
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import egovframework.let.cop.management.service.EgovManagementService;
 import egovframework.let.cop.management.service.ProductCategoryVO;
@@ -59,6 +67,8 @@ public class EgovManagementServiceImpl extends EgovAbstractServiceImpl implement
 
 	@Resource(name = "ProductOptionDAO")
 	private ProductOptionDAO productOptionDAO;
+	
+	private static final ObjectMapper objectMapper = new ObjectMapper();;
 	
 	/**
      * 모든 제품을 조회 한다.
@@ -206,9 +216,9 @@ public class EgovManagementServiceImpl extends EgovAbstractServiceImpl implement
      * @see egovframework.let.cop.management.service.EgovManagementService
      */
 	@Override
-	public List<Map<String, Object>> getProductDetailToProductCategoryByProductCode(String productCode) throws Exception {
+	public List<Map<String, Object>> getCheckedCategoryListByProductCode(String productCode) throws Exception {
 		// TODO Auto-generated method stub
-		return productDetailDAO.selectProductDetailToProductCategoryByProductCode(productCode);
+		return productDetailDAO.selectCheckedCategoryListByProductCode(productCode);
 	}
 
 	/**
@@ -217,9 +227,20 @@ public class EgovManagementServiceImpl extends EgovAbstractServiceImpl implement
      * @see egovframework.let.cop.management.service.EgovManagementService
      */
 	@Override
-	public List<Map<String, Object>> getProductDetailToAtchFileByProductCode(String productCode) throws Exception {
+	public List<Map<String, Object>> getImgFileListByProductCode(String productCode) throws Exception {
 		// TODO Auto-generated method stub
-		return productDetailDAO.selectProductDetailToAtchFileByProductCode(productCode);
+		return productDetailDAO.selectImgFileListByProductCode(productCode);
+	}
+	
+	/**
+     * 제품상세와 연결된 옵션를 조회 한다.
+     *
+     * @see egovframework.let.cop.management.service.EgovManagementService
+     */
+	@Override
+	public List<Map<String, Object>> getOptionListByProductCode(String productCode) throws Exception {
+		// TODO Auto-generated method stub
+		return productDetailDAO.selectOptionListByProductCode(productCode);
 	}
 	
 	/**
@@ -257,6 +278,7 @@ public class EgovManagementServiceImpl extends EgovAbstractServiceImpl implement
 			
 			String paramedProductId = String.valueOf(param.get("productId"));
 			String paramedProductCode = String.valueOf(param.get("productCode"));
+			String parmedOptionList = String.valueOf(param.get("optionList"));
 			
 			boolean hasParamedProductId = !EgovStringUtil.isEmpty(paramedProductId);
 			boolean hasParamedProductCode = !EgovStringUtil.isEmpty(paramedProductCode);
@@ -269,6 +291,7 @@ public class EgovManagementServiceImpl extends EgovAbstractServiceImpl implement
 			
     		int productCategoryIndex = 0;
     		int atchFileIndex = 0;
+    		int optionIndex = 0;
     		
     		productDetailVO.setProductId(productId);
 			productDetailVO.setProductCode(productCode);
@@ -290,6 +313,10 @@ public class EgovManagementServiceImpl extends EgovAbstractServiceImpl implement
 			
 			String[] categoryIdList = String.valueOf(param.get("checkedCategoryList")).split(",");
 			String[] atchFileIdList = String.valueOf(param.get("atchFileList")).split(",");
+			List<ProductOptionVO> optionList = new ArrayList<>();
+			if(!EgovStringUtil.isEmpty(parmedOptionList)) {
+				optionList = Arrays.asList(objectMapper.readValue(parmedOptionList, ProductOptionVO[].class));
+			}
 			
 			// 패러미터로 받은 제품ID가 있는지 체크 -> 제품에 신규/수정 데이터 넣기
 			if(!hasParamedProductId) {
@@ -340,6 +367,23 @@ public class EgovManagementServiceImpl extends EgovAbstractServiceImpl implement
 				addProductDetailToAtchFile(atchFileMap);
 				
 				atchFileIndex++;
+			}
+			
+			if(optionList.size() != 0) {
+				for(ProductOptionVO option : optionList) {
+					Map<String, String> optionMap = new HashMap<>();
+					if(!EgovStringUtil.isEmpty(option.getOptionCode())) {
+						optionMap.put("productCode", productCode);
+						optionMap.put("optionCode", option.getOptionCode());
+					} else {
+						optionMap.put("productCode", productCode);
+						optionMap.put("optionCode", "string_string_name_"+option.getOptionName()+"string_string_price_"+option.getOptionPrice());
+					}
+					
+					if(optionIndex==0) productDetailDAO.deleteProductDetailToProductOption(optionMap);
+					productDetailDAO.insertProductDetailToProductOption(optionMap);
+					optionIndex++;
+				}
 			}
     	}
 	}
@@ -791,6 +835,26 @@ public class EgovManagementServiceImpl extends EgovAbstractServiceImpl implement
 	public List<ProductOptionVO> getOptionListAll() throws Exception {
 		// TODO Auto-generated method stub
 		return productOptionDAO.selectOptionListAll();
+	}
+	
+	/**
+     * 판매 가능한 옵션을 조회 한다.
+     *
+     * @see egovframework.let.cop.management.service.EgovManagementService
+     */
+	@Override
+	public List<ProductOptionVO> getOptionListOnSale() throws Exception {
+		return productOptionDAO.selectOptionListOnSale();
+	};
+	
+	/**
+     * 옵션 코드로 옵션을 조회한다.
+     *
+     * @see egovframework.let.cop.management.service.EgovManagementService
+     */
+	@Override
+	public ProductOptionVO getOptionByOptionCode(String optionCode) throws Exception {
+		return productOptionDAO.selectOptionByOptionCode(optionCode);
 	}
 	
 	/**

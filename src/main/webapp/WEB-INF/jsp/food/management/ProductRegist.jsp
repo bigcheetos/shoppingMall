@@ -20,6 +20,14 @@
     margin-bottom: 5px;
     border-bottom: 1px solid #ccc;
 }
+.blue a:hover {
+	color: #ee5a00;
+    text-decoration: underline;
+}
+.blue a:focus {
+	color: #ee5a00;
+    text-decoration: underline;
+}
 .set_goods_info a:hover {
     color: #ee5a00;
     text-decoration: underline;
@@ -171,8 +179,8 @@ input[type=number] {
                                         <div class="img_cont">
                                             <div class="blue">대표 이미지(필수)</div>
                                             <div class="file">
-                                                <input type="button" class="btn btn-secondary btn-img-upload" onclick="fn_btnImgUploadOnClicked(1)" value="파일선택"/>
-                                                <input type="button" class="btn btn-secondary btn-img-select" onclick="fn_btnImgSelectorOnClicked(1)" value="제공이미지 사용"/>
+                                                <input type="button" class="btn btn-primary btn-img-upload" onclick="fn_btnImgUploadOnClicked(1)" value="파일선택"/>
+                                                <input type="button" class="btn btn-primary btn-img-select" onclick="fn_btnImgSelectorOnClicked(1)" value="제공이미지 사용"/>
                                             </div>
                                         </div>
 									</li>
@@ -186,132 +194,6 @@ input[type=number] {
                                         </div>
                                         <hr>
                                         <input type="button" class="btn btn-secondary" value="+추가 이미지" onclick="fn_addImgList(1)">
-									</li>
-                                    <!-- <li>
-                                        <div id="prd_image2" class="img_thumb">
-                                            <img id="file_prd_image2" src="/user/file/sht/upfile_202109101119597720">
-                                        </div>
-                                        <div class="img_cont">
-                                            <div class="blue">상세 이미지(1)</div>
-                                            <div class="file">
-                                                <input name="prd_image2" id="prd_image2" type="file" title="상품 이미지">
-                                            </div>
-                                        </div>
-									</li>
-                                    <li>
-                                        <div id="prd_image3" class="img_thumb">
-                                            <img id="file_prd_image3" src="/user/file/sht/upfile_202109101119597720">
-                                        </div>
-                                        <div class="img_cont">
-                                            <div class="blue">상세 이미지(2)</div>
-                                            <div class="file">
-                                                <input name="prd_image3" id="prd_image3" type="file" title="상품 이미지">
-                                            </div>
-                                        </div>
-									</li>
-                                    <li>
-                                        <div id="prd_image4" class="img_thumb">
-                                            <img id="file_prd_image4" src="/user/file/sht/upfile_202109101119597720">
-                                        </div>
-                                        <div class="img_cont">
-                                            <div class="blue">상세 이미지(3)</div>
-                                            <div class="file">
-                                                <input name="prd_image4" id="prd_image4" type="file" title="상품 이미지">
-                                            </div>
-                                        </div>
-									</li>
-                                    <li>
-                                        <div id="prd_image5" class="img_thumb">
-                                            <img id="file_prd_image5" src="/user/file/sht/upfile_202109101119597720">
-                                        </div>
-                                        <div class="img_cont">
-                                            <div class="blue">상세 이미지(4)</div>
-                                            <div class="file">
-                                                <input name="prd_image5" id="prd_image5" type="file" title="상품 이미지">
-                                            </div>
-                                        </div>
-									</li>
-                                    <li>
-                                        <div id="prd_image6" class="img_thumb">
-                                            <img id="file_prd_image6" src="/user/file/sht/upfile_202109101119597720">
-                                        </div>
-                                        <div class="img_cont">
-                                            <div class="blue">상세 이미지(5)</div>
-                                            <div class="file">
-                                                <input name="prd_image6" id="prd_image6" type="file" title="상품 이미지">
-                                            </div>
-                                        </div>
-									</li>
-                                    <li>
-                                        <div id="prd_image7" class="img_thumb">
-                                            <img id="file_prd_image7" src="/user/file/sht/upfile_202109101119597720">
-                                        </div>
-                                        <div class="img_cont">
-                                            <div class="blue">상세 이미지(6)</div>
-                                            <div class="file">
-                                                <input name="prd_image7" id="prd_image7" type="file" title="상품 이미지">
-                                            </div>
-                                        </div>
-									</li>
-                                    <li>
-                                        <div id="prd_image8" class="img_thumb">
-                                            <img id="file_prd_image8" src="/user/file/sht/upfile_202109101119597720">
-                                        </div>
-                                        <div class="img_cont">
-                                            <div class="blue">상세 이미지(7)</div>
-                                            <div class="file">
-                                                <input name="prd_image8" id="prd_image8" type="file" title="상품 이미지">
-                                            </div>
-                                        </div>
-									</li>
-                                    <li>
-                                        <div id="prd_image9" class="img_thumb">
-                                            <img id="file_prd_image9" src="/user/file/sht/upfile_202109101119597720">
-                                        </div>
-                                        <div class="img_cont">
-                                            <div class="blue">상세 이미지(8)</div>
-                                            <div class="file">
-                                                <input name="prd_image9" id="prd_image9" type="file" title="상품 이미지">
-                                            </div>
-                                        </div>
-									</li>
-                                    <li>
-                                        <div id="prd_image10" class="img_thumb">
-                                            <img id="file_prd_image10" src="/user/file/sht/upfile_202109101119597720">
-                                        </div>
-                                        <div class="img_cont">
-                                            <div class="blue">상세 이미지(9)</div>
-                                            <div class="file">
-                                                <input name="prd_image10" id="prd_image10" type="file" title="상품 이미지">
-                                            </div>
-                                        </div>
-									</li>
-                                    <li>
-                                        <div id="prd_image11" class="img_thumb">
-                                            <img id="file_prd_image11" src="/user/file/sht/upfile_202109101119597720">
-                                        </div>
-                                        <div class="img_cont">
-                                            <div class="blue">상세 이미지(10)</div>
-                                            <div class="file">
-                                                <input name="prd_image11" id="prd_image11" type="file" title="상품 이미지">
-                                            </div>
-                                        </div>
-									</li> -->
-								</ul>
-							</div>
-                            
-                            <div id="provide_image_file" style="display:none">
-								<ul class="prd_img_file" style="width:100%;">
-									<li>
-                                        <div class="img_thumb">
-                                            <img id="provide_image_preview">
-                                        </div>
-                                        <div class="img_cont">
-                                            <div>
-                                                제공 이미지를  사용합니다.
-                                                <!-- <img src="/common/html/admin/images/order/btn_cancle.gif" align="absmiddle" class="pointer" onclick="cancel_provide_image();"> -->
-                                            </div>
-                                        </div>
 									</li>
 								</ul>
 							</div>
@@ -349,7 +231,6 @@ input[type=number] {
 								</div>
 								 <div>
 									 &nbsp;원
-									 <!-- &nbsp;* 명칭은 4~5자가 가장 적절하게 표시됩니다. -->
 								 </div>
 								 
 								<br/>
@@ -361,29 +242,43 @@ input[type=number] {
 							옵션
 						</td>
 						<td>
-							<div class="item" style="padding-bottom:3px; padding-top:2px; ">
-								<div>
-									<div style="width:20%; float:left">
-										&nbsp;&nbsp;옵션명&nbsp;
+							<div class="item div-option-list" style="padding-bottom:3px; padding-top:2px; ">
+								<!-- <div id="div_product_option_1">
+									<div class="div-option-selector" style="width:20%; float:left">
+										<select name="product_option_select" id="product_option_select_1" class="form-select" onchange="fn_changeOption()">
+											<option value="none" selected="selected"}>사용자옵션</option>
+										</select>
 									</div>
-									<div style="width:79%; float:left">
-										<input type="text" name="ps_title[]" title="사용자옵션명" class="form-control" value="">
+									<div class="div-option-name">
+										<div style="width:8%; float:left">
+											<span>옵션명</span>
+										</div>
+										<div style="width:27%; float:left">
+											<input type="text" name="product_option_name" id="product_option_name_1" title="옵션명" class="form-control" value="">
+										</div>
 									</div>
-								</div>
-								<div>
-									<div style="width:20%; float:left">
-										&nbsp;&nbsp;옵션내용&nbsp;
+									<div class="div-option-price">
+										<div style="width:10%; float:left">
+											<span>옵션금액</span>
+										</div>
+										<div style="width:25%; float:left">
+											<input type="number" min="0" name="product_option_price" id="product_option_price_1" title="옵션금액" class="form-control" value="0" style="text-align:right;"/>
+										</div>
 									</div>
-									<div style="width:79%; float:left">
-									 	<input type="text" name="ps_contents[]" title="사용자옵션" class="form-control"  value="">
+									<div class="div-option-button">
+										<div style="width:5%; float:left">
+											<input type="button" class="btn btn-secondary" value="+">
+										</div>
+										<div style="width:5%; float:left">
+											<input type="button" class="btn btn-secondary" value="-" style="display: none;">
+										</div>
 									</div>
-								</div>
-								<div>
-									<input type="button" class="btn btn-secondary" value="+추가 옵션">
-								</div>
+								</div>  -->
+								<!-- <div class="clear"></div>
+								<hr>
+								-->
+								<!-- 추가 옵션 넣을 곳 -->
 							</div>
-							
-							
 						</td>
 					</tr>
 					<tr><td style="padding-bottom:3px; padding-top:2px;">*옵션명은 한글 기준 20자 옵션내용은 한글 기준 50글자 이내로 작성하여 주세요.</td></tr>
@@ -442,7 +337,7 @@ input[type=number] {
 					<tr>
 						<td colspan="2" style="text-align:center; padding:15px;">
 							<!-- <img src="/common/html/admin/images/common/btn_apply.gif" value="등록하기" class="pointer" onclick="validate()" /> -->
-							<input type="button" class="btn btn-primary" value="등록하기" onclick="fn_validate()">
+							<input type="button" class="btn btn-success" value="등록하기" onclick="fn_validate()">
 						</td>
 					</tr>
 					
@@ -451,7 +346,7 @@ input[type=number] {
 						<td class="bg-lightgray" style="border-top:1px solid #aaa;">
 							상품재료
 							<br />
-							<input type="button" class="btn btn-primary" value="보기" onClick="fn_setGoodsInfoList('material')">
+							<input type="button" class="btn btn-info" value="보기" onClick="fn_setGoodsInfoList('material')">
 						</td>
 						<td style="border-top:1px solid #aaa;">
 							<div class="item">
@@ -463,7 +358,7 @@ input[type=number] {
 						<td class="bg-lightgray">
 							상품사이즈
 							<br />
-							<input type="button" class="btn btn-primary" value="보기" onClick="fn_setGoodsInfoList('size')">
+							<input type="button" class="btn btn-info" value="보기" onClick="fn_setGoodsInfoList('size')">
 						</td>
 						<td>
 							<div class="item">
@@ -474,7 +369,7 @@ input[type=number] {
 					<tr>
 						<td class="bg-lightgray">
 							상품용도
-							<br /><input type="button" class="btn btn-primary" value="보기" onClick="fn_setGoodsInfoList('use')">
+							<br /><input type="button" class="btn btn-info" value="보기" onClick="fn_setGoodsInfoList('use')">
 						</td>
 						<td>
 							<div class="item">
@@ -485,7 +380,7 @@ input[type=number] {
 					<tr>
 						<td class="bg-lightgray">
 							상품소개
-							<br /><input type="button" class="btn btn-primary" value="보기" onClick="fn_setGoodsInfoList('introduction')">
+							<br /><input type="button" class="btn btn-info" value="보기" onClick="fn_setGoodsInfoList('introduction')">
 						</td>
 						<td>
 							<div class="item">
@@ -530,7 +425,7 @@ input[type=number] {
 					<tr>
 						<td colspan="2"  style="text-align:center; padding-top:15px;">
 							<!-- <img src="/common/html/admin/images/common/btn_apply.gif" value="등록하기" class="pointer" onclick="validate()" /> -->
-							<input type="button" class="btn btn-primary" value="등록하기" onclick="fn_validate()">
+							<input type="button" class="btn btn-success" value="등록하기" onclick="fn_validate()">
 						</td>
 					</tr>
 				</table>
@@ -713,9 +608,14 @@ input[type=number] {
 	
 	var productCategoryList = []; 	// 카테고리
 	var productCategoryMap	= {};	// 카테고리
+
+	var productOptionList = [];	// 옵션
+	//var productOptionMap = [];
 	
 	var imgFileList = []; 	// 이미지파일
 	var imgFileIndex = 1;	// 이미지파일 순번
+	
+	var optionIndex = 1;	// 옵션 순번
 	
 	var findIdIndex = 0;	// 이미지파일 버튼 인덱스
 	
@@ -812,6 +712,240 @@ input[type=number] {
 			
 			document.querySelector("#category_areas").appendChild(com_divType);
 		}
+		
+		fn_checkedCategoryList();
+	}
+	
+	// 옵션 세팅
+	var fn_setProductOptionCallback = function() {
+		// 옵션 셀렉트 리스트 만들기
+		fn_addOptionList();
+	}
+	
+	var fn_addOptionList = function() {
+		
+		var div_product_option = document.querySelector('#div_product_option_'+optionIndex);
+		
+		if(!div_product_option) {
+			div_product_option = document.createElement('div');
+			div_product_option.id = "div_product_option_"+optionIndex;
+		}
+		
+		while(div_product_option.hasChildNodes()) {
+			div_product_option.removeChild(div_product_option.firstChild);
+		}
+		
+		// 셀렉트박스 시작
+		var div_selector = document.createElement("div");
+		var select_productOption = document.createElement("select");
+		var option_none = document.createElement("option"); // 첫번째 옵션
+		let nowIndex = optionIndex;
+		
+		// 설정
+		div_selector.className = 'div-option-selector';
+		div_selector.style.width = '20%';
+		div_selector.style.float = 'left';
+		
+		select_productOption.id = "product_option_select_"+optionIndex;
+		select_productOption.className = "form-select";
+		
+		// addEventListner
+		select_productOption.addEventListener('change', function(event) {
+			fn_changeOptionSelect(this, nowIndex);
+		});
+		
+		option_none.selected = true;
+		option_none.innerText = "사용자옵션";
+		
+		select_productOption.append(option_none);
+		
+		// 가져온 옵션 설정, 넣기
+		for(var productOption of productOptionList) {
+			var option_productOption = document.createElement("option");
+			option_productOption.innerText = productOption.optionName;
+			option_productOption.dataset.optionCode = productOption.optionCode;
+			option_productOption.value = productOption.optionPrice;
+			select_productOption.appendChild(option_productOption);
+		}
+		
+		
+		
+		// 
+		div_selector.appendChild(select_productOption);
+		div_product_option.append(div_selector);
+		// 셀렉트박스 끝
+		
+		// 옵션명 시작
+		var div_option_name = document.createElement('div');
+		var div_option_name_left = document.createElement('div');
+		var div_option_name_right = document.createElement('div');
+		var span_option_name = document.createElement('span');
+		var input_option_name = document.createElement('input');
+		
+		div_option_name.className = 'div-option-name';
+		div_option_name_left.style.width = '8%';
+		div_option_name_left.style.float = 'left';
+		span_option_name.innerText = '옵션명';
+		div_option_name_right.style.width = '27%';
+		div_option_name_right.style.float = 'left';
+		input_option_name.type = 'text';
+		input_option_name.name = 'product_option_name';
+		input_option_name.id = 'product_option_name_'+optionIndex;
+		input_option_name.title = '옵션명'
+		input_option_name.className = 'form-control';
+		input_option_name.value = '';
+		
+		div_option_name_left.append(span_option_name);
+		div_option_name_right.append(input_option_name);
+		div_option_name.append(div_option_name_left);
+		div_option_name.append(div_option_name_right);
+		
+		div_product_option.append(div_option_name);
+		// 옵션명 끝
+		
+		// 옵션 코드 시작
+		var input_option_code = document.createElement('input');
+		
+		input_option_code.type = 'hidden';
+		input_option_code.name = 'product_option_code';
+		input_option_code.id = 'product_option_code_'+optionIndex;
+		input_option_code.title = '옵션코드'
+		input_option_code.className = 'form-control';
+		input_option_code.value = '';
+		
+		
+		div_option_name.append(input_option_code);
+		// 옵션 코드 끝
+		
+		// 옵션금액 시작
+		var div_option_price = document.createElement('div');
+		var div_option_price_left = document.createElement('div');
+		var div_option_price_right = document.createElement('div');
+		var span_option_price = document.createElement('span');
+		var input_option_price = document.createElement('input');
+		
+		div_option_price.className = 'div-option-price';
+		div_option_price_left.style.width = '10%';
+		div_option_price_left.style.float = 'left';
+		span_option_price.innerText = '옵션금액';
+		div_option_price_right.style.width = '25%';
+		div_option_price_right.style.float = 'left';
+		input_option_price.type = 'number';
+		input_option_price.min = 0;
+		input_option_price.max = 990000;
+		input_option_price.name = 'product_option_price';
+		input_option_price.id = 'product_option_price_'+optionIndex;
+		input_option_price.title = '옵션금액'
+		input_option_price.className = 'form-control';
+		input_option_price.value = 0;
+		input_option_price.style.textAlign = 'right';
+		
+		div_option_price_left.append(span_option_price);
+		div_option_price_right.append(input_option_price);
+		div_option_price.append(div_option_price_left);
+		div_option_price.append(div_option_price_right);
+		
+		div_product_option.append(div_option_price);
+		// 옵션금액 끝
+		
+		// 버튼부
+		var div_button = document.createElement('div');
+		var div_button_left = document.createElement('div');
+		var btn_plus_button = document.createElement('input');
+		var div_button_right = document.createElement('div');
+		var btn_minus_button = document.createElement('input');
+		
+		div_button.className = 'div-option-button';
+		div_button_left.style.width = '5%';
+		div_button_left.style.float = 'left';
+		btn_plus_button.type = 'button';
+		btn_plus_button.className = 'btn btn-secondary';
+		btn_plus_button.value = '+';
+		div_button_right.style.width = '5%';
+		div_button_right.style.float = 'left';
+		btn_minus_button.type = 'button';
+		btn_minus_button.className = 'btn btn-secondary';
+		btn_minus_button.value = '-';
+		btn_minus_button.style.display = (optionIndex==1)?'none':'';
+		
+		div_button_left.append(btn_plus_button);
+		div_button_right.append(btn_minus_button);
+		div_button.append(div_button_left);
+		div_button.append(div_button_right);
+		
+		div_product_option.append(div_button);
+		
+		// 버튼 이벤트
+		btn_plus_button.addEventListener('click', function() {
+			fn_addOptionList();
+		});
+		
+		btn_minus_button.addEventListener('click', function() {
+			document.querySelector('#div_product_option_'+nowIndex).remove();
+		});
+		
+		// 버튼부 끝
+		
+		var div_clear = document.createElement('div');
+		var hr = document.createElement('hr');
+		div_clear.className = 'clear';
+		
+		div_product_option.append(div_clear);
+		div_product_option.append(hr);
+
+		document.querySelector('.div-option-list').append(div_product_option);
+		
+		optionIndex++;
+	}
+	
+	// 옵션 선택한 경우
+	var fn_changeOptionSelect = function(_this, nowIndex) {
+		var optionName = document.querySelector('#product_option_name_'+nowIndex);
+		var optionCode = document.querySelector('#product_option_code_'+nowIndex);
+		var optionPrice= document.querySelector('#product_option_price_'+nowIndex);
+		
+		if(_this.options[_this.selectedIndex].value != '사용자옵션' 
+		&& fn_checkDuplicateOption(_this.options[_this.selectedIndex].value)) { 
+			alert('중복된 옵션 상품입니다.');
+			
+			// 초기화
+			_this.selectedIndex = 0;
+			optionName.value = '';
+			optionCode.value = '';
+			optionPrice.value = '';
+			
+			optionName.readOnly = false;
+			optionPrice.readOnly = false;
+			
+			return; 
+		};
+		
+		if(_this.options[_this.selectedIndex].value == '사용자옵션') {
+			// 초기화
+			optionName.value = '';
+			optionCode.value = '';
+			optionPrice.value = '';
+			
+			optionName.readOnly = false;
+			optionPrice.readOnly = false;
+		} else {
+			optionName.value = _this.options[_this.selectedIndex].text;
+			optionCode.value = _this.options[_this.selectedIndex].dataset.optionCode;
+			optionPrice.value = _this.options[_this.selectedIndex].value;
+			
+			optionName.readOnly = true;
+			optionPrice.readOnly = true;
+		}
+	}
+	
+	var fn_checkDuplicateOption = function(selectedValue) {
+		var checkCount = 0;
+		
+		document.querySelectorAll('.div-option-list select').forEach(function(el) {
+			if(el.options[el.selectedIndex].value == selectedValue) checkCount++;
+		});
+		
+		return checkCount!=1;
 	}
 	
 	//상품코드 중복체크
@@ -1171,11 +1305,11 @@ input[type=number] {
 		div_blue.innerText = "상세 이미지("+imgFileIndex+")";
 		div_file.className = "file";
 		input_button_upload.type = "button";
-		input_button_upload.className = "btn btn-secondary btn-img-upload";
+		input_button_upload.className = "btn btn-primary btn-img-upload";
 		input_button_upload.value = "파일선택";
 		span.innerText = " ";
 		input_button_select.type = "button";
-		input_button_select.className = "btn btn-secondary btn-img-select";
+		input_button_select.className = "btn btn-primary btn-img-select";
 		input_button_select.value = "제공이미지 사용";
 		
 		div_product_img.appendChild(img);
@@ -1210,7 +1344,7 @@ input[type=number] {
 	
 	// 이미지 업로드 버튼
 	var fn_btnImgUploadOnClicked = function(imgFileIndex) {
-		var url = '/cmm/fms/EgovFileUploadPopup.do';
+		var url = '/cmm/fms/EgovFileUploadPopup.do?imgFile=true';
 		var winWidth = 700;
 		var winHeight = 300;
 		var popupOption = "width="+winWidth+",height="+winHeight;
@@ -1263,12 +1397,14 @@ input[type=number] {
 		fn_getImgFile(result.atchFileId);
 	}
 	
+	// 이미지 불러오기
 	var fn_getImgFile = function(atchFileId) {
 		imgFileList = [];
 		// 호출할 url, 서버에서 받아온 이미지 데이터 담을 곳, callback함수
 		gfn_commonLoadDataRequest('/cmm/fms/getImgFileList.do?atchFileId='+atchFileId, imgFileList, fn_setImg);
 	}
 	
+	// 이미지 세팅
 	var fn_setImg = function() {
 		document.querySelector("#product_img_"+findIdIndex).src = '';
 		document.querySelector("#product_img_"+findIdIndex).src = imgFileList[0].fileStreCours + imgFileList[0].streFileNm;
@@ -1278,7 +1414,7 @@ input[type=number] {
 		findIdIndex = 0;
 	}
 	
-	// 체크박스 세팅
+	// 원산지 간편등록 체크박스 전체 on/off
 	// fn_set_checkbox('#set_origin_form','set_material', this.checked, 'text') 
 	var fn_setCheckbox = function(formName, checkboxName, thisChecked, exclusions) {
 		var checkboxList = document.querySelectorAll("form"+formName+" input[name="+checkboxName+"]");
@@ -1293,11 +1429,14 @@ input[type=number] {
 	// 필수체크
 	var fn_validate = function() {
 		var checkedCategoryList = document.querySelectorAll('div#category_areas input[name=category_names]:checked');
-		var atchFileList 		= document.querySelector('.prd_img_file').querySelectorAll('input[type=hidden]');
+		var atchFileList 		= document.querySelectorAll('.prd_img_file input[type=hidden]');
+		var optionNameList 		= document.querySelectorAll('.div-option-name input[name=product_option_name]');
+		var optionCodeList 		= document.querySelectorAll('.div-option-name input[name=product_option_code]');
+		var optionPriceList 	= document.querySelectorAll('.div-option-price input[name=product_option_price]');
 		
-		var filteredProductPrice = gfn_filterInt(productPrice.value);
+		var filteredProductPrice  = gfn_filterInt(productPrice.value);
 		var filteredDiscountPrice = gfn_filterInt(productDiscountPrice.value);
-		var filteredDeliverypay = gfn_filterInt(productDeliverypay.value);
+		var filteredDeliverypay   = gfn_filterInt(productDeliverypay.value);
 		
 		if(checkedCategoryList.length < 1) {
 			alert('카테고리를 선택하세요.');
@@ -1317,6 +1456,14 @@ input[type=number] {
 		if(productPrice.value.length < 1) {
 			alert('판매금액을 입력하세요.');
 			return;
+		}
+		
+		for(var i in optionPriceList) {
+			var nowPrice = optionPriceList[i].value=="0"?"":optionPriceList[i].value;
+			if(nowPrice && !optionNameList[i].value) {
+				alert('옵션명을 입력하세요.');
+				return;
+			}
 		}
 		
 		if(isNaN(gfn_filterInt(filteredProductPrice))
@@ -1348,6 +1495,7 @@ input[type=number] {
 		// 서버에 넘길 데이터 세팅
 		var categoryStr = '';
 		var atchFileStr = '';
+		var optionStr = '';
 		
 		checkedCategoryList.forEach(function(el) {
 			categoryStr += el.id.replace('category_','') + ',';
@@ -1356,12 +1504,27 @@ input[type=number] {
 			if(el.value) atchFileStr += el.value + ',';
 		})
 		
+		if(optionNameList[0].value) {
+			optionStr = '[';
+			for(var i in optionNameList) {
+				if(optionNameList[i].value) {
+					optionStr += '{\"optionName\": \"' +  optionNameList[i].value 
+							+ '\", \"optionCode\": \"' + optionCodeList[i].value 
+							+ '\", \"optionPrice\": \"' + optionPriceList[i].value 
+							+ '\"},';	
+				} 
+			}
+			optionStr = optionStr.slice(0, -1); 
+			optionStr += ']';	
+		}
+		
 		var updateFormData = [{
 			productId : productId.value,
 			productCode : productCode.value,
 			
 			checkedCategoryList : categoryStr,
 			atchFileList : atchFileStr,
+			optionList : optionStr,
 			
 			productName : productName.value,
 			productSummary : productSummary.value,
@@ -1407,9 +1570,20 @@ input[type=number] {
 	}
 	
 	// 카테고리 체크
-	var fn_setCheckedCategoryList = function(checkedCategoryList) {
-		for(var checkedCategory of checkedCategoryList) {
-			var categoryId = document.querySelector('#category_'+checkedCategory.CATEGORY_ID);
+	var fn_checkedCategoryList = function(checkedCategoryList) {
+		
+		if(checkedCategoryList) fn_setCheckedCategoryList.list = checkedCategoryList;
+		
+		// 카테고리 목록이 동적으로 생성되고, 서버에서 받아온 값이 있으면
+		if(fn_setCheckedCategoryList.list && document.querySelectorAll('div#category_areas input[name=category_names]')) {
+			// 불러온 카테고리 체크
+			fn_setCheckedCategoryList();
+		}
+	}
+	
+	var fn_setCheckedCategoryList = function() {
+		for(var checkedCategory of fn_setCheckedCategoryList.list) {
+			var categoryId = document.querySelector('#category_'+checkedCategory.categoryId);
 			categoryId.checked = true;
 		}
 	}
@@ -1420,9 +1594,33 @@ input[type=number] {
 		for(var imgFile of imgFileList) {
 			// 이미지가 더 있을 경우 이미지 리스트 동적 생성
 			if(setImgIndex!=1) {fn_addImgList(setImgIndex);}
-			document.querySelector("#product_img_"+setImgIndex).src = imgFile.FILE_COURS_NM;
-			document.querySelector("#atch_file_id_"+setImgIndex).value = imgFile.ATCH_FILE_ID;
+			document.querySelector("#product_img_"+setImgIndex).src = imgFile.fileCoursNm;
+			document.querySelector("#atch_file_id_"+setImgIndex).value = imgFile.atchFileId;
 			setImgIndex++;
+		}
+	}
+	
+	var fn_setOptionList = function(optionList) {
+		var setOptionIndex = 1;
+		for(var option of optionList) {
+			if(setOptionIndex!=1) {fn_addOptionList();}
+			
+			var select_productOption = document.querySelector("#product_option_select_"+setOptionIndex);
+			
+			document.querySelector('#product_option_name_'+setOptionIndex).value = option.optionName;
+			document.querySelector('#product_option_price_'+setOptionIndex).value = option.optionPrice;
+			
+			for(var i = 0; i < select_productOption.length; i++) {
+				if(select_productOption.options[i].dataset.optionCode == option.optionCode) {
+					select_productOption.options[i].selected = true
+					document.querySelector('#product_option_code_'+setOptionIndex).value = option.optionCode;
+					document.querySelector('#product_option_name_'+setOptionIndex).readOnly = true;
+					document.querySelector('#product_option_price_'+setOptionIndex).readOnly = true;
+					break;
+				}
+			}
+			
+			setOptionIndex++;
 		}
 	}
 	
@@ -1447,8 +1645,10 @@ input[type=number] {
 		productNotice.value 		= gfn_isEmpty(data.productNotice)?"":data.productNotice;
 		
 		if(!gfn_isEmpty(data.productCode)) {
-			fn_loadDataRequest('/cmm/main/management/getProductDetailToProductCategory.do?productCode='+data.productCode, fn_setCheckedCategoryList);
-			fn_loadDataRequest('/cmm/main/management/getProductDetailToAtchFile.do?productCode='+data.productCode, fn_setImgFileSrc);	
+			// url, 콜백 function
+			fn_loadDataRequest('/cmm/main/management/getProductDetailToProductCategory.do?productCode='+data.productCode, fn_checkedCategoryList);
+			fn_loadDataRequest('/cmm/main/management/getProductDetailToAtchFile.do?productCode='+data.productCode, fn_setImgFileSrc);
+			fn_loadDataRequest('/cmm/main/management/getProductDetailToProductOption.do?productCode='+data.productCode, fn_setOptionList);
 		}
 		
 	}
@@ -1458,6 +1658,8 @@ input[type=number] {
 		function() {
 			// 타입 불러오기
 			gfn_commonLoadDataRequest('/cmm/main/management/getProductTypeList.do', productTypeList, fn_setProductTypeMap);
+			// 옵션 상품 불러오기
+			gfn_commonLoadDataRequest('/cmm/main/management/getProductOptionList.do', productOptionList, fn_setProductOptionCallback);
 			
 			if(productId.value != 'null') {
 				fn_loadDataRequest('/cmm/main/management/getProductDetail.do?productId='+productId.value, fn_setDataForm);

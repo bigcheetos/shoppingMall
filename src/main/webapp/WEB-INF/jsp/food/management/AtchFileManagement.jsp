@@ -69,24 +69,9 @@
 	<section class="stock">
 		<div class="container">
 			<!-- 테이블 넣을 곳 -->
-			<div id="commonSearchDiv_container"></div>
-			<!-- <div style="padding: 2px;">
-				<div style="float: left">
-					<button type="button" class="btn btn-secondary"
-						onclick="onBtSelectAll()">전체선택</button>
-					<button type="button" class="btn btn-secondary"
-						onclick="onBtDeselectAll()">선택취소</button>
-				</div>
-				<div style="float: left">&nbsp; &nbsp;</div>
-				<div style="float: left">&nbsp; &nbsp;</div>
-				<div style="float: right">
-					<button type="button" class="btn btn-primary" onclick="onBtSearch()">조회</button>
-					<button type="button" class="btn btn-success" onclick="onBtAddBottom()">신규</button>
-					<button type="button" class="btn btn-warning" onclick="onBtSave()">저장</button>
-					<button type="button" class="btn btn-danger" onclick="onBtDelete()">삭제</button>
-				</div>
+			<div id="commonSearchDiv_container" data-btn_select_all="on" data-btn_deselect_all="on" data-btn_custom=""
+				data-btn_search="on" data-btn_add="on" data-btn_save="on" data-btn_delete="on"></div>
 
-			</div> -->
 			<div id="updateRows"
 				style="height: 100px; border: 1px solid #f4f4f4; margin: 5px 0"></div>
 			<div class="grid-wrapper">

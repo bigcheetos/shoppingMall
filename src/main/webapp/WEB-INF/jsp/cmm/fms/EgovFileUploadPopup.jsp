@@ -26,45 +26,23 @@
 	<br>
 	<br>
 	<br>
-	<%-- <h2>다중 파일 업로드</h2>
-	<form name="frm" method="post"
-		action="<c:url value='/file/fileUpload.do'/>"
-		enctype="multipart/form-data">
-		<input type="hidden" name="atchPosblFileNumber"
-			id="atchPosblFileNumber" value="5" /> <input type="hidden"
-			name="savePath" value="Globals.fileTest1Path" />
-		<table width="400px" cellspacing="0" cellpadding="0" border="1">
-			<tr>
-				<td><input name="file_1" id="egovComFileUploader" type="file" />
-					<div id="egovComFileList"></div></td>
-			</tr>
-			<tr>
-				<td align="center"><input type="submit" value="저장"></td>
-			</tr>
-		</table>
-	</form>
-	<!-- 첨부파일 업로드 가능화일 리스트설 Start..-->
-	<script type="text/javascript">
-		var maxFileNum = document.getElementById('atchPosblFileNumber').value;
-		if (maxFileNum == null || maxFileNum == "") {
-			maxFileNum = 3;
-		}
-		var multi_selector = new MultiSelector(document
-				.getElementById('egovComFileList'), maxFileNum);
-		multi_selector.addElement(document
-				.getElementById('egovComFileUploader'));
-	</script> --%>
-
-	<!-- 첨부파일 업로드 가능화일 리스트 End.-->
-
-	<p>
+	
 	<h2>파일 업로드</h2>
 	<form id="frm2" action="<c:url value='/cmm/fms/fileUpload.do'/>"
 		method="post" enctype="multipart/form-data">
 		<input type="hidden" name="savePath" value="Globals.fileStorePath" />
 		<table width="400px" cellspacing="0" cellpadding="0" border="1">
 			<tr>
-				<td><input class="btn" type="file" name="file1" /></td>
+				<c:choose>
+					<c:when test="${param.imgFile eq 'true'}">
+					<td><input class="btn" type="file" name="file1" accept=".gif,.jpg,.png,.bmp" onchange="fn_checkFile(this)"></td>	
+					</c:when>
+				
+					<c:otherwise>
+					<td><input class="btn" type="file" name="file1"></td>
+					</c:otherwise>
+				</c:choose>
+				
 			</tr>
 			<tr>
 				<td align="center">
@@ -91,6 +69,23 @@
 				var data = new FormData(form);
 				fn_uploadFileRequest(data);
 		    }
+			
+			// 용량체크
+			var fn_checkFile = function(el) {
+				// files 로 해당 파일 정보 얻기.
+				var file = el.files;
+
+				// file[0].size 는 파일 용량 정보입니다.
+				if(file[0].size > 1024 * 1024 * 5){
+					// 용량 초과시 경고후 해당 파일의 용량도 보여줌
+					alert('5MB 이하 파일만 등록할 수 있습니다.\n\n' + '현재파일 용량 : ' + (Math.round(file[0].size / 1024 / 1024 * 100) / 100) + 'MB');
+				}
+
+				// 체크를 통과했다면 종료.
+				else return;
+
+				el.outerHTML = el.outerHTML;
+			}
 			
 			var fn_uploadFileRequest = function(data) {
 				// 그리드 데이터 업로드 요청

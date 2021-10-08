@@ -14,6 +14,34 @@
 				PRODUCT_OPTION			
 	</select>
 	
+	<select id="selectOptionListOnSale" resultMap="ProductOptionResultMap" >
+			SELECT 
+				OPTION_CODE,
+				STOCK_ID,
+				ATCH_FILE_ID,
+				OPTION_NAME,
+				OPTION_STATUS,
+				OPTION_PRICE
+			FROM
+				PRODUCT_OPTION
+			WHERE
+				OPTION_STATUS = 'Y'			
+	</select>
+	
+	<select id="selectOptionByOptionCode" resultMap="ProductOptionResultMap" parameterType = "string">
+			SELECT 
+				OPTION_CODE,
+				STOCK_ID,
+				ATCH_FILE_ID,
+				OPTION_NAME,
+				OPTION_STATUS,
+				OPTION_PRICE
+			FROM
+				PRODUCT_OPTION
+			WHERE
+				OPTION_CODE = #{optionCode}
+	</select>
+	
 	<select id="selectCountByOptionCode" resultType="int" parameterType = "string">
 		SELECT
 			COUNT(*)

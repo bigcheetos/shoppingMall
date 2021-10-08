@@ -154,7 +154,7 @@
 	        <div class="item-order-wrap">
 	        <!-- 검색조건 넣는 곳 -->
 	        	<div class="item-order-type-select input-group mb-3">
-	        		<div class="input-group-prepend">
+	        		<!-- <div class="input-group-prepend">
 						<button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</button>
 					    <div class="dropdown-menu">
 					      <a class="dropdown-item" href="#">Action</a>
@@ -163,7 +163,7 @@
 					      <div role="separator" class="dropdown-divider"></div>
 					      <a class="dropdown-item" href="#">Separated link</a>
 					    </div>
-					</div>
+					</div> -->
 	        		<input type="text" class="form-control" id="search-word" name="search-word" value="${searchWord }" placeholder="검색할 단어를 입력해 주세요." onkeyup="fn_enterInSearch()">
 	        		<div class="input-group-append">
 	        			&nbsp;

@@ -61,7 +61,7 @@ public class EgovShopServiceImpl extends EgovAbstractServiceImpl implements Egov
 		System.out.println("shopSearchVO.toString"+ shopSearchVO.toString());
 		
 		for(ProductVO productVO : productList) {
-			Map<String, Object> retunedMap = new HashMap<>();
+			Map<String, Object> returnedMap = new HashMap<>();
 			Map<String, Object> productImgMap = productDetailDAO.selectMainImgByProductId(productVO.getProductId());
 			
 			String productLink = "/cmm/main/shop/discountShopDetail.do?productId="+productVO.getProductId();
@@ -74,15 +74,15 @@ public class EgovShopServiceImpl extends EgovAbstractServiceImpl implements Egov
 			productVO.setProductPrice(formatting(productVO.getProductPrice()));
 			
 			if(productImgMap != null) {
-				retunedMap.put("productImg", String.valueOf(productImgMap.get("FILE_COURS_NM")));
+				returnedMap.put("productImg", String.valueOf(productImgMap.get("fileCoursNm")));
 			} else {
-				retunedMap.put("productImg", "noImage");
+				returnedMap.put("productImg", "noImage");
 			}
 			
-			retunedMap.put("productVO", productVO);
-			retunedMap.put("productRatio", (int)(100 - productRatio*100));
-			retunedMap.put("productLink", productLink);
-			returnedMapList.add(retunedMap);
+			returnedMap.put("productVO", productVO);
+			returnedMap.put("productRatio", (int)(100 - productRatio*100));
+			returnedMap.put("productLink", productLink);
+			returnedMapList.add(returnedMap);
 		}
 		
 		return returnedMapList;
@@ -91,10 +91,11 @@ public class EgovShopServiceImpl extends EgovAbstractServiceImpl implements Egov
 	@Override
 	public Map<String, Object> getProductDetailByProductId(String productId) throws Exception {
 		// TODO Auto-generated method stub
-		Map<String, Object> retunedMap = new HashMap<>();
+		Map<String, Object> returnedMap = new HashMap<>();
 		
 		ProductDetailVO productDetailVO = productDetailDAO.selectProductDetailByProductId(productId);
 		List<Map<String, Object>> imgMapList = productDetailDAO.selectImgListByProductId(productId);
+		List<Map<String, Object>> optionList = productDetailDAO.selectOptionListByProductId(productId);
 		List<Map<String, Object>> checkedCategoryList = productDetailDAO.selectCheckedCategoryListByProductId(productDetailVO.getProductId());
 		
 		double productDiscountPrice = Integer.parseInt(productDetailVO.getProductDiscountPrice());
@@ -104,12 +105,14 @@ public class EgovShopServiceImpl extends EgovAbstractServiceImpl implements Egov
 		productDetailVO.setProductDiscountPrice(formatting(productDetailVO.getProductDiscountPrice()));
 		productDetailVO.setProductPrice(formatting(productDetailVO.getProductPrice()));
 		
-		retunedMap.put("productDetailVO", productDetailVO);
-		retunedMap.put("imgMapList", imgMapList);
-		retunedMap.put("checkedCategoryList", checkedCategoryList);
-		retunedMap.put("productRatio", (int)(100 - productRatio*100));
+		returnedMap.put("productDetailVO", productDetailVO);
+		returnedMap.put("imgMapList", imgMapList);
+		returnedMap.put("optionList", optionList);
+		returnedMap.put("checkedCategoryList", checkedCategoryList);
 		
-		return retunedMap;
+		returnedMap.put("productRatio", (int)(100 - productRatio*100));
+		
+		return returnedMap;
 	}
 
 }

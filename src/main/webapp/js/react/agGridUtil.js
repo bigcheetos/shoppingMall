@@ -1,7 +1,7 @@
 /**
 * AG-GRID COMMON UTILS
 * 
-* @author kkaok, kkaok.pe.kr@gmail.com
+* @author 
 */
 /**
  * currency 표현. 세자리 마다 콤마

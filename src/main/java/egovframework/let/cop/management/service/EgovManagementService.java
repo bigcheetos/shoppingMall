@@ -106,7 +106,7 @@ public interface EgovManagementService {
 	 * @param String
 	 * @exception Exception Exception
 	 */
-	public List<Map<String, Object>> getProductDetailToProductCategoryByProductCode(String productCode) throws Exception;
+	public List<Map<String, Object>> getCheckedCategoryListByProductCode(String productCode) throws Exception;
 	
 	/**
 	 * 제품 상세와 연결된 이미지파일을 조회한다.
@@ -115,7 +115,7 @@ public interface EgovManagementService {
 	 * @param String
 	 * @exception Exception Exception
 	 */
-	public List<Map<String, Object>> getProductDetailToAtchFileByProductCode(String productCode) throws Exception;
+	public List<Map<String, Object>> getImgFileListByProductCode(String productCode) throws Exception;
 	
 	/**
 	 * 제품 상세코드가 데이터베이스에 존재하는지 확인한다.
@@ -459,15 +459,40 @@ public interface EgovManagementService {
 	/** 옵션 시작 **/
 
 	/**
-	 * 옵션에 대하여 내용을 조회 한다.
-	 * @return
+	 * 옵션에 대하여 목록을 조회 한다.
+	 * @return List
 	 * 
 	 * @param 
 	 * @exception Exception Exception
 	 */
 	public List<ProductOptionVO> getOptionListAll() throws Exception;
 	
-
+	/**
+	 * 판매가능한 옵션에 대하여 목록을 조회 한다.
+	 * @return List
+	 * 
+	 * @param 
+	 * @exception Exception Exception
+	 */
+	public List<ProductOptionVO> getOptionListOnSale() throws Exception;
+	
+	/**
+	 * 제품코드를 이용하여 옵션에 대하여 목록을 조회 한다.
+	 * @return List
+	 * 
+	 * @param 
+	 * @exception Exception Exception
+	 */
+	public List<Map<String, Object>> getOptionListByProductCode(String productCode) throws Exception;
+	
+	/**
+	 * 옵션코드로 옵션을 조회 한다.
+	 * @return ProductOptionVO 
+	 * 
+	 * @param String
+	 * @exception Exception Exception
+	 */
+	public ProductOptionVO getOptionByOptionCode(String optionCode) throws Exception;
 	/**
 	 * 컨트롤러에서 넘겨받은 옵션 리스트를 신규, 수정, 삭제로 분류하여 저장한다.
 	 * @return String
