@@ -195,6 +195,80 @@
     color: #cb0000 !important;
     vertical-align: baseline;
 }
+
+.selected-option-list {
+    margin-top: 12px;
+}
+.selected-option-list li {
+	position: relative;
+    margin-top: 10px;
+    padding: 14px 13px 11px;
+    background: #f9f9fa;
+    border: 1px solid #f2f2f2;
+    border-radius: 2px;
+    border-bottom: 1px solid #bec1c7;
+}
+.selected-option-list li .tit {
+	margin-bottom: 11px;
+    padding: 0 15px 13px 0;
+    border-bottom: 1px dotted #e2e2e3;
+    font-size: 14px;
+    color: #000;
+    line-height: 20px;
+}
+.selected-option-list li .tit .txt_option{
+	width: 507px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-weight: bold;
+    color: #233549;
+	display: block;
+    word-break: break-all;
+    font-size: 14px;
+    line-height: 20px;
+    overflow: hidden;
+}
+.selected-option-list li .choose_amount {
+	position: relative;
+    z-index: 10;
+    margin-right: 152px;
+}
+.selected-option-list li .choose_amount span {
+	display: block;
+    height: 25px;
+    position: relative;
+}
+.selected-option-list li .choose_amount input {
+    height: 21px;
+    margin-left: 10px;
+    border: 1px solid #ececec;
+    line-height: 21px;
+    color: #233549;
+    font-size: 14px;
+    text-align: center;
+}
+.selected-option-list li .choose_result {
+	position: relative;
+    padding-right: 20px;
+}
+.selected-option-list li .choose_result strong {
+	text-align: right;
+    margin-top: -20px;
+    padding-bottom: 0;
+    display: block;
+    font-size: 16px;
+    line-height: 18px;
+    color: #222;
+    font-weight: bold;
+}
+.selected-option-list li .choose_result button {
+    position: absolute;
+    width: 26px;
+    height: 26px;
+    right: -7px;
+    top: -3px;
+    background-position: -442px -122px;
+}
 </style>
 <head>
     <meta charset="UTF-8">
@@ -309,7 +383,7 @@
                       <td>
                           <div class="count clfix">
                           		<input type="hidden" name="productDiscountPrice" id="productDiscountPrice" value="${productDetailMap.productDetailVO.productDiscountPrice }">
-                          		<input type="number" name="productAmount" id="productAmount" value=0 min=1 max=9999>
+                          		<input type="number" name="productAmount" id="productAmount" value=1 min=1 max=999>
                           </div>
                       </td>
                   </tr>
@@ -334,16 +408,18 @@
               </table>
               <div class="total-payment">
               	<p class="total">총 상품금액
-              	
-              	
-                      <em class="big"><span id="productPayment">0</span>원</em>
+              	      <em class="big"><span id="productPayment">${productDetailMap.productDetailVO.productDiscountPrice }</span>원</em>
               	</p>
+              	<ul class="selected-option-list">
+              		
+              		<br>
+              	</ul>
               </div>
               
           </div>
           <div class="btn-wrap clfix">
-                  <div id="imgInCart"  class="button basket_btn3 button-01" onclick="return false;">바로 구매</div>
-                  <div id="imgInCart"  class="button basket_btn2 button-01" onclick="return false;">장바구니 담기</div>
+                  <div class="button basket_btn3 button-01" onclick="return false;">바로 구매</div>
+                  <div class="button basket_btn2 button-01" onclick="return false;">장바구니 담기</div>
               <!-- <div id="repeatedBuyBtn_8010000705" class="button like_btn" alt="자주구매" title="자주 구매하는 상품으로 등록하기" onclick="popUpLoginWin(document.location.href);">자주구매상품</div> -->
           </div>
       </div>
@@ -418,6 +494,7 @@
     <script src="/js/mixitup.min.js"></script>
     <script src="/js/owl.carousel.min.js"></script>
     <script src="/js/main.js"></script>
+    <script src="/js/react/commonFunctions.js"></script>
 </body>
 <script>
 	const productDiscountPrice = document.querySelector('#productDiscountPrice');	// 할인판매가격, 실제판매가격
@@ -426,12 +503,35 @@
 	const mainImg = document.querySelector('.main_img img');
 	const subImgList = document.querySelectorAll('.sub_img img');
 	
-	const regex = /[^0-9]/g;	// 숫자
+	const numRegex = /[^0-9]/g;	// 숫자
 	
 	// 구매수량에 따른 총 결제금액 변동 이벤트
 	var fn_setProductPayment = function() {
-		var amountOfPayment = +productAmount.value.replace(regex,'') * +productDiscountPrice.value.replace(regex,'');
-		productPayment.textContent = amountOfPayment.toLocaleString();
+		
+		var productAmountValue = gfn_filterInt(productAmount.value);
+		
+		if(!gfn_filterInt(productAmountValue)) {
+			productAmountValue = 1;
+			productAmount.value = productAmountValue;
+		} else {
+			if(productAmountValue < 0) {
+				productAmountValue = 1;
+				productAmount.value = productAmountValue;	
+			} else if(productAmountValue > 999) {
+				productAmountValue = 999;
+				productAmount.value = productAmountValue;
+			}
+		}
+		
+		var optionResultList = document.querySelectorAll('.choose_result strong');
+		var optionTotalPaymentAmount = 0;
+		
+		optionResultList.forEach(el => {
+		    optionTotalPaymentAmount += +el.innerText.replace(numRegex,'');
+		});
+		
+		var paymentAmount = +productAmountValue * +productDiscountPrice.value.replace(numRegex,'') + optionTotalPaymentAmount;
+		productPayment.textContent = paymentAmount.toLocaleString();
 	}
 	
 	// 마우스오버에 따른 메인이미지 변동 이벤트
@@ -439,12 +539,13 @@
 		mainImg.src = subImg.src;
 	}
 	
-	// 옵션 클릭시 이벤트
+	// 옵션 추가 버튼 클릭시 이벤트
 	var fn_addOption = function() {
+		var selectedOptionList = document.querySelector('.selected-option-list');
 		var optionData = productOption.options[productOption.selectedIndex].dataset;
 		
 		// 같은 옵션이 이미 리스트에 있는 지 체크
-		var existedOptionList = document.querySelectorAll('.option-list')
+		var existedOptionList = document.querySelectorAll('.choose_result strong')
 		if(existedOptionList.length > 0) {
 			for(var existedOption of existedOptionList) {
 				if(existedOption.dataset.optionCode == optionData.optionCode) {
@@ -454,51 +555,84 @@
 			}
 		}
 		
-		var br = document.createElement('br');
-		var div_option = document.createElement('div');
-		var img = document.createElement('img')
-		var p_optionName = document.createElement('span');
-		var p_optionPrice = document.createElement('span');
-		var input_optionAmount = document.createElement('input');
-		var input_cancel = document.createElement('input');
+		var li_selected_option = document.createElement('li');
 		
-		div_option.dataset.optionName = optionData.optionName;
-		div_option.dataset.optionCode = optionData.optionCode;
-		div_option.dataset.optionPrice = optionData.optionPrice;
-		div_option.style.background = '	#F5F5F5';
-		div_option.className = 'border option-list';
+		var div_choose_option = document.createElement('div');
+		var div_choose_amount = document.createElement('div');
+		var div_choose_result = document.createElement('div');
 		
-		img.src = '/images/food/product/noimage.png';
-		p_optionName.innerText = optionData.optionName;
-		p_optionName.className = 'h6';
-		p_optionPrice.innerText = optionData.optionPrice + '원';
-		input_optionAmount.type = 'number';
-		input_optionAmount.name = 'optionAmount';
-		input_optionAmount.value = 1;
-		input_optionAmount.min = 1;
-		input_optionAmount.max = 9999;
-		input_cancel.type = 'button';
-		input_cancel.className = 'btn border';
-		input_cancel.value = 'X';
+		var p_choose_option = document.createElement('p');
+		var span_choose_option = document.createElement('span');
 		
-		input_optionAmount.addEventListener('change', function(event){
-			p_optionPrice.innerText = (input_optionAmount.value * 1*optionData.optionPrice) + '원';
+		var input_choose_amount = document.createElement('input');
+		
+		var strong_choose_result = document.createElement('strong');
+		var btn_choose_result = document.createElement('button');
+		var span_choose_result = document.createElement('span');
+		
+		//li_selected_option.id = 'selected_option_' + productOption.selectedIndex;
+		
+		div_choose_option.className = 'choose_option';
+		p_choose_option.className = 'tit';
+		span_choose_option.className = 'txt_option';
+		span_choose_option.innerText = '옵션 상품 ' + (1*productOption.selectedIndex+1) + '. ' + optionData.optionName;
+		
+		div_choose_amount.className = 'choose_amount';
+		input_choose_amount.type = 'number';
+		input_choose_amount.min = 1;
+		input_choose_amount.max = 999;
+		input_choose_amount.value = 1;
+		
+		div_choose_result.className = 'choose_result'
+		strong_choose_result.dataset.optionName = optionData.optionName;
+		strong_choose_result.dataset.optionCode = optionData.optionCode;
+		strong_choose_result.dataset.optionPrice = optionData.optionPrice;
+		strong_choose_result.innerText = (1*optionData.optionPrice).toLocaleString() + '원';
+		
+		span_choose_result.innerText = 'X';
+		
+		// 옵션상품 수량 변화 이벤트
+		input_choose_amount.addEventListener('change', function(event){
+			// 숫자체크
+			if(!gfn_filterInt(input_choose_amount.value)) {
+				input_choose_amount.value = 1; 
+			} else {
+				if(gfn_filterInt(input_choose_amount.value) < 0) {
+					input_choose_amount.value = 1;	
+				} else if(input_choose_amount.value > 999) {
+					input_choose_amount.value = 999;
+				}
+			}
+			strong_choose_result.innerText = (input_choose_amount.value * 1*optionData.optionPrice).toLocaleString() + '원';
+			
+			// 총 상품금액
+			fn_setProductPayment();
 		});
 		
-		input_cancel.addEventListener('click', function(event) {
-			br.remove();
-			div_option.remove();
+		// 옵션상품 제거 이벤트
+		btn_choose_result.addEventListener('click', function(event) {
+			li_selected_option.remove();
+			
+			// 총 상품금액
+			fn_setProductPayment();
 		});
 		
-		div_option.appendChild(img);
-		div_option.appendChild(p_optionName);
-		div_option.appendChild(document.createElement('hr'));
-		div_option.appendChild(input_optionAmount);
-		div_option.appendChild(p_optionPrice);
-		div_option.appendChild(input_cancel);
+		div_choose_option.appendChild(p_choose_option);
+		p_choose_option.appendChild(span_choose_option);
 		
-		document.querySelector('.total-payment').appendChild(br);
-		document.querySelector('.total-payment').appendChild(div_option);
+		div_choose_amount.appendChild(input_choose_amount);
+		
+		div_choose_result.appendChild(strong_choose_result);
+		btn_choose_result.appendChild(span_choose_result);
+		div_choose_result.appendChild(btn_choose_result);
+		
+		li_selected_option.appendChild(div_choose_option);
+		li_selected_option.appendChild(div_choose_amount);
+		li_selected_option.appendChild(div_choose_result);
+		
+		selectedOptionList.insertBefore(li_selected_option, selectedOptionList.firstChild);
+		
+		fn_setProductPayment();
 	}
 	
 	// after the page has finished loading

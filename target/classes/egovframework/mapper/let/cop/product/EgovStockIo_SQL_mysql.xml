@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="StockIoDAO">
+	
+	<select id="selectStockIoListByStockId" resultMap="stockIoResultMap" parameterType = "String">
+			SELECT 
+				STOCK_IO_ID,
+				STOCK_ID,
+				STOCK_IO_AMT,
+				STOCK_IO_TYPE,
+				STOCK_IO_DATE
+			FROM
+				STOCK_IO
+			WHERE
+				1 = 1
+			<if test="stockId != null  and stockId != ''">
+				AND STOCK_ID = #{stockId}
+			</if>
+			ORDER BY
+				STOCK_IO_DATE ASC
+	</select>
+	
+	<select id="selectStockInputListByStockId" resultMap="stockIoResultMap" parameterType = "String">
+			SELECT 
+				STOCK_IO_ID,
+				STOCK_ID,
+				STOCK_IO_AMT,
+				STOCK_IO_TYPE,
+				STOCK_IO_DATE
+			FROM
+				STOCK_IO
+			WHERE
+				STOCK_ID = #{stockId}
+			AND	STOCK_IO_TYPE = 'input'
+	</select>
+	
+	<select id="selectStockOutputListByStockId" resultMap="stockIoResultMap" parameterType = "String">
+			SELECT 
+				STOCK_IO_ID,
+				STOCK_ID,
+				STOCK_IO_AMT,
+				STOCK_IO_TYPE,
+				STOCK_IO_DATE
+			FROM
+				STOCK_IO
+			WHERE
+				STOCK_ID = #{stockId}
+			AND	STOCK_IO_TYPE = 'output'
+	</select>
+	
+		<select id="selectNextStockIoId" resultType="String" >
+			SELECT 
+				MAX(STOCK_IO_ID) + 1
+			FROM
+				STOCK_IO			
+	</select>
+	
+	<insert id="insertStockIo">
+			INSERT INTO
+				STOCK_IO
+			(
+				STOCK_IO_ID,
+				STOCK_ID,
+				STOCK_IO_AMT,
+				STOCK_IO_TYPE,
+				STOCK_IO_DATE
+			)
+			VALUES
+			(
+				#{stockIoId},
+				#{stockId},
+				#{stockIoAmt},
+				#{stockIoType}, 
+				#{stockIoDate}
+			)
+	</insert>
+	
+	<update id="updateStockIo">
+			UPDATE
+				STOCK_IO
+			SET
+				STOCK_ID 	   = #{stockId},
+				STOCK_IO_AMT   = #{stockIoAmt},
+				STOCK_IO_TYPE  = #{stockIoType},
+				STOCK_IO_DATE  = #{stockIoDate}
+			WHERE
+				STOCK_IO_ID    = #{stockIoId}
+	</update>
+	
+	<delete id="deleteStockIo">
+		DELETE
+			FROM STOCK_IO
+		WHERE
+			STOCK_IO_ID = #{stockIoId}
+	</delete>
+	
+	<resultMap id="stockIoResultMap" type="egovframework.let.cop.product.service.StockIoVO">
+		<result property="stockIoId" column="STOCK_IO_ID"/>
+		<result property="stockId" column="STOCK_ID"/>
+		<result property="stockIoAmt" column="STOCK_IO_AMT"/>
+		<result property="stockIoType" column="STOCK_IO_TYPE"/>
+		<result property="stockIoDate" column="STOCK_IO_DATE"/>
+	</resultMap>
+</mapper>

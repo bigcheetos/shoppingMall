@@ -10,10 +10,10 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import egovframework.let.cop.management.service.ProductDetailVO;
-import egovframework.let.cop.management.service.ProductVO;
-import egovframework.let.cop.management.service.impl.ProductDAO;
-import egovframework.let.cop.management.service.impl.ProductDetailDAO;
+import egovframework.let.cop.product.service.EgovProductDetailService;
+import egovframework.let.cop.product.service.EgovProductService;
+import egovframework.let.cop.product.service.ProductDetailVO;
+import egovframework.let.cop.product.service.ProductVO;
 import egovframework.let.cop.shop.service.EgovShopService;
 import egovframework.let.cop.shop.service.ShopSearchVO;
 import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
@@ -38,11 +38,11 @@ import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 @Service("EgovShopService")
 public class EgovShopServiceImpl extends EgovAbstractServiceImpl implements EgovShopService {
 	
-	@Resource(name = "ProductDAO")
-	private ProductDAO productDAO;
+	@Resource(name = "EgovProductService")
+	private EgovProductService productService;
 	
-	@Resource(name = "ProductDetailDAO")
-	private ProductDetailDAO productDetailDAO;
+	@Resource(name = "EgovProductDetailService")
+	private EgovProductDetailService productDetailService;
 	
 	private static final DecimalFormat DECIMAL_FORMATTER = new DecimalFormat("###,###.##");
 	
@@ -57,12 +57,12 @@ public class EgovShopServiceImpl extends EgovAbstractServiceImpl implements Egov
 		List<Map<String, Object>> returnedMapList = new ArrayList<>();
 		
 		// searchVO로 검색하도록 변경
-		List<ProductVO> productList = productDAO.selectProductListBySearchVO(shopSearchVO);
+		List<ProductVO> productList = productService.getProductListBySearchVO(shopSearchVO);
 		System.out.println("shopSearchVO.toString"+ shopSearchVO.toString());
 		
 		for(ProductVO productVO : productList) {
 			Map<String, Object> returnedMap = new HashMap<>();
-			Map<String, Object> productImgMap = productDetailDAO.selectMainImgByProductId(productVO.getProductId());
+			Map<String, Object> productImgMap = productDetailService.getMainImgByProductId(productVO.getProductId());
 			
 			String productLink = "/cmm/main/shop/discountShopDetail.do?productId="+productVO.getProductId();
 			
@@ -93,10 +93,10 @@ public class EgovShopServiceImpl extends EgovAbstractServiceImpl implements Egov
 		// TODO Auto-generated method stub
 		Map<String, Object> returnedMap = new HashMap<>();
 		
-		ProductDetailVO productDetailVO = productDetailDAO.selectProductDetailByProductId(productId);
-		List<Map<String, Object>> imgMapList = productDetailDAO.selectImgListByProductId(productId);
-		List<Map<String, Object>> optionList = productDetailDAO.selectOptionListByProductId(productId);
-		List<Map<String, Object>> checkedCategoryList = productDetailDAO.selectCheckedCategoryListByProductId(productDetailVO.getProductId());
+		ProductDetailVO productDetailVO = productDetailService.getProductDetailByProductId(productId);
+		List<Map<String, Object>> imgMapList = productDetailService.getImgListByProductId(productId);
+		List<Map<String, Object>> optionList = productDetailService.getOptionListByOptionId(productId);
+		List<Map<String, Object>> checkedCategoryList = productDetailService.getCheckedCategoryListByProductId(productDetailVO.getProductId());
 		
 		double productDiscountPrice = Integer.parseInt(productDetailVO.getProductDiscountPrice());
 		double productPrice = Integer.parseInt(productDetailVO.getProductPrice());

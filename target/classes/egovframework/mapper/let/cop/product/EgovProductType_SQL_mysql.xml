@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ProductTypeDAO">
+	
+	<select id="selectTypeListAll" resultMap="productTypeResultMap" >
+			SELECT 
+				TYPE_ID,
+				TYPE_NAME,
+				TYPE_ORDER,
+				TYPE_STATUS
+			FROM
+				PRODUCT_TYPE			
+	</select>
+	
+	<select id="selectNextTypeId" resultType="String" >
+			SELECT 
+				MAX(TYPE_ID) + 1
+			FROM
+				PRODUCT_TYPE			
+	</select>
+	
+	<insert id="insertType">
+			INSERT INTO
+				PRODUCT_TYPE
+			(
+				TYPE_ID,
+				TYPE_NAME,
+				TYPE_ORDER,
+				TYPE_STATUS
+			)
+			VALUES
+			(
+				#{typeId},
+				#{typeName}, 
+				#{typeOrder}, 
+				#{typeStatus}
+			)
+	</insert>
+	
+	<update id="updateType">
+			UPDATE
+				PRODUCT_TYPE
+			SET
+				TYPE_NAME = #{typeName},
+				TYPE_ORDER = #{typeOrder}, 
+				TYPE_STATUS = #{typeStatus}
+			WHERE
+				TYPE_ID = #{typeId}
+	</update>
+	
+	<delete id="deleteType">
+		DELETE
+			FROM PRODUCT_TYPE
+		WHERE
+			TYPE_ID = #{typeId}
+	</delete>
+	
+	<resultMap id="productTypeResultMap" type="egovframework.let.cop.product.service.ProductTypeVO">
+		<result property="typeId" column="TYPE_ID"/>
+		<result property="typeName" column="TYPE_NAME"/>
+		<result property="typeOrder" column="TYPE_ORDER"/>
+		<result property="typeStatus" column="TYPE_STATUS"/>
+	</resultMap>
+</mapper>

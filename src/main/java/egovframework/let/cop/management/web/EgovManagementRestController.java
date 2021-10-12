@@ -22,13 +22,13 @@ import egovframework.com.cmm.ComDefaultVO;
 import egovframework.com.cmm.service.EgovFileMngService;
 import egovframework.com.cmm.service.FileVO;
 import egovframework.let.cop.management.service.EgovManagementService;
-import egovframework.let.cop.management.service.ProductCategoryVO;
-import egovframework.let.cop.management.service.ProductDetailVO;
-import egovframework.let.cop.management.service.ProductOptionVO;
-import egovframework.let.cop.management.service.ProductTypeVO;
-import egovframework.let.cop.management.service.ProductVO;
-import egovframework.let.cop.management.service.StockIoVO;
-import egovframework.let.cop.management.service.StockVO;
+import egovframework.let.cop.product.service.ProductCategoryVO;
+import egovframework.let.cop.product.service.ProductDetailVO;
+import egovframework.let.cop.product.service.ProductOptionVO;
+import egovframework.let.cop.product.service.ProductTypeVO;
+import egovframework.let.cop.product.service.ProductVO;
+import egovframework.let.cop.product.service.StockIoVO;
+import egovframework.let.cop.product.service.StockVO;
 import egovframework.let.utl.fcc.service.EgovStringUtil;
 
 @RestController@SessionAttributes(types = ComDefaultVO.class)
@@ -251,8 +251,6 @@ public class EgovManagementRestController {
 		||stockId.equals("null")) {
     		stockId = "";
     	}
-    	
-    	
     	
     	StockIoVO stockIoVO = new StockIoVO();
     	stockIoVO.setStockId(stockId);

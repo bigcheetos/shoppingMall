@@ -310,6 +310,9 @@
 		/*	신규	*/
 		function onBtAddBottom() {
 			
+			location.href="/cmm/main/management/productRegist.do";
+			
+			/* 
 			// 초기값 넣기
 			var newRow = {
 				productId : null,
@@ -332,7 +335,7 @@
 			// 
 			mainGrid.gridOpts.api.updateRowData({
 				add : [ newRow ]
-			});
+			}); */
 		}
 		
 		

@@ -15,7 +15,7 @@ import org.springmodules.validation.commons.DefaultBeanValidator;
 
 import egovframework.com.cmm.ComDefaultVO;
 import egovframework.let.cop.management.service.EgovManagementService;
-import egovframework.let.cop.management.service.ProductCategoryVO;
+import egovframework.let.cop.product.service.ProductCategoryVO;
 import egovframework.let.cop.shop.service.EgovShopService;
 import egovframework.let.cop.shop.service.ShopSearchVO;
 import egovframework.rte.fdl.string.EgovStringUtil;

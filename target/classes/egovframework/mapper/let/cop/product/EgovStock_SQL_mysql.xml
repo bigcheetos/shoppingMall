@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="StockDAO">
+	
+	<select id="selectStockListAll" resultMap="stockResultMap" >
+			SELECT 
+				STOCK_ID,
+				STOCK_NAME,
+				STOCK_AMT
+			FROM
+				STOCK			
+	</select>
+	
+	<select id="selectNextStockId" resultType="String" >
+			SELECT 
+				MAX(STOCK_ID) + 1
+			FROM
+				STOCK			
+	</select>
+	
+	<insert id="insertStock">
+			INSERT INTO
+				STOCK
+			(
+				STOCK_ID,
+				STOCK_NAME,
+				STOCK_AMT
+			)
+			VALUES
+			(
+				#{stockId},
+				#{stockName}, 
+				#{stockAmt}
+			)
+	</insert>
+	
+	<update id="updateStock">
+			UPDATE
+				STOCK
+			SET
+				STOCK_NAME = #{stockName},
+				STOCK_AMT  = #{stockAmt}
+			WHERE
+				STOCK_ID = #{stockId}
+	</update>
+	
+	<delete id="deleteStock">
+		DELETE
+			FROM STOCK
+		WHERE
+			STOCK_ID = #{stockId}
+	</delete>
+	
+	<resultMap id="stockResultMap" type="egovframework.let.cop.product.service.StockVO">
+		<result property="stockId" column="STOCK_ID"/>
+		<result property="stockName" column="STOCK_NAME"/>
+		<result property="stockAmt" column="STOCK_AMT"/>
+	</resultMap>
+</mapper>

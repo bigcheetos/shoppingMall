@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ProductDetailDAO">
+	
+	<select id="selectProductDetailByProductId" resultMap="ProductDetailResultMap" parameterType = "string">
+			SELECT 
+				A.PRODUCT_ID,
+				A.STOCK_ID,
+				A.PRODUCT_NAME,
+				A.PRODUCT_SUMMARY,
+				A.PRODUCT_PRICE,
+				A.PRODUCT_DISCOUNT_PRICE,
+				A.PRODUCT_ORIGIN,
+				A.PRODUCT_DELIVERYPAY,
+				A.PRODUCT_STATUS,
+				A.PRODUCT_RDCNT,
+				A.PRODUCT_BESTCNT,
+				A.PRODUCT_REGID,
+				A.PRODUCT_UPDID,
+				A.PRODUCT_REGDATE,
+				A.PRODUCT_UPDDATE,
+				
+				B.PRODUCT_CODE, 
+				B.PRODUCT_MATERIAL,
+				B.PRODUCT_SIZE,
+				B.PRODUCT_INTRODUCTION,
+				B.PRODUCT_USE,
+				B.PRODUCT_DELIVERYGUIDE,
+				B.PRODUCT_CANCELGUIDE,
+				B.PRODUCT_NOTICE,
+				B.DETAIL_STATUS,
+				B.DETAIL_REGID,
+				B.DETAIL_UPDID,
+				B.DETAIL_REGDATE,
+				B.DETAIL_UPDDATE
+				
+			FROM
+				PRODUCT A
+			INNER JOIN
+				PRODUCT_DETAIL B
+			ON A.PRODUCT_ID = B.PRODUCT_ID
+			WHERE
+				A.PRODUCT_ID = #{productId}	
+	</select>
+	
+	<select id="selectCountByProductCode" resultType="int" parameterType = "string">
+		SELECT
+			COUNT(*) AS CNT
+		FROM
+			PRODUCT_DETAIL
+		WHERE
+			PRODUCT_CODE = #{productCode}
+	</select>
+	
+	<select id="selectCountByProductId" resultType="int" parameterType = "string">
+		SELECT
+			COUNT(*) AS CNT
+		FROM
+			PRODUCT_DETAIL
+		WHERE
+			PRODUCT_ID = #{productId}
+	</select>
+	
+	<insert id="insertProductDetail" parameterType = "egovframework.let.cop.product.service.ProductDetailVO">
+			INSERT INTO
+				PRODUCT_DETAIL
+			(
+				PRODUCT_CODE,
+				PRODUCT_ID,
+				PRODUCT_MATERIAL,
+				PRODUCT_SIZE,
+				PRODUCT_INTRODUCTION,
+				PRODUCT_USE,
+				PRODUCT_DELIVERYGUIDE,
+				PRODUCT_CANCELGUIDE,
+				PRODUCT_NOTICE,
+				DETAIL_STATUS,
+				DETAIL_REGID,
+				DETAIL_UPDID,
+				DETAIL_REGDATE,
+				DETAIL_UPDDATE
+			)
+			VALUES
+			(
+				#{productCode},
+				#{productId},
+				#{productMaterial},
+				#{productSize},
+				#{productIntroduction},
+				#{productUse},
+				#{productDeliveryguide},
+				#{productCancelguide},
+				#{productNotice},
+				#{detailStatus},
+				#{detailRegid},
+				#{detailUpdid},
+				now(),
+				now()
+			)
+	</insert>
+	
+	<update id="updateProductDetail" parameterType = "egovframework.let.cop.product.service.ProductDetailVO">
+			UPDATE
+				PRODUCT_DETAIL
+			SET
+				PRODUCT_MATERIAL 		= #{productMaterial},
+				PRODUCT_SIZE			= #{productSize},
+				PRODUCT_INTRODUCTION 	= #{productIntroduction},
+				PRODUCT_USE  			= #{productUse},
+				PRODUCT_DELIVERYGUIDE 	= #{productDeliveryguide},
+				PRODUCT_CANCELGUIDE 	= #{productCancelguide},
+				PRODUCT_NOTICE 			= #{productNotice},
+				DETAIL_STATUS			= #{detailStatus},
+				DETAIL_UPDID 			= #{detailUpdid},
+				DETAIL_UPDDATE 			= now()
+			WHERE
+				PRODUCT_CODE 			= #{productCode}
+	</update>
+	
+	<delete id="deleteProductDetail" parameterType = "egovframework.let.cop.product.service.ProductDetailVO">
+		DELETE
+		FROM PRODUCT_DETAIL
+		WHERE
+			PRODUCT_CODE = #{productCode}
+	</delete>
+	
+	<!-- 이미지파일 관련 -->
+	<select id="selectImgFileListByProductCode" resultType="map" parameterType = "string">
+		SELECT
+			A.ATCH_FILE_ID								as atchFileId,
+			A.PRODUCT_CODE								as productCode,
+			A.USE_PURPOSE								as usePurpose,
+			CONCAT(B.FILE_STRE_COURS, B.STRE_FILE_NM) 	as fileCoursNm
+		FROM
+			PRODUCT_DETAIL_TO_ATCH_FILE A
+		INNER JOIN
+			ATCH_FILE_DETAIL B
+		ON
+			A.ATCH_FILE_ID = B.ATCH_FILE_ID
+		WHERE
+			PRODUCT_CODE = #{productCode}
+	</select>
+	
+	<select id="selectMainImgByProductId" resultType="map" parameterType = "string">
+		SELECT
+			A.ATCH_FILE_ID								as atchFileId,
+			A.PRODUCT_CODE								as productCode,
+			A.USE_PURPOSE								as usePurpose,
+			CONCAT(E.FILE_STRE_COURS, E.STRE_FILE_NM) 	as fileCoursNm
+		FROM
+			PRODUCT_DETAIL_TO_ATCH_FILE A
+		INNER JOIN
+			(SELECT 
+				C.PRODUCT_ID, 
+                D.PRODUCT_CODE
+			FROM
+				PRODUCT C
+			INNER JOIN
+				PRODUCT_DETAIL D
+			ON
+				C.PRODUCT_ID = D.PRODUCT_ID
+			WHERE
+				C.PRODUCT_ID = #{productId}
+			) B
+		ON
+			A.PRODUCT_CODE = B.PRODUCT_CODE
+		INNER JOIN
+			ATCH_FILE_DETAIL E
+        ON
+			A.ATCH_FILE_ID = E.ATCH_FILE_ID
+		WHERE
+			A.USE_PURPOSE  = 'main'
+	</select>
+	
+	<select id="selectImgListByProductId" resultType="map" parameterType = "string">
+		SELECT
+			A.ATCH_FILE_ID								as atchFileId,
+			A.PRODUCT_CODE								as productCode,
+			A.USE_PURPOSE								as usePurpose,
+			CONCAT(E.FILE_STRE_COURS, E.STRE_FILE_NM) 	as fileCoursNm
+		FROM
+			PRODUCT_DETAIL_TO_ATCH_FILE A
+		INNER JOIN
+			(SELECT 
+				C.PRODUCT_ID, 
+                D.PRODUCT_CODE
+			FROM
+				PRODUCT C
+			INNER JOIN
+				PRODUCT_DETAIL D
+			ON
+				C.PRODUCT_ID = D.PRODUCT_ID
+			WHERE
+				C.PRODUCT_ID = #{productId}
+			) B
+		ON
+			A.PRODUCT_CODE = B.PRODUCT_CODE
+		INNER JOIN
+			ATCH_FILE_DETAIL E
+        ON
+			A.ATCH_FILE_ID = E.ATCH_FILE_ID
+	</select>
+	
+	<insert id="insertProductDetailToAtchFile">
+			INSERT INTO
+				PRODUCT_DETAIL_TO_ATCH_FILE
+			(
+				ATCH_FILE_ID,
+				PRODUCT_CODE,
+				USE_PURPOSE
+			)
+			VALUES
+			(
+				#{atchFileId},
+				#{productCode},
+				#{usePurpose}
+			)
+	</insert>
+	
+	<delete id="deleteProductDetailToAtchFile">
+		DELETE
+		FROM PRODUCT_DETAIL_TO_ATCH_FILE
+		WHERE
+			PRODUCT_CODE = #{productCode}
+	</delete>
+	
+	<!-- 카테고리 관련 -->
+	<select id="selectCheckedCategoryListByProductCode" resultType="map" parameterType = "string">
+		SELECT
+			PRODUCT_CODE	as productCode,
+			CATEGORY_ID		as categoryId
+		FROM
+			PRODUCT_DETAIL_TO_PRODUCT_CATEGORY
+		WHERE
+			PRODUCT_CODE = #{productCode}
+	</select>
+	
+	<select id="selectCheckedCategoryListByProductId" resultType="map" parameterType = "string">
+		SELECT
+			B.PRODUCT_ID	as productId,
+            A.PRODUCT_CODE	as productCode,
+			A.CATEGORY_ID	as categoryId,
+            E.CATEGORY_NAME	as categoryName
+		FROM
+			PRODUCT_DETAIL_TO_PRODUCT_CATEGORY A
+		INNER JOIN
+			(SELECT 
+				C.PRODUCT_ID, 
+                D.PRODUCT_CODE
+			FROM
+				PRODUCT C
+			INNER JOIN
+				PRODUCT_DETAIL D
+			ON
+				C.PRODUCT_ID = D.PRODUCT_ID
+			WHERE
+				C.PRODUCT_ID = #{productId}
+			) B
+		ON
+			A.PRODUCT_CODE = B.PRODUCT_CODE
+		INNER JOIN
+			PRODUCT_CATEGORY E
+        ON
+			A.CATEGORY_ID = E.CATEGORY_ID
+	</select>
+	
+	<insert id="insertProductDetailToProductCategory">
+			INSERT INTO
+				PRODUCT_DETAIL_TO_PRODUCT_CATEGORY
+			(
+				PRODUCT_CODE,
+				CATEGORY_ID
+			)
+			VALUES
+			(
+				#{productCode},
+				#{categoryId}
+			)
+	</insert>
+	
+	<delete id="deleteProductDetailToProductCategory">
+		DELETE
+		FROM PRODUCT_DETAIL_TO_PRODUCT_CATEGORY
+		WHERE
+			PRODUCT_CODE = #{productCode}
+	</delete>
+	
+	<!-- 옵션과 연결 -->
+	<select id="selectOptionListByProductCode" resultType="map" parameterType = "string">
+		SELECT
+			A.PRODUCT_CODE		as productCode,
+		    A.OPTION_CODE		as optionCode,
+		    IFNULL(B.OPTION_NAME,REPLACE(SUBSTRING_INDEX(A.OPTION_CODE, 'string_string_', 2),'string_string_name_',''))	as optionName,
+			IFNULL(B.OPTION_PRICE,REPLACE(SUBSTRING_INDEX(A.OPTION_CODE, 'string_string_', -1),'price_',''))			as optionPrice
+		FROM
+			PRODUCT_DETAIL_TO_PRODUCT_OPTION A
+		LEFT JOIN
+			PRODUCT_OPTION B
+		ON
+			A.OPTION_CODE = B.OPTION_CODE
+		WHERE
+			PRODUCT_CODE = #{productCode}
+	</select>
+	
+	<select id="selectOptionListByProductId" resultType="map" parameterType = "string">
+		SELECT
+			B.PRODUCT_ID																								as productId,
+			A.PRODUCT_CODE																								as productCode,
+			A.OPTION_CODE																								as optionCode,
+			IFNULL(E.OPTION_NAME,REPLACE(SUBSTRING_INDEX(A.OPTION_CODE, 'string_string_', 2),'string_string_name_',''))	as optionName,
+			IFNULL(E.OPTION_PRICE,REPLACE(SUBSTRING_INDEX(A.OPTION_CODE, 'string_string_', -1),'price_',''))			as optionPrice
+		FROM
+			PRODUCT_DETAIL_TO_PRODUCT_OPTION A
+		INNER JOIN
+			(SELECT 
+				C.PRODUCT_ID, 
+				D.PRODUCT_CODE
+			FROM
+				PRODUCT C
+			INNER JOIN
+				PRODUCT_DETAIL D
+			ON
+				C.PRODUCT_ID = D.PRODUCT_ID
+			WHERE
+				C.PRODUCT_ID = #{productId}
+			) B
+		ON
+			A.PRODUCT_CODE = B.PRODUCT_CODE
+		LEFT JOIN
+			PRODUCT_OPTION E
+		ON
+			A.OPTION_CODE = E.OPTION_CODE;
+	</select>
+	
+	<insert id="insertProductDetailToProductOption">
+			INSERT INTO
+				PRODUCT_DETAIL_TO_PRODUCT_OPTION
+			(
+				PRODUCT_CODE,
+				OPTION_CODE
+			)
+			VALUES
+			(
+				#{productCode},
+				#{optionCode}
+			)
+	</insert>
+	
+	<delete id="deleteProductDetailToProductOption">
+		DELETE
+		FROM PRODUCT_DETAIL_TO_PRODUCT_OPTION
+		WHERE
+			PRODUCT_CODE = #{productCode}
+	</delete>
+	
+	<resultMap id="ProductDetailResultMap" type="egovframework.let.cop.product.service.ProductDetailVO">
+		<result property="productId" column="PRODUCT_ID"/>
+		<result property="stockId" column="STOCK_ID"/>
+		<result property="productName" column="PRODUCT_NAME"/>
+		<result property="productSummary" column="PRODUCT_SUMMARY"/>
+		<result property="productPrice" column="PRODUCT_PRICE"/>
+		<result property="productDiscountPrice" column="PRODUCT_DISCOUNT_PRICE"/>
+		<result property="productOrigin" column="PRODUCT_ORIGIN"/>
+		<result property="productDeliverypay" column="PRODUCT_DELIVERYPAY"/>
+		<result property="productStatus" column="PRODUCT_STATUS"/>
+		<result property="productRdcnt" column="PRODUCT_RDCNT"/>
+		<result property="productBestcnt" column="PRODUCT_BESTCNT"/>
+		
+		<result property="productCode" column="PRODUCT_CODE"/>
+		<result property="productMaterial" column="PRODUCT_MATERIAL"/>
+		<result property="productSize" column="PRODUCT_SIZE"/>
+		<result property="productDeliveryguide" column="PRODUCT_DELIVERYGUIDE"/>
+		<result property="productCancelguide" column="PRODUCT_CANCELGUIDE"/>
+		<result property="productNotice" column="PRODUCT_NOTICE"/>
+		<result property="detailRegid" column="DETAIL_REGID"/>
+		<result property="detailUpdid" column="DETAIL_UPDID"/>
+		<result property="detailRegdate" column="DETAIL_REGDATE"/>
+		<result property="detailUpddate" column="DETAIL_UPDDATE"/>
+	</resultMap>
+</mapper>
