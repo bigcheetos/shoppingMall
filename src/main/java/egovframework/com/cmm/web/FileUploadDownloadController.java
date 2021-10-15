@@ -23,7 +23,6 @@ import egovframework.com.cmm.ComDefaultVO;
 import egovframework.com.cmm.service.EgovFileMngService;
 import egovframework.com.cmm.service.EgovFileMngUtil;
 import egovframework.com.cmm.service.FileVO;
-import egovframework.rte.fdl.property.EgovPropertyService;
 
 /**
  * 파일 업로드 다운로드를 위한 컨트롤러 클래스
@@ -51,9 +50,6 @@ public class FileUploadDownloadController {
 
 	@Resource(name = "EgovFileMngUtil")
 	private EgovFileMngUtil fileUtil;
-	
-	 @Resource(name = "propertiesService")
-    protected EgovPropertyService propertyService;
 	
 	@Autowired
     private DefaultBeanValidator beanValidator;
@@ -88,7 +84,12 @@ public class FileUploadDownloadController {
 
         return ret;
     }
-	
+    /**
+     * 파일 업로드
+     *
+     * @param paramList, request, model
+     * @return String
+     */
     @RequestMapping(value = "/cmm/fms/fileUpload.do")
 	public String uploadSingleFile(final MultipartHttpServletRequest multiRequest, 
 			HttpServletRequest request, ModelMap model) throws Exception {
@@ -123,7 +124,7 @@ public class FileUploadDownloadController {
      * 파일 삭제
      *
      * @param paramList, request, model
-     * @return List<StockIoVO>
+     * @return String
      */
     @RequestMapping("/cmm/fms/fileListRemove.do")
     @ResponseBody

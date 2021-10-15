@@ -199,8 +199,8 @@ var fn_saveRows = function() {
 	});
 	var uploadRows = Object.assign(updateRows, removedRows);
 	
-	$("#updateRows").html('');
-	$("#updateRows").html(JSON.stringify(uploadRows));
+	/*$("#updateRows").html('');
+	$("#updateRows").html(JSON.stringify(uploadRows));*/
 	fn_uploadDataRequest(uploadRows);
 }
 //

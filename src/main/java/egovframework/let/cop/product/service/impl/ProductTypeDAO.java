@@ -10,7 +10,7 @@ import egovframework.let.cop.product.service.ProductTypeVO;
 @Repository("ProductTypeDAO") 
 public class ProductTypeDAO extends EgovComAbstractDAO {
 	/**
-     * 타입 목록을 조회 한다.
+     * 모든 타입을 조회한다.
      *
      * @param 
      * @return List<ProductTypeVO>
@@ -21,7 +21,7 @@ public class ProductTypeDAO extends EgovComAbstractDAO {
 	}
 	
 	/**
-     * 타입  최고값 다음 Id를 조회한다.
+     * 타입Id 최고값의 다음값를 조회한다.
      *
      * @param 
      * @return String

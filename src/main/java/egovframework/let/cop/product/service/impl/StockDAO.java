@@ -10,7 +10,7 @@ import egovframework.let.cop.product.service.StockVO;
 @Repository("StockDAO") 
 public class StockDAO extends EgovComAbstractDAO {
 	/**
-     * 재고 목록을 조회 한다.
+     * 모든 재고를 조회한다.
      *
      * @param 
      * @return List<StockVO>
@@ -21,7 +21,7 @@ public class StockDAO extends EgovComAbstractDAO {
 	}
 	
 	/**
-     * 재고 최고 Id 다음 Id를 조회한다.
+     * 재고Id의 최고값의 다음값를 조회한다.
      *
      * @param 
      * @return String
@@ -39,8 +39,8 @@ public class StockDAO extends EgovComAbstractDAO {
      * @return 
      * @throws Exception
      */
-	public void insertStock(StockVO type) throws Exception {
-		insert("StockDAO.insertStock", type);
+	public void insertStock(StockVO stock) throws Exception {
+		insert("StockDAO.insertStock", stock);
 	}
 	
 	/**
@@ -50,8 +50,8 @@ public class StockDAO extends EgovComAbstractDAO {
      * @return 
      * @throws Exception
      */
-	public void updateStock(StockVO type) throws Exception {
-		update("StockDAO.updateStock", type);
+	public void updateStock(StockVO stock) throws Exception {
+		update("StockDAO.updateStock", stock);
 	}
 	
 	/**
@@ -61,7 +61,7 @@ public class StockDAO extends EgovComAbstractDAO {
      * @return 
      * @throws Exception
      */
-	public void deleteStock(StockVO type) throws Exception {
-		delete("StockDAO.deleteStock", type);
+	public void deleteStock(StockVO stock) throws Exception {
+		delete("StockDAO.deleteStock", stock);
 	}
 }

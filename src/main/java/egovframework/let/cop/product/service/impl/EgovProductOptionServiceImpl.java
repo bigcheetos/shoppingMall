@@ -34,7 +34,7 @@ public class EgovProductOptionServiceImpl extends EgovAbstractServiceImpl implem
 	private ProductOptionDAO productOptionDAO;
 	
 	/**
-     * 모든 옵션을 조회 한다.
+     * 모든 옵션을 조회한다.
      *
      * @see egovframework.let.cop.product.service.EgovProductOptionService
      */
@@ -45,7 +45,7 @@ public class EgovProductOptionServiceImpl extends EgovAbstractServiceImpl implem
 	}
 	
 	/**
-     * 판매 가능한 옵션을 조회 한다.
+     * 판매 가능한 옵션목록을 조회한다.
      *
      * @see egovframework.let.cop.product.service.EgovProductOptionService
      */
@@ -55,7 +55,7 @@ public class EgovProductOptionServiceImpl extends EgovAbstractServiceImpl implem
 	};
 	
 	/**
-     * 옵션 코드로 옵션을 조회한다.
+     * 옵션코드를 통해 옵션을 조회한다.
      *
      * @see egovframework.let.cop.product.service.EgovProductOptionService
      */
@@ -65,7 +65,7 @@ public class EgovProductOptionServiceImpl extends EgovAbstractServiceImpl implem
 	}
 	
 	/**
-     * 옵션 코드값이 존재하는지 조회한다.
+     * 옵션코드값이 DB에 존재하는지 조회한다.
      *
      * @see egovframework.let.cop.product.service.EgovProductOptionService
      */
@@ -76,7 +76,7 @@ public class EgovProductOptionServiceImpl extends EgovAbstractServiceImpl implem
 	}
 	
 	/**
-     * 옵션을 신규 추가한다.
+     * 옵션을 추가한다.
      *
      * @see egovframework.let.cop.product.service.EgovProductOptionService
      * #modifyStock(egovframework.let.cop.management.service.productOptionVO)
@@ -100,7 +100,7 @@ public class EgovProductOptionServiceImpl extends EgovAbstractServiceImpl implem
 	}
 	
 	/**
-     * 옵션을삭제한다.
+     * 옵션을 삭제한다.
      *
      * @see egovframework.let.cop.product.service.EgovProductOptionService
      * #modifyStock(egovframework.let.cop.management.service.productOptionVO)

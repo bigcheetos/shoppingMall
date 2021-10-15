@@ -11,7 +11,7 @@ import egovframework.let.cop.product.service.ProductOptionVO;
 public class ProductOptionDAO extends EgovComAbstractDAO{
 	
 	/**
-     * 옵션 목록을 조회 한다.
+     * 모든 옵션을 조회한다.
      *
      * @param 
      * @return List<ProductOptionVO>
@@ -22,7 +22,7 @@ public class ProductOptionDAO extends EgovComAbstractDAO{
 	}
 	
 	/**
-     * 판매 가능한 옵션 목록을 조회 한다.
+     * 판매 가능한 옵션 목록을 조회한다.
      *
      * @param 
      * @return List<ProductOptionVO>
@@ -33,7 +33,7 @@ public class ProductOptionDAO extends EgovComAbstractDAO{
 	}
 	
 	/**
-     * 옵션을 조회 한다.
+     * 옵션코드를 통해 옵션을 조회한다.
      *
      * @param String
      * @return ProductOptionVO
@@ -44,7 +44,7 @@ public class ProductOptionDAO extends EgovComAbstractDAO{
 	}
 	
 	/**
-     * 옵션 최고값 다음 Id를 조회한다.
+     * 옵션코드와 일치하는 수를 조회한다.
      *
      * @param String
      * @return int
@@ -78,7 +78,7 @@ public class ProductOptionDAO extends EgovComAbstractDAO{
 	}
 	
 	/**
-     * 옵션을 추가한다.
+     * 옵션을 삭제한다.
      *
      * @param ProductOptionVO
      * @return 

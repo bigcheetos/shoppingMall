@@ -34,7 +34,7 @@ public class EgovStockIoServiceImpl extends EgovAbstractServiceImpl implements E
 	private StockIoDAO stockIoDAO;
 	
 	/**
-     * 재고에 대한 입출고 목록을 조회한다.
+     * 재고Id를 통해 입출고 목록을 조회한다.
      *
      * @see egovframework.let.cop.management.service.EgovManagementService
      */
@@ -45,7 +45,7 @@ public class EgovStockIoServiceImpl extends EgovAbstractServiceImpl implements E
 	}
 
 	/**
-     * 재고에 대한 입고 목록을 조회한다.
+     * 재고Id를 통해 입고 목록을 조회한다.
      *
      * @see egovframework.let.cop.management.service.EgovManagementService
      */
@@ -56,7 +56,7 @@ public class EgovStockIoServiceImpl extends EgovAbstractServiceImpl implements E
 	}
 	
 	/**
-     * 재고에 대한 입고 목록을 조회한다.
+     * 재고Id를 통해 출고 목록을 조회한다.
      *
      * @see egovframework.let.cop.management.service.EgovManagementService
      */
@@ -78,7 +78,7 @@ public class EgovStockIoServiceImpl extends EgovAbstractServiceImpl implements E
 	}
 	
 	/**
-     * 입출고를 신규 추가한다.
+     * 입출고를 추가한다.
      *
      * @see egovframework.let.cop.management.service.EgovManagementService
      * #modifyStock(egovframework.let.cop.product.service.StockIoVO)

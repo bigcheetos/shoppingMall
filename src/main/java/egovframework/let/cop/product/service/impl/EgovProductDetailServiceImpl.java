@@ -12,7 +12,7 @@ import egovframework.let.cop.product.service.ProductDetailVO;
 import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 
 /**
- * 제품 상세를 위한 서비스 구현 클래스
+ * 상품 상세를 위한 서비스 구현 클래스
  * @author 개발팀 김진영
  * @since 2021.10.12
  * @version 1.0
@@ -34,7 +34,7 @@ public class EgovProductDetailServiceImpl extends EgovAbstractServiceImpl implem
 	private ProductDetailDAO productDetailDAO;
 	
 	/**
-     * 제품상세을 조회 한다.
+     * 상품Id를 통해 상품상세을 조회한다.
      *
      * @see egovframework.let.cop.product.service.EgovProductDetailService
      */
@@ -45,7 +45,7 @@ public class EgovProductDetailServiceImpl extends EgovAbstractServiceImpl implem
 		return productDetailDAO.selectProductDetailByProductId(productId);
 	}
 	/**
-     * 제품코드가 있는지 확인한다.
+     * 상품코드가 DB에 있는지 확인한다.
      *
      * @see egovframework.let.cop.product.service.EgovProductDetailService
      */
@@ -56,7 +56,7 @@ public class EgovProductDetailServiceImpl extends EgovAbstractServiceImpl implem
 	}
 	
 	/**
-     * 제품Id가 있는지 확인한다.
+     * 상품Id가 DB에 있는지 확인한다.
      *
      * @see egovframework.let.cop.product.service.EgovProductDetailService
      */
@@ -67,7 +67,7 @@ public class EgovProductDetailServiceImpl extends EgovAbstractServiceImpl implem
 	}
 	
 	/**
-     * 제품 상세 정보를 추가한다.
+     * 상품상세정보를 추가한다.
      *
      * @see egovframework.let.cop.product.service.EgovProductDetailService
      */
@@ -78,7 +78,7 @@ public class EgovProductDetailServiceImpl extends EgovAbstractServiceImpl implem
 	}
 
 	/**
-     * 제품 상세 정보를 수정한다.
+     * 상품상세정보를 수정한다.
      *
      * @see egovframework.let.cop.product.service.EgovProductDetailService
      */
@@ -88,7 +88,7 @@ public class EgovProductDetailServiceImpl extends EgovAbstractServiceImpl implem
 		productDetailDAO.updateProductDetail(productDetailVO);
 	}
 	/**
-     * 제품 상세 정보를 삭제한다.
+     * 상품상세정보를 삭제한다.
      *
      * @see egovframework.let.cop.product.service.EgovProductDetailService
      */
@@ -100,7 +100,7 @@ public class EgovProductDetailServiceImpl extends EgovAbstractServiceImpl implem
 	/** 이미지 관련 시작 **/
 	
 	/**
-     * 제품Id를 이용해 제품에 대표 이미지를 가져온다.
+     * 상품Id를 통해 상품의 대표 이미지를 조회한다.
      *
      * @see egovframework.let.cop.product.service.EgovProductDetailService
      */
@@ -110,7 +110,7 @@ public class EgovProductDetailServiceImpl extends EgovAbstractServiceImpl implem
 		return productDetailDAO.selectMainImgByProductId(productId);
 	}
 	/**
-     * 제품상세와 연결된 이미지파일을 조회 한다.
+     * 상품코드를 통해 상품 이미지목록을 조회한다.
      *
      * @see egovframework.let.cop.product.service.EgovProductDetailService
      */
@@ -120,7 +120,7 @@ public class EgovProductDetailServiceImpl extends EgovAbstractServiceImpl implem
 		return productDetailDAO.selectImgFileListByProductCode(productCode);
 	}
 	/**
-     * 제품상세정보에 사용된 이미지파일의 연결정보를 추가한다.
+     * 상품에 사용된 이미지파일의 정보를 추가한다.
      *
      * @see egovframework.let.cop.product.service.EgovProductDetailService
      */
@@ -130,7 +130,7 @@ public class EgovProductDetailServiceImpl extends EgovAbstractServiceImpl implem
 		productDetailDAO.insertProductDetailToAtchFile(map);
 	}
 	/**
-     * 제품상세정보에 사용된 이미지파일의 연결정보를 삭제한다.
+     * 상품에 사용된 이미지파일의 정보를 삭제한다.
      *
      * @see egovframework.let.cop.product.service.EgovProductDetailService
      */
@@ -140,7 +140,7 @@ public class EgovProductDetailServiceImpl extends EgovAbstractServiceImpl implem
 		productDetailDAO.deleteProductDetailToAtchFile(map);
 	}
 	/**
-     * 제품Id를 이용해 제품에 포함된 이미지 파일 목록을 가져온다.
+     * 상품Id를 이용해 상품에 사용된 이미지파일 목록을 조회한다.
      *
      * @see egovframework.let.cop.product.service.EgovProductDetailService
      */
@@ -154,7 +154,7 @@ public class EgovProductDetailServiceImpl extends EgovAbstractServiceImpl implem
 	/** 카테고리 관련 시작 **/
 	
 	/**
-     * 제품Id를 이용해 제품에 체크된 카테고리 목록을 가져온다.
+     * 상품Id를 통해 상품에 체크된 카테고리 목록을 조회한다.
      *
      * @see egovframework.let.cop.product.service.EgovProductDetailService
      */
@@ -164,7 +164,7 @@ public class EgovProductDetailServiceImpl extends EgovAbstractServiceImpl implem
 		return productDetailDAO.selectCheckedCategoryListByProductId(productId);
 	}
 	/**
-     * 제품상세와 연결된 카테고리를 조회 한다.
+     * 상품코드를 통해 상품에 체크된 카테고리 목록을 조회한다.
      *
      * @see egovframework.let.cop.product.service.EgovProductDetailService
      */
@@ -174,7 +174,7 @@ public class EgovProductDetailServiceImpl extends EgovAbstractServiceImpl implem
 		return productDetailDAO.selectCheckedCategoryListByProductCode(productCode);
 	}
 	/**
-     * 제품상세정보에 사용된 카테고리의 연결정보를 추가한다.
+     * 상품에 사용된 카테고리의 정보를 추가한다.
      *
      * @see egovframework.let.cop.product.service.EgovProductDetailService
      */
@@ -184,7 +184,7 @@ public class EgovProductDetailServiceImpl extends EgovAbstractServiceImpl implem
 		productDetailDAO.insertProductDetailToProductCategory(map);
 	}
 	/**
-     * 제품상세정보에 사용된 카테고리의 연결정보를 삭제한다.
+     * 상품에 사용된 카테고리의 정보를 삭제한다.
      *
      * @see egovframework.let.cop.product.service.EgovProductDetailService
      */
@@ -198,7 +198,7 @@ public class EgovProductDetailServiceImpl extends EgovAbstractServiceImpl implem
 	/** 옵션 관련 시작 **/
 	
 	/**
-     * 제품Id를 이용해 제품에 포함된 옵션 목록을 가져온다.
+     * 상품Id를 통해 상품의 옵션 목록을 조회한다.
      *
      * @see egovframework.let.cop.product.service.EgovProductDetailService
      */
@@ -208,7 +208,7 @@ public class EgovProductDetailServiceImpl extends EgovAbstractServiceImpl implem
 		return productDetailDAO.selectOptionListByProductId(productId);
 	}
 	/**
-     * 제품상세와 연결된 옵션를 조회 한다.
+     * 상품코드를 통해 상품의 옵션 목록를 조회한다.
      *
      * @see egovframework.let.cop.product.service.EgovProductDetailService
      */
@@ -218,7 +218,7 @@ public class EgovProductDetailServiceImpl extends EgovAbstractServiceImpl implem
 		return productDetailDAO.selectOptionListByProductCode(productCode);
 	}
 	/**
-     * 제품상세정보에 사용된 옵션의 연결정보를 추가한다.
+     * 상품에 사용된 옵션의 정보를 추가한다.
      *
      * @see egovframework.let.cop.product.service.EgovProductDetailService
      */
@@ -229,7 +229,7 @@ public class EgovProductDetailServiceImpl extends EgovAbstractServiceImpl implem
 		
 	}
 	/**
-     * 제품상세정보에 사용된 옵션의 연결정보를 삭제한다.
+     * 상품에 사용된 옵션의 정보를 삭제한다.
      *
      * @see egovframework.let.cop.product.service.EgovProductDetailService
      */

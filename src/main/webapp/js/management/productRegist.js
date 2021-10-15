@@ -607,10 +607,10 @@ var fn_setGoodsIntroductionInfo = function(paramedTextareaId, goods) {
 		case '꽃다발' :
 			goodsIntroductionInfoList = gfn_getIntroductionBouquet();
 			break;
-		case '축하화한' :
+		case '축하화환' :
 			goodsIntroductionInfoList = gfn_getIntroductionHwreath();
 			break;
-		case '근조화한' :
+		case '근조화환' :
 			goodsIntroductionInfoList = gfn_getIntroductionDwreath();
 			break;
 		case '관엽/화분' :
@@ -672,8 +672,6 @@ var fn_setGoodsText = function(paramedTextareaId, goodsText) {
 // 추가이미지 동적으로 생성
 var fn_addImgList = function() {
 	
-	if(imgFileIndex>=10) return;
-	
 	imgFileIndex++;
 	
 	var li = document.createElement("li");
@@ -686,6 +684,8 @@ var fn_addImgList = function() {
 	var input_button_upload = document.createElement("input");
 	var span = document.createElement("span");
 	var input_button_select = document.createElement("input");
+	var span2 = document.createElement("span");
+	var input_button_delete = document.createElement("input");
 	
 	li.className = "list-group-item li-product-image";
 	div_product_img.id = "div_product_img_"+imgFileIndex;
@@ -700,7 +700,7 @@ var fn_addImgList = function() {
 	input_hidden.value = "";
 	div_img_cont.className = "img_cont";
 	div_blue.className = "blue";
-	div_blue.innerText = "상세 이미지("+imgFileIndex+")";
+	div_blue.innerText = "상세 이미지("+(+imgFileIndex-1)+")";
 	div_file.className = "file";
 	input_button_upload.type = "button";
 	input_button_upload.className = "btn btn-primary btn-img-upload";
@@ -709,6 +709,10 @@ var fn_addImgList = function() {
 	input_button_select.type = "button";
 	input_button_select.className = "btn btn-primary btn-img-select";
 	input_button_select.value = "제공이미지 사용";
+	span2.innerText = " ";
+	input_button_delete.type = "button";
+	input_button_delete.className = "btn btn-secondary"
+	input_button_delete.value = "X";
 	
 	div_product_img.appendChild(img);
 	div_product_img.appendChild(input_hidden);
@@ -716,6 +720,8 @@ var fn_addImgList = function() {
 	div_file.appendChild(input_button_upload);
 	div_file.appendChild(span);
 	div_file.appendChild(input_button_select);
+	div_file.appendChild(span2);
+	div_file.appendChild(input_button_delete);
 	
 	div_img_cont.appendChild(div_blue);
 	div_img_cont.appendChild(div_file);
@@ -735,6 +741,10 @@ var fn_addImgList = function() {
 	
 	input_button_select.addEventListener('click', function() {
 		fn_btnImgSelectorOnClicked(currentIndex);
+	});
+	
+	input_button_delete.addEventListener('click', function() {
+		li.remove();
 	});
 }
 

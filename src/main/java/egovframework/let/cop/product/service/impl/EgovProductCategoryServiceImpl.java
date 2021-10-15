@@ -34,7 +34,7 @@ public class EgovProductCategoryServiceImpl extends EgovAbstractServiceImpl impl
 	private ProductCategoryDAO productCategoryDAO;
 	
 	/**
-     * 모든 카테고리를 조회 한다.
+     * 모든 카테고리를 조회한다.
      *
      * @see egovframework.let.cop.product.service.EgovProductCategoryService
      */
@@ -45,7 +45,7 @@ public class EgovProductCategoryServiceImpl extends EgovAbstractServiceImpl impl
 	}
 
 	/**
-     * 카테고리 Id의 다음 값을 조회 한다.
+     * 카테고리 Id의 다음 값을 조회한다.
      *
      * @see egovframework.let.cop.product.service.EgovProductCategoryService
      */

@@ -61,11 +61,12 @@ public class EgovManagementController {
      */
     @RequestMapping("/cmm/main/management/productManagement.do")
     public String viewProductManagement(HttpServletRequest request, ModelMap model) throws Exception {
+    	
     	return "food/management/ProductManagement";
     }
 
     /**
-     * 관리 > 상품
+     * 관리 > 상품등록
      */
     @RequestMapping("/cmm/main/management/productRegist.do")
     public String viewProductRegist(HttpServletRequest request, ModelMap model) throws Exception {
@@ -82,7 +83,7 @@ public class EgovManagementController {
     }
     
     /**
-     * 관리 > 재고
+     * 관리 > 입출고
      */
     @RequestMapping("/cmm/main/management/stockIoManagement.do")
     public String viewStockIoManagement(HttpServletRequest request, ModelMap model) throws Exception {
@@ -109,7 +110,7 @@ public class EgovManagementController {
     }
     
     /**
-     * 관리 > 첨부파일 관리
+     * 관리 > 파일
      */
     @RequestMapping("/cmm/main/management/atchFileManagement.do")
     public String viewAtchFileManagement(HttpServletRequest request, ModelMap model) throws Exception {
@@ -118,7 +119,7 @@ public class EgovManagementController {
     }
     
     /**
-     * 관리 > 옵션 관리
+     * 관리 > 옵션
      */
     @RequestMapping("/cmm/main/management/productOptionManagement.do")
     public String viewProductOptionManagement(HttpServletRequest request, ModelMap model) throws Exception {
@@ -127,7 +128,7 @@ public class EgovManagementController {
     }
     
 	/**
-     * 관리 > 첨부파일 팝업
+     * 관리 > 상품등록, 파일 > 파일업로드팝업
      */
     @RequestMapping("/cmm/fms/EgovFileUploadPopup.do")
     public String viewEgovFileUploadPopup(HttpServletRequest request, ModelMap model) throws Exception {
@@ -136,7 +137,7 @@ public class EgovManagementController {
     }
     
     /**
-     * 관리 > 꽃 원산지 표시 안내 팝업
+     * 관리 > 상품등록 > 꽃 원산지 표시 안내 팝업
      */
     @RequestMapping("/cmm/main/management/viewOriginFlowerCountry.do")
     public String viewOriginFlowerCountry(HttpServletRequest request, ModelMap model) throws Exception {
@@ -145,7 +146,7 @@ public class EgovManagementController {
     }
     
     /**
-     * 관리 > 이미지 파일 팝업
+     * 관리 > 상품등록 > 제공이미지팝업
      */
     @RequestMapping("/cmm/main/management/viewImgFilePopup.do")
     public String viewImgFilePopup(HttpServletRequest request, ModelMap model) throws Exception {

@@ -3,6 +3,8 @@ package egovframework.let.cop.shop.service;
 import java.util.List;
 import java.util.Map;
 
+import egovframework.let.cop.product.service.ProductCategoryVO;
+
 /**
  * 물품 판매를 위한 서비스 인터페이스
  * @author 개발팀 김진영
@@ -38,4 +40,13 @@ public interface EgovShopService {
 	 * @exception Exception Exception
 	 */
 	public Map<String, Object> getProductDetailByProductId(String productId) throws Exception;
+	
+	/**
+	 * 카테고리에 대하여 내용을 조회 한다.
+	 * @return List
+	 * 
+	 * @param 
+	 * @exception Exception Exception
+	 */
+	public List<ProductCategoryVO> getCategoryListAll() throws Exception;
 }

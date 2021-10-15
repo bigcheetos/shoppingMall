@@ -34,7 +34,7 @@ public class EgovStockServiceImpl extends EgovAbstractServiceImpl implements Ego
 	private StockDAO stockDAO;
 	
 	/**
-     * 모든 재고를 조회 한다.
+     * 모든 재고를 조회한다.
      *
      * @see egovframework.let.cop.management.service.EgovManagementService
      */
@@ -45,7 +45,7 @@ public class EgovStockServiceImpl extends EgovAbstractServiceImpl implements Ego
 	}
 
 	/**
-     * 재고 Id의 다음 값을 조회 한다.
+     * 재고Id의 다음 값을 조회한다.
      *
      * @see egovframework.let.cop.management.service.EgovManagementService
      */

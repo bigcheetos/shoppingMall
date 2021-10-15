@@ -77,7 +77,7 @@ public class EgovManagementRestController {
         return ret;
     }
     /**
-     * 제품 조회
+     * 상품목록 조회
      *
      * @param request, model
      * @return List<ProductCategoryVO>
@@ -91,7 +91,7 @@ public class EgovManagementRestController {
     }
     
     /**
-     * 카테고리 추가/삭제/수정 저장
+     * 상품 추가/수정/삭제 저장
      *
      * @param paramList, request, model
      * @return List<ProductCategoryVO>
@@ -118,7 +118,7 @@ public class EgovManagementRestController {
     
     
     /**
-     * 카테고리 조회
+     * 카테고리목록 조회
      *
      * @param request, model
      * @return List<ProductCategoryVO>
@@ -132,7 +132,7 @@ public class EgovManagementRestController {
     }
     
     /**
-     * 카테고리 추가/삭제/수정 저장
+     * 카테고리 추가/수정/삭제 저장
      *
      * @param paramList, request, model
      * @return List<ProductCategoryVO>
@@ -158,7 +158,7 @@ public class EgovManagementRestController {
     }
     
     /**
-     * 타입 조회
+     * 유형목록 조회
      *
      * @param request, model
      * @return List<ProductTypeVO>
@@ -172,7 +172,7 @@ public class EgovManagementRestController {
     }
     
     /**
-     * 타입 추가/삭제/수정 저장
+     * 유형 추가/수정/삭제 저장
      *
      * @param paramList, request, model
      * @return List<ProductTypeVO>
@@ -198,7 +198,7 @@ public class EgovManagementRestController {
     }
     
     /**
-     * 재고 조회
+     * 재고목록 조회
      *
      * @param request, model
      * @return List<StockVO>
@@ -212,7 +212,7 @@ public class EgovManagementRestController {
     }
     
     /**
-     * 재고 추가/삭제/수정 저장
+     * 재고 추가/수정/삭제 저장
      *
      * @param paramList, request, model
      * @return List<StockVO>
@@ -237,7 +237,7 @@ public class EgovManagementRestController {
     }    
     
     /**
-     * 입출고 조회
+     * 재고ID에 맞는 입출고목록 조회
      *
      * @param request, model
      * @return List<StockIoVO>
@@ -261,7 +261,7 @@ public class EgovManagementRestController {
     }
     
     /**
-     * 입출고 추가/삭제/수정 저장
+     * 입출고 추가/수정/삭제 저장
      *
      * @param paramList, request, model
      * @return List<StockIoVO>
@@ -311,7 +311,7 @@ public class EgovManagementRestController {
     }
     
     /**
-     * 이미지파일 목록 조회
+     * 이미지파일목록 조회
      *
      * @param request, model
      * @return List<FileVO>
@@ -336,7 +336,7 @@ public class EgovManagementRestController {
     }
     
     /**
-     * 옵션 목록 조회
+     * 옵션목록 조회
      *
      * @param request, model
      * @return List<ProductOptionVO>
@@ -350,7 +350,7 @@ public class EgovManagementRestController {
     }
     
     /**
-     * 판매중인 옵션 목록 조회
+     * 판매가능한 옵션목록 조회
      *
      * @param request, model
      * @return List<ProductOptionVO>
@@ -364,7 +364,7 @@ public class EgovManagementRestController {
     }
     
     /**
-     * 제품 코드로 옵션 목록 조회
+     * 제품코드에 맞는 옵션목록 조회
      *
      * @param request, model
      * @return List<ProductOptionVO>
@@ -384,7 +384,7 @@ public class EgovManagementRestController {
     }
     
     /**
-     * 옵션 추가/삭제/수정 저장
+     * 옵션 추가/수정/삭제 저장
      *
      * @param paramList, request, model
      * @return String
@@ -432,7 +432,7 @@ public class EgovManagementRestController {
     }
     
     /**
-     * 옵션 목록 조회
+     * 상품ID에 맞는 상품상세 조회
      *
      * @param request, model
      * @return List<ProductOptionVO>
@@ -455,7 +455,7 @@ public class EgovManagementRestController {
     }
     
     /**
-     * 제품코드와 연결된 카테고리 조회
+     * 제품코드에 맞는 카테고리목록 조회
      *
      * @param request, model
      * @return List<Map<String, String>>
@@ -477,7 +477,7 @@ public class EgovManagementRestController {
     }
     
     /**
-     * 제품코드와 연결된 이미지파일 조회
+     * 제품코드에 맞는 첨부파일목록 조회
      *
      * @param request, model
      * @return List<Map<String, Object>>
@@ -496,7 +496,7 @@ public class EgovManagementRestController {
     }
     
     /**
-     * 폼디테일 신규/수정 저장
+     * 상품상세 추가/수정 저장
      *
      * @param paramList, request, model
      * @return String
@@ -504,17 +504,6 @@ public class EgovManagementRestController {
     @ResponseBody
     @RequestMapping("/cmm/main/management/registProductDetail.do")
     public String registProductDetail(@RequestBody  List<Map<String, Object>> paramList, HttpServletRequest request, ModelMap model) throws Exception {
-    	
-    	
-    	/*for(Map<String, Object> param : paramList) {
-    		Set<String> keySet = param.keySet();
-    		
-    		for(String key : keySet) {
-    			System.out.println("key: " + key);
-    			System.out.println("value: " + param.get(key));
-    			System.out.println();
-    		}
-    	}*/
     	
     	String message = "";
     	

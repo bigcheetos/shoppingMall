@@ -143,7 +143,7 @@ const PRODUCT_INTRODUCTION_LIST    =
 	,'관엽/화분'
 	,'동양란'
 	,'서양란'
-	,'꽃박스'];
+	,'꽃상자'];
 
 const PRODUCT_DELIVERYGUIDE = "<strong><span style='FONT-SIZE:11pt'>[배송이 가능한 시간 ]</span></strong><br>"
 +"<strong>평   일</strong> : 오전 8:30~오후 7:00<br>"
@@ -178,15 +178,28 @@ const PRODUCT_NOTICE 		= "<strong><font color='#ff0000'>★ 실제상품과 사�
 
 const PRODUCT_INTRODUCTION_BASKET = 
 	['소중한 사람에게 당신의 마음을 표현하세요'
-	,'편안한 매력을 가진 수국 꽃바구니입니다. 분홍색 수국의 꽃말은 소녀의 꿈이라 합니다.'];
-
-const PRODUCT_INTRODUCTION_BOUQUET = [];
-const PRODUCT_INTRODUCTION_HWREATH = [];
-const PRODUCT_INTRODUCTION_DWREATH = [];
-const PRODUCT_INTRODUCTION_FOLIAGE = [];
-const PRODUCT_INTRODUCTION_EORCHID = [];
-const PRODUCT_INTRODUCTION_WORCHID = [];
-const PRODUCT_INTRODUCTION_BOX = [];
+	,'편안한 매력을 가진 수국 꽃바구니입니다. 분홍색 수국의 꽃말은 소녀의 꿈이라 합니다'];
+const PRODUCT_INTRODUCTION_BOUQUET = 
+	['라인감이 이쁜 핑크 꽃다발'
+	,'마음을 녹여버릴 달콤한 초콜릿같은 꽃다발'];
+const PRODUCT_INTRODUCTION_HWREATH = 
+	['지인의 좋은 일에 기뻐하고 축하하는 마음을 표현하세요'
+	,'결혼개업을 축하할 때 필요한 화환'];
+const PRODUCT_INTRODUCTION_DWREATH = 
+	['삼가 고인의 명복을 빕니다'
+	,'사람의 죽음에 대하여 삼가 슬픈 마음을 나타낼 때 필요한 화환'
+	,'싱싱한 하얀 국화와 포인트 꽃을 통해 품격있게 디자인된 화환'];
+const PRODUCT_INTRODUCTION_FOLIAGE = 
+	['사계절 싱그러운 잎을 볼 수 있어 실내에서 많이 기르는 식물'
+	,'공기 정화로 인기 좋은 식물'];
+const PRODUCT_INTRODUCTION_EORCHID = 
+	['기르기 쉽고 은은한 향기와 함께 번식으로도 으뜸인 철골수심'
+	,'잎이 넓고 풍성한 느낌이 드는 금홍. 꽃에서 은은한 향기를 풍기는 매력이 있다'];
+const PRODUCT_INTRODUCTION_WORCHID = 
+	['서양란은 원산지에 상관없이 주로 영국을 중심으로 서양에서 개발 보급된 난입니다'
+	,'외유내강형 여성을 닮은 호접란. \'행복이 날아온다, 당신을 사랑합니다\'라는 꽃말을 가지고 있다'];
+const PRODUCT_INTRODUCTION_BOX = 
+	['상큼발랄한 오렌지 빛을 머금은 꽃상자'];
 
 var gfn_getMaterialList = function () {
 	return PRODUCT_MATERIAL_LIST;

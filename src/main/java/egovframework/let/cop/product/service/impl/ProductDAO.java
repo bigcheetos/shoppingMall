@@ -12,7 +12,7 @@ import egovframework.let.cop.shop.service.ShopSearchVO;
 public class ProductDAO extends EgovComAbstractDAO{
 	
 	/**
-     * 제품 목록을 조회 한다.
+     * 상품 목록을 조회한다.
      *
      * @param 
      * @return List<ProductVO>
@@ -23,7 +23,7 @@ public class ProductDAO extends EgovComAbstractDAO{
 	}
 	
 	/**
-     * 검색조건에 맞는 제품 목록을 조회 한다.
+     * 검색조건에 맞는 상품 목록을 조회한다.
      *
      * @param 
      * @return List<ProductVO>
@@ -34,7 +34,7 @@ public class ProductDAO extends EgovComAbstractDAO{
 	}
 	
 	/**
-     * 제품Id를 이용해 제품을 조회 한다.
+     * 상품Id를 통해 상품을 조회한다.
      *
      * @param String
      * @return ProductVO
@@ -45,7 +45,7 @@ public class ProductDAO extends EgovComAbstractDAO{
 	}
 	
 	/**
-     * 제품 Id 최고값 다음 Id를 조회한다.
+     * DB에 존재하는 상품Id의 최고값+1을 조회한다.
      *
      * @param 
      * @return String
@@ -57,7 +57,7 @@ public class ProductDAO extends EgovComAbstractDAO{
 	}
 	
 	/**
-     * 제품를 추가한다.
+     * 상품을 추가한다.
      *
      * @param ProductVO
      * @return 
@@ -68,7 +68,7 @@ public class ProductDAO extends EgovComAbstractDAO{
 	}
 	
 	/**
-     * 제품를 수정한다.
+     * 상품을 수정한다.
      *
      * @param ProductVO
      * @return 
@@ -79,7 +79,7 @@ public class ProductDAO extends EgovComAbstractDAO{
 	}
 	
 	/**
-     * 제품를 삭제한다.
+     * 상품을 삭제한다.
      *
      * @param ProductVO
      * @return 

@@ -10,7 +10,7 @@ import egovframework.let.cop.product.service.StockIoVO;
 @Repository("StockIoDAO") 
 public class StockIoDAO extends EgovComAbstractDAO {
 	/**
-     * 입출고 목록을 조회 한다.
+     * 재고Id를 통해 입출고 목록을 조회한다.
      *
      * @param String stockId
      * @return List<StockIoVO>
@@ -21,7 +21,7 @@ public class StockIoDAO extends EgovComAbstractDAO {
 	}
 	
 	/**
-     * 입고 목록을 조회 한다.
+     * 재고Id를 통해 입고 목록을 조회한다.
      *
      * @param String stockId
      * @return List<StockIoVO>
@@ -32,7 +32,7 @@ public class StockIoDAO extends EgovComAbstractDAO {
 	}
 	
 	/**
-     * 출고 목록을 조회 한다.
+     * 재고Id를 통해 출고 목록을 조회한다.
      *
      * @param String stockId
      * @return List<StockIoVO>
@@ -43,7 +43,7 @@ public class StockIoDAO extends EgovComAbstractDAO {
 	}
 	
 	/**
-     * 재고 최고 Id 다음 Id를 조회한다.
+     * 입출고Id의 최고값 다음 값을 조회한다.
      *
      * @param 
      * @return String

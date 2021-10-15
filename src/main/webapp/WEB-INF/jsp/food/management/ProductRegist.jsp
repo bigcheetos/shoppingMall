@@ -598,7 +598,7 @@ input[type=number] {
     <script src="/js/mixitup.min.js"></script>
     <script src="/js/owl.carousel.min.js"></script>
     <script src="/js/main.js"></script>
-    
+    <script src="/js/common/productInformation.js"></script>
 	<script src="/js/common/commonFunctions.js"></script>
     <script src="/js/management/productRegist.js"></script>
 </body>

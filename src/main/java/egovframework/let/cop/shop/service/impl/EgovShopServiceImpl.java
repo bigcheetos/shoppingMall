@@ -10,8 +10,10 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import egovframework.let.cop.product.service.EgovProductCategoryService;
 import egovframework.let.cop.product.service.EgovProductDetailService;
 import egovframework.let.cop.product.service.EgovProductService;
+import egovframework.let.cop.product.service.ProductCategoryVO;
 import egovframework.let.cop.product.service.ProductDetailVO;
 import egovframework.let.cop.product.service.ProductVO;
 import egovframework.let.cop.shop.service.EgovShopService;
@@ -44,12 +46,20 @@ public class EgovShopServiceImpl extends EgovAbstractServiceImpl implements Egov
 	@Resource(name = "EgovProductDetailService")
 	private EgovProductDetailService productDetailService;
 	
+	@Resource(name = "EgovProductCategoryService")
+	private EgovProductCategoryService categoryService;
+	
 	private static final DecimalFormat DECIMAL_FORMATTER = new DecimalFormat("###,###.##");
 	
 	protected String formatting(Object o) {
 		return DECIMAL_FORMATTER.format(Double.valueOf((String)(o)));
 	}
 	
+	/**
+     * 검색조건에 맞는 상품목록을 조회한다.
+     *
+     * @see egovframework.let.cop.shop.service.EgovShopService
+     */
 	@Override
 	public List<Map<String, Object>> getProductListOnShopBySearchVO(ShopSearchVO shopSearchVO) throws Exception {
 		// TODO Auto-generated method stub
@@ -87,7 +97,12 @@ public class EgovShopServiceImpl extends EgovAbstractServiceImpl implements Egov
 		
 		return returnedMapList;
 	}
-
+	
+	/**
+     * 상품Id로 상품상세정보를 가져온다.
+     *
+     * @see egovframework.let.cop.shop.service.EgovShopService
+     */
 	@Override
 	public Map<String, Object> getProductDetailByProductId(String productId) throws Exception {
 		// TODO Auto-generated method stub
@@ -113,6 +128,17 @@ public class EgovShopServiceImpl extends EgovAbstractServiceImpl implements Egov
 		returnedMap.put("productRatio", (int)(100 - productRatio*100));
 		
 		return returnedMap;
+	}
+	
+	/**
+     * 모든 카테고리를 가져온다.
+     *
+     * @see egovframework.let.cop.shop.service.EgovShopService
+     */
+	@Override
+	public List<ProductCategoryVO> getCategoryListAll() throws Exception {
+		// TODO Auto-generated method stub
+		return categoryService.getCategoryListAll();
 	}
 
 }

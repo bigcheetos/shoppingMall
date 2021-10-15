@@ -30,11 +30,11 @@
                             </ul>
                         </div>
                         <div class="header__top__right__auth" style = "padding: 0px 20px 0px 20px;">
-                            <a href="<c:url value='/uat/uia/LoginUsr.do'/>"><i class="fa fa-user"></i> Login </a>
+                            <a href="/uat/uia/LoginUsr.do"><i class="fa fa-user"></i> Login </a>
                         </div>
                         
                          <div class="header__top__right__auth">
-                            <a href="<c:url value='/user/com/userSignup.do'/>"><i class="fas fa-user-plus"></i> sign up</a>
+                            <a href="/user/com/userSignup.do"><i class="fas fa-user-plus"></i> sign up</a>
                         </div>
                     </div>
                 </div>
@@ -51,16 +51,16 @@
             <div class="col-lg-6">
                 <nav class="header__menu">
                     <ul>
-                        <li class="active"><a href="./index.html">Home</a>
+                        <li class="active"><a href="/cmm/main/home/intro.do">Home</a>
                         	<ul class="header__menu__dropdown">
                                 <li><a href="/cmm/main/home/intro.do">소개</a></li>
                                 <li><a href="/cmm/main/home/standard.do">상품기준</a></li>
                                 <li><a href="/cmm/main/home/event.do">이벤트/프로모션</a></li>
                             </ul>
                         </li>
-                        <li><a href="./shop-grid.html">Shop</a>
+                        <li><a href="/cmm/main/shop/discountShop.do">Shop</a>
                         	 <ul class="header__menu__dropdown">
-                                <li><a href="./shoping-grid.html">할인관</a></li>
+                                <li><a href="/cmm/main/shop/discountShop.do">할인관</a></li>
                                 <li><a href="">베스트</a></li>
                                 <li><a href="">신상품</a></li>
                             </ul>
@@ -80,6 +80,18 @@
                                 <li><a href="">FAQ</a></li>
                                 <li><a href="">1:1 문의</a></li>
                                 <li><a href="">오시는 길</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="/cmm/main/management/productManagement.do">Management</a>
+                        	<ul class="header__menu__dropdown">
+                                <li><a href="/cmm/main/management/productManagement.do">상품</a></li>
+                                <li><a href="/cmm/main/management/productRegist.do">상품등록</a></li>
+                                <li><a href="/cmm/main/management/stockManagement.do">재고</a></li>
+                                <li><a href="/cmm/main/management/stockIoManagement.do">입출고</a></li>
+                                <li><a href="/cmm/main/management/productOptionManagement.do">옵션</a></li>
+                                <li><a href="/cmm/main/management/productCategoryManagement.do">카테고리</a></li>
+                                <li><a href="/cmm/main/management/productTypeManagement.do">유형</a></li>
+                                <li><a href="/cmm/main/management/atchFileManagement.do">파일</a></li>
                             </ul>
                         </li>
                     </ul>

@@ -31,7 +31,7 @@ import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 import egovframework.rte.fdl.string.EgovStringUtil;
 
 /**
- * 제품 관리를 위한 서비스 구현 클래스
+ * 상품 관리를 위한 서비스 구현 클래스
  * @author 개발팀 김진영
  * @since 2021.08.25
  * @version 1.0
@@ -73,10 +73,10 @@ public class EgovManagementServiceImpl extends EgovAbstractServiceImpl implement
 	
 	private static final ObjectMapper objectMapper = new ObjectMapper();
 	
-	/**	제품 시작	**/
+	/**	상품 시작	**/
 	
 	/**
-     * 모든 제품을 조회 한다.
+     * 모든 상품을 조회 한다.
      *
      * @see egovframework.let.cop.management.service.EgovManagementService
      */
@@ -87,7 +87,7 @@ public class EgovManagementServiceImpl extends EgovAbstractServiceImpl implement
 	}
 
 	/**
-     * 제품Id로 제품을 하나 조회한다.
+     * 상품Id로 상품을 하나 조회한다.
      *
      * @see egovframework.let.cop.management.service.EgovManagementService
      */
@@ -98,7 +98,7 @@ public class EgovManagementServiceImpl extends EgovAbstractServiceImpl implement
 	}
 	
 	/**
-     * 컨트롤러에서 넘겨받은 제품 리스트를 신규, 수정, 삭제로 분류하여 저장한다.
+     * 상품을 저장한다.
      *
      * @see egovframework.let.cop.management.service.EgovManagementService
      * #addProduct(egovframework.let.cop.product.service.ProductVO)
@@ -156,11 +156,11 @@ public class EgovManagementServiceImpl extends EgovAbstractServiceImpl implement
     	}
 	}
 	
-	/**	제품 끝	**/
-	/**	제품 상세정보 시작	**/
+	/**	상품 끝	**/
+	/**	상품 상세정보 시작	**/
 	
 	/**
-     * 제품상세을 조회 한다.
+     * 상품상세을 조회 한다.
      *
      * @see egovframework.let.cop.management.service.EgovManagementService
      */
@@ -172,7 +172,7 @@ public class EgovManagementServiceImpl extends EgovAbstractServiceImpl implement
 	}
 	
 	/**
-     * 제품상세를 저장한다.
+     * 상품상세를 저장한다.
      *
      * @see egovframework.let.cop.management.service.EgovManagementService
      */
@@ -189,8 +189,8 @@ public class EgovManagementServiceImpl extends EgovAbstractServiceImpl implement
 			boolean hasParamedProductId = !EgovStringUtil.isEmpty(paramedProductId);
 			boolean hasParamedProductCode = !EgovStringUtil.isEmpty(paramedProductCode);
 			
-			String productId = hasParamedProductId?paramedProductId:productService.getProductNextId();	// 패러미터 받은게 없으면 DB의 제품ID 최고값 + 1
-    		String productCode = hasParamedProductCode?paramedProductCode:productId;	// 패러미터 받은게 없으면 제품ID값과 동일하게
+			String productId = hasParamedProductId?paramedProductId:productService.getProductNextId();	// 패러미터 받은게 없으면 DB의 상품ID 최고값 + 1
+    		String productCode = hasParamedProductCode?paramedProductCode:productId;	// 패러미터 받은게 없으면 상품ID값과 동일하게
     		
     		ProductDetailVO productDetailVO = new ProductDetailVO();
 			ProductVO productVO = new ProductVO();
@@ -224,7 +224,7 @@ public class EgovManagementServiceImpl extends EgovAbstractServiceImpl implement
 				optionList = Arrays.asList(objectMapper.readValue(parmedOptionList, ProductOptionVO[].class));
 			}
 			
-			// 패러미터로 받은 제품ID가 있는지 체크 -> 제품에 신규/수정 데이터 넣기
+			// 패러미터로 받은 상품ID가 있는지 체크 -> 상품에 신규/수정 데이터 넣기
 			if(!hasParamedProductId) {
 				productVO = productDetailVO.getProductVO();
 				productVO.setProductStatus("작성중");
@@ -243,7 +243,7 @@ public class EgovManagementServiceImpl extends EgovAbstractServiceImpl implement
 				productService.modifyProduct(productVO);
 			}
 			
-			// 패러미터로 받은 제품코드가 제품상세 테이블에 있는지 체크 -> 제품상세에 신규/수정 데이터 넣기
+			// 패러미터로 받은 상품코드가 상품상세 테이블에 있는지 체크 -> 상품상세에 신규/수정 데이터 넣기
 			if(!productDetailService.checkProductIdFromProductDetail(productId)) {
 				productDetailService.addProductDetail(productDetailVO);
 			} else {
@@ -295,7 +295,7 @@ public class EgovManagementServiceImpl extends EgovAbstractServiceImpl implement
 	}
 	
 	/**
-     * 제품상세와 연결된 옵션를 조회 한다.
+     * 상품코드로 옵션목록을 조회한다.
      *
      * @see egovframework.let.cop.management.service.EgovManagementService
      */
@@ -305,7 +305,7 @@ public class EgovManagementServiceImpl extends EgovAbstractServiceImpl implement
 		return productDetailService.getOptionListByProductCode(productCode);
 	}
 	/**
-     * 제품코드가 있는지 확인한다.
+     * 넘겨받은 상품코드로 일치하는 상품코드가 DB에 있는지 확인한다.
      *
      * @see egovframework.let.cop.management.service.EgovManagementService
      */
@@ -315,7 +315,7 @@ public class EgovManagementServiceImpl extends EgovAbstractServiceImpl implement
 		return productDetailService.checkProductCode(productCode);
 	}
 	/**
-     * 제품상세와 연결된 카테고리를 조회 한다.
+     * 상품코드로 체크된 카테고리 목록을 조회한다.
      *
      * @see egovframework.let.cop.management.service.EgovManagementService
      */
@@ -325,7 +325,7 @@ public class EgovManagementServiceImpl extends EgovAbstractServiceImpl implement
 		return productDetailService.getCheckedCategoryListByProductCode(productCode);
 	}
 	/**
-     * 제품상세와 연결된 이미지파일을 조회 한다.
+     * 상품코드로 이미지파일 목록을 조회한다.
      *
      * @see egovframework.let.cop.management.service.EgovManagementService
      */
@@ -335,11 +335,11 @@ public class EgovManagementServiceImpl extends EgovAbstractServiceImpl implement
 		return productDetailService.getImgFileListByProductCode(productCode);
 	}
 	
-	/**	제품 상세정보 끝	**/
+	/**	상품 상세정보 끝	**/
 	/**	카테고리 시작	**/
 	
 	/**
-     * 모든 카테고리를 조회 한다.
+     * 모든 카테고리을 조회한다.
      *
      * @see egovframework.let.cop.management.service.EgovManagementService
      */
@@ -350,9 +350,9 @@ public class EgovManagementServiceImpl extends EgovAbstractServiceImpl implement
 	}
 	
 	/**
-     * 컨트롤러에서 넘겨받은 카테고리 리스트를 신규, 수정, 삭제로 분류한다.
+     * 카테고리를 저장한다.
      *
-     * 
+     * @see egovframework.let.cop.management.service.EgovManagementService
      */
 	@Override
 	public void saveCategoryList(List<Map<String, Object>> paramList) throws Exception {
@@ -386,7 +386,7 @@ public class EgovManagementServiceImpl extends EgovAbstractServiceImpl implement
 	/**	타입 시작	**/
 	
 	/**
-     * 모든 타입을 조회 한다.
+     * 모든 유형을 조회한다.
      *
      * @see egovframework.let.cop.management.service.EgovManagementService
      */
@@ -397,9 +397,9 @@ public class EgovManagementServiceImpl extends EgovAbstractServiceImpl implement
 	}
 
 	/**
-     * 컨트롤러에서 넘겨받은 타입 목록을 신규, 수정, 삭제로 분류한다.
+     * 유형을 저장한다.
      *
-     * 
+     * @see egovframework.let.cop.management.service.EgovManagementService
      */
 	@Override
 	public void saveTypeList(List<Map<String, Object>> paramList) throws Exception {
@@ -432,7 +432,7 @@ public class EgovManagementServiceImpl extends EgovAbstractServiceImpl implement
 	/**	재고 시작	**/
 	
 	/**
-     * 모든 재고를 조회 한다.
+     * 모든 재고를 조회한다.
      *
      * @see egovframework.let.cop.management.service.EgovManagementService
      */
@@ -443,9 +443,9 @@ public class EgovManagementServiceImpl extends EgovAbstractServiceImpl implement
 	}
 
 	/**
-     * 컨트롤러에서 넘겨받은 재고 리스트를 신규, 수정, 삭제로 분류한다.
+     * 재고를 저장한다.
      *
-     * 
+     * @see egovframework.let.cop.management.service.EgovManagementService
      */
 	@Override
 	public void saveStockList(List<Map<String, Object>> paramList) throws Exception {
@@ -477,7 +477,7 @@ public class EgovManagementServiceImpl extends EgovAbstractServiceImpl implement
 	/**	입출고 시작	**/
 	
 	/**
-     * 재고에 대한 입출고 목록을 조회한다.
+     * 재고Id로 입출고 목록을 조회한다.
      *
      * @see egovframework.let.cop.management.service.EgovManagementService
      */
@@ -488,9 +488,9 @@ public class EgovManagementServiceImpl extends EgovAbstractServiceImpl implement
 	}
 	
 	/**
-     * 컨트롤러에서 넘겨받은 입출고 리스트를 신규, 수정, 삭제로 분류한다.
+     * 입출고를 저장한다.
      *
-     * 
+     * @see egovframework.let.cop.management.service.EgovManagementService
      */
 	@Override
 	public void saveStockIoList(List<Map<String, Object>> paramList) throws Exception {
@@ -541,7 +541,7 @@ public class EgovManagementServiceImpl extends EgovAbstractServiceImpl implement
 	}
 	
 	/**
-     * 판매 가능한 옵션을 조회 한다.
+     * 판매 가능한 옵션목록을 조회한다.
      *
      * @see egovframework.let.cop.management.service.EgovManagementService
      */
@@ -551,7 +551,7 @@ public class EgovManagementServiceImpl extends EgovAbstractServiceImpl implement
 	};
 	
 	/**
-     * 컨트롤러에서 넘겨받은 옵션 목록을 신규, 수정, 삭제로 분류한다.
+     * 옵션을 저장한다.
      *
      * @see egovframework.let.cop.management.service.EgovManagementService
      */

@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springmodules.validation.commons.DefaultBeanValidator;
 
 import egovframework.com.cmm.ComDefaultVO;
-import egovframework.let.cop.management.service.EgovManagementService;
 import egovframework.let.cop.product.service.ProductCategoryVO;
 import egovframework.let.cop.shop.service.EgovShopService;
 import egovframework.let.cop.shop.service.ShopSearchVO;
@@ -29,9 +28,6 @@ public class EgovShopController {
 	 */
 	@Resource(name = "EgovShopService")
 	private EgovShopService shopService;
-	
-	@Resource(name = "EgovManagementService")
-	private EgovManagementService managementService;
 	
 	@Autowired
     private DefaultBeanValidator beanValidator;
@@ -67,7 +63,9 @@ public class EgovShopController {
         return ret;
     }
 	
-    
+    /**
+     * 판매샵 > 할인관
+     */
     @RequestMapping("/cmm/main/shop/discountShop.do")
     public String viewDiscountShop(HttpServletRequest request, ModelMap model) throws Exception {
     	// 패러미터 받기
@@ -88,7 +86,7 @@ public class EgovShopController {
     	
     	// 데이터 조회
     	List<Map<String, Object>> productList = shopService.getProductListOnShopBySearchVO(shopSearchVO);
-    	List<ProductCategoryVO> categoryList = managementService.getCategoryListAll();
+    	List<ProductCategoryVO> categoryList = shopService.getCategoryListAll();
     	
     	// 
     	model.addAttribute("searchWord", searchWord);
@@ -99,7 +97,9 @@ public class EgovShopController {
     	
     	return "food/shop/DiscountShop";
     }
-    
+    /**
+     * 판매샵 > 할인관 > 상품상세정보보기
+     */
     @RequestMapping("/cmm/main/shop/discountShopDetail.do")
     public String viewDiscountShopDetail(HttpServletRequest request, ModelMap model) throws Exception {
     	String productId = request.getParameter("productId");

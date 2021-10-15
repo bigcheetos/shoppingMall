@@ -101,8 +101,8 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.23.0/moment.min.js"></script>
 	<script src="https://unpkg.com/ag-grid/dist/ag-grid.min.js"></script>
 	
-	<script src="/js/react/agGridUtil.js"></script>
-	<script src="/js/react/commonFunctions.js"></script>
+	<script src="/js/common/agGridUtil.js"></script>
+	<script src="/js/common/commonFunctions.js"></script>
 	<script src="/js/management/productManagement.js"></script>
 </body>
 
