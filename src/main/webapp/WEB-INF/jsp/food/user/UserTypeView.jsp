@@ -1,44 +1,39 @@
-
-
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ page import ="egovframework.com.cmm.LoginVO" %>
 
 <!DOCTYPE html>
 <html>
-	<head>
-		<title><spring:message code="main.sitename" text="재능기부장학금" /></title>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width">
-		<!--[if lt IE 9]>
-		<script src="js/html5shiv.js"></script>
-		<script src="js/css3-mediaqueries.js"></script>
-		<![endif]-->
-		<link rel="stylesheet" type="text/css" href="<c:url value='/'/>css/common.css"/>
-		<script type="text/javascript" src="<c:url value='/js/jquery.min.js' />" ></script>
-	<script type="text/javascript">
-	
-  /* 	function registTypeD(){
-		var member = document.getElementById("member").value = "M"
-		console.log(member);
-		document.form.action = "<c:url value='user/com/userSbscrbRegist.do'/>";
-	  	document.form.submit();	
-	}
-	
-	function registTypeB(){
-		var admin = document.getElementById("admin").value = "B"
-		console.log(admin);
-		document.form.action = "<c:url value='user/com/userSbscrbRegist.do'/>";
-	  	document.form.submit();	
-	}  */
-	 
-	</script>
-		
-    </head>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Ogani Template">
+    <meta name="keywords" content="Ogani, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
+    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+    
+    <title>food</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="/css/food/cartlist.css" type="text/css"> 
+     <link rel="stylesheet" href="/css/food/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/food/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="/css/food/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="/css/food/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/food/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/food/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/food/style.css" type="text/css"> 
+</head>
 	<body>
+	    <jsp:include page="/WEB-INF/jsp/food/sub/FoodMainHeader.jsp"/> 
+	
 		<div id="wrap"> 
 			<%-- <div class="header"> 
 				<div class="top">
@@ -77,8 +72,21 @@
             </div> <!--content-->
         </form>
         </div><!--wrap-->
-		<!--footer Start-->
-<%-- 		<div class="footer"><c:import url="/EgovPageLink.do?link=main/inc/IncFooter" /></div>
- --%>		<!--footer End-->
+
+       <!-- Js Plugins -->
+    <script src="/js/jquery-3.3.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/jquery.nice-select.min.js"></script>
+    <script src="/js/jquery-ui.min.js"></script>
+    <script src="/js/jquery.slicknav.js"></script>
+    <script src="/js/mixitup.min.js"></script>
+    <script src="/js/owl.carousel.min.js"></script>
+    <script src="/js/main.js"></script>
+
+
+
+ <!-- Footer Section Begin -->
+    <jsp:include page="/WEB-INF/jsp/food/sub/FoodMainFooter.jsp"/> 
+    <!-- Footer Section End -->
     </body>
 </html>

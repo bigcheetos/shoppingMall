@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Language" content="ko" >
-<title>표준프레임워크 경량환경 홈페이지 템플릿</title>
+<title>올인원 관리자</title>
 <link href="<c:url value='/'/>css/common.css" rel="stylesheet" type="text/css" >
 </head>
 <body>
@@ -28,7 +28,7 @@
 	<div id="main_container">
 		<div class="lefttitle_image">
 		    <img src="<c:url value='/images/index/main_titleimage.gif' />" 
-		         alt="경량환경 내부업무 홈페이지/전자정부 표준프레임워크의 경량환경 내부 업무에 대한 최신정보와 기술을 제공하고 있습니다." />
+		         alt="" />
 		</div>
 		
 		<!-- code layer -->

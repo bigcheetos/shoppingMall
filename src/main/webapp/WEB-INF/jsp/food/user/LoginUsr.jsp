@@ -13,6 +13,16 @@
 <title>comprar - 로그인</title>
 <link href="<c:url value='/'/>css/common.css" rel="stylesheet" type="text/css" >
 <link href="<c:url value='/'/>css/login.css" rel="stylesheet" type="text/css" >
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="/css/food/bootstrap.min.css" type="text/css">
+<link rel="stylesheet" href="/css/food/elegant-icons.css" type="text/css">
+<link rel="stylesheet" href="/css/food/nice-select.css" type="text/css">
+<link rel="stylesheet" href="/css/food/jquery-ui.min.css" type="text/css">
+<link rel="stylesheet" href="/css/food/owl.carousel.min.css" type="text/css">
+<link rel="stylesheet" href="/css/food/slicknav.min.css" type="text/css">
+<link rel="stylesheet" href="/css/food/style.css" type="text/css"> 
 <script type="text/javascript">
 function checkLogin(memGubun) {
     // 일반회원
@@ -128,7 +138,7 @@ function goRegiUsr() {
 </script>
 </head>
 <body  onload="fnInit();">
-<noscript>자바스크립트를 지원하지 않는 브라우저에서는 일부 기능을 사용하실 수 없습니다.</noscript>    
+    <jsp:include page="/WEB-INF/jsp/food/sub/FoodMainHeader.jsp"/> 
 <!-- 전체 레이어 시작 -->
 <div id="wrap">
     <!-- header 시작 -->
@@ -197,10 +207,8 @@ function goRegiUsr() {
             <!-- //content 끝 -->    
     </div>  
     <!-- //container 끝 -->
-    <!-- footer 시작 -->
-<%--     <div id="footer"><c:import url="/EgovPageLink.do?link=main/inc/EgovIncFooter" /></div>
- --%>    <!-- //footer 끝 -->
-</div>
+    <jsp:include page="/WEB-INF/jsp/food/sub/FoodMainFooter.jsp"/> 
+
 <!-- //전체 레이어 끝 -->
 </body>
 </html>

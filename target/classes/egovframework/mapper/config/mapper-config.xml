@@ -8,6 +8,9 @@
 		<setting name="mapUnderscoreToCamelCase" value="true"></setting>
 		<!--  파라미터에 Null 값이 있을 경우 에러 처리 -->
 		<setting name="jdbcTypeForNull" value="VARCHAR"></setting>
+		<setting name="returnInstanceForEmptyRow" value="true"></setting>
+		<setting name="useGeneratedKeys" value="true"></setting>
+		
 	</settings>
 	
 	<!-- Type Aliases 설정-->
@@ -16,7 +19,6 @@
 		<typeAlias alias="FileVO"			type="egovframework.com.cmm.service.FileVO" />
 		<typeAlias alias="ComDefaultCodeVO" type="egovframework.com.cmm.ComDefaultCodeVO" />
 		<typeAlias alias="comDefaultVO"		type="egovframework.com.cmm.ComDefaultVO" />
-		<typeAlias alias="LoginVO"		    type="egovframework.com.cmm.LoginVO" />
 	</typeAliases>
     
 </configuration>

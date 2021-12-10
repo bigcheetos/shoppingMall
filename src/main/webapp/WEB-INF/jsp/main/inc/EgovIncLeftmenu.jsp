@@ -14,7 +14,7 @@ String menuNo = ((String)session.getAttribute("menuNo")!=null)?(String)session.g
 			<a href="javascript:fn_main_headPageMove('11','main/sample_menu/EgovAboutSite')">사이트관리</a>
 			<ul>
 				<li class="dept02"><a href="javascript:fn_main_headPageMove('11','main/sample_menu/EgovAboutSite')">공지사항</a></li>	
-				<li class="dept02"><a href="javascript:fn_main_headPageMove('12','main/sample_menu/EgovHistory')">질문게시판</a></li>
+				<li class="dept02"><a href="javascript:fn_main_headPageMove('12','main/sample_menu/EgovHistory')">1:1 질문게시판</a></li>
 				<li class="dept02"><a href="javascript:fn_main_headPageMove('13','main/sample_menu/EgovOrganization')">이벤트/프로모션</a></li>
 				<li class="dept02"><a href="javascript:fn_main_headPageMove('14','main/sample_menu/EgovLocation')">대시보드</a></li>
 			</ul> 
@@ -35,7 +35,7 @@ String menuNo = ((String)session.getAttribute("menuNo")!=null)?(String)session.g
 			<ul>
 				<li class="dept02"><a href="javascript:fn_main_headPageMove('31','main/sample_menu/EgovDownload')">상품등록/수정</a></li>
 				<li class="dept02"><a href="javascript:fn_main_headPageMove('32','main/sample_menu/EgovQA')">재고관리</a></li>
-				<li class="dept02"><a href="javascript:fn_main_headPageMove('33','main/sample_menu/EgovService')"></a></li>
+				<li class="dept02"><a href="javascript:fn_main_headPageMove('33','main/sample_menu/EgovService')">입출고</a></li>
 			</ul>
 		</li>
 		<% } %>
@@ -60,6 +60,17 @@ String menuNo = ((String)session.getAttribute("menuNo")!=null)?(String)session.g
 				<li class="dept02"><a href="javascript:fn_main_headPageAction('54','cop/com/selectBBSUseInfs.do')">게시판사용관리</a></li> 
 				<li class="dept02"><a href="javascript:fn_main_headPageAction('55','cop/bbs/selectBoardList.do?bbsId=BBSMSTR_AAAAAAAAAAAA')">공지사항관리</a></li>
                 <li class="dept02"><a href="javascript:fn_main_headPageAction('56','cop/bbs/selectBoardList.do?bbsId=BBSMSTR_BBBBBBBBBBBB')">사이트갤러리관리</a></li>
+			</ul> 
+		</li>
+		<% } %>
+		<% if (menuNo.indexOf("6")== 0) {%>
+		<li class="leftmenu_dept01">
+			<a href="javascript:fn_main_headPageMove('11','main/sample_menu/EgovAboutSite')">관리</a>
+			<ul>
+				<li class="dept02"><a href="javascript:fn_main_headPageMove('11','main/sample_menu/EgovAboutSite')">공지사항</a></li>	
+				<li class="dept02"><a href="javascript:fn_main_headPageMove('12','main/sample_menu/EgovHistory')">질문게시판</a></li>
+				<li class="dept02"><a href="javascript:fn_main_headPageMove('13','main/sample_menu/EgovOrganization')">이벤트/프로모션</a></li>
+				<li class="dept02"><a href="javascript:fn_main_headPageMove('14','main/sample_menu/EgovLocation')">대시보드</a></li>
 			</ul> 
 		</li>
 		<% } %>

@@ -163,7 +163,11 @@
             <artifactId>jackson-databind</artifactId>
             <version>2.5.1</version>
         </dependency> 
-		
+		<dependency>
+		    <groupId>org.hibernate</groupId>
+		    <artifactId>hibernate-validator</artifactId>
+		    <version>5.2.4.Final</version>
+		</dependency>
 		<!-- <dependency>
 			<groupId>org.hsqldb</groupId>
 			<artifactId>hsqldb</artifactId>
@@ -183,6 +187,12 @@
 			<artifactId>log4jdbc3</artifactId>
 			<version>1.1</version>
 		</dependency>
+		
+		<dependency>
+		   <groupId>org.bgee.log4jdbc-log4j2</groupId>
+		   <artifactId>log4jdbc-log4j2-jdbc4</artifactId>
+		   <version>1.16</version>
+		  </dependency>
 		<!-- oracle 10g driver -->
 		<!--
 		<dependency>

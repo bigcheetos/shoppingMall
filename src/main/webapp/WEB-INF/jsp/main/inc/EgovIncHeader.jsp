@@ -2,6 +2,13 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import ="egovframework.com.cmm.LoginVO" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet"> <!--CDN 링크 -->
+</head>
 <div id="skipNav" class="invisible">
     <dl>
         <dt>콘텐츠 바로가기</dt>
@@ -9,23 +16,21 @@
         <dd><a href="#topnavi">메인메뉴 바로가기</a></dd>
     </dl>
 </div>
-<!-- 행정안전부 로고 및 타이틀 시작 -->
+
 <div id="logoarea">
     <h1><a href="<c:url value='/cmm/main/mainPage.do' />"><img src="<c:url value='/images/header/bidtLogo.png' />" alt="템플릿 샘플 홈페이지" height="30" /></a></h1>
 </div>
-<!-- 
-<div id="nia_logo">
-    <img src="<c:url value='/images/header/limg_lt_nia_logo.gif' />" alt="NIA한국정보화진흥원" />
-</div>
- -->
+
 <div id="project_title"><span class="maintitle">올인원 </span><strong>관리자 페이지 </strong>
 </div>
-<!-- //행정안전부 로고 및 타이틀 끝 -->
+
 <div class="header_login">
+   <div> <a href="/cmm/main/mainPage.do" ><i class="fas fa-home"></i></a></div>
     <%
        LoginVO loginVO = (LoginVO)session.getAttribute("LoginVO"); 
        if(loginVO == null){ 
     %>
+    
     <div id="header_loginname">
         <a href="#" ></a>
     </div>
@@ -48,3 +53,4 @@
     </ul>
     <% } %>    
 </div>
+</html>

@@ -55,7 +55,7 @@ public class EgovLoginController {
 	 */
 	@RequestMapping(value = "/uat/uia/LoginUsr.do")
 	public String loginUsrView(@ModelAttribute("loginVO") LoginVO loginVO, HttpServletRequest request, HttpServletResponse response, ModelMap model) throws Exception {
-		return "cmm/uat/uia/LoginUsr";
+		return "food/user/LoginUsr";
 	}
 
 	/**
@@ -84,7 +84,7 @@ public class EgovLoginController {
 			}				
 		}else {			
 			model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
-			return "cmm/uat/uia/LoginUsr";
+			return "food/user/LoginUsr";
 		}
 		return "";
 		

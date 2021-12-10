@@ -18,7 +18,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
     <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
     
-    <title>화랑</title>
+    <title>food</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
@@ -31,13 +31,63 @@
     <link rel="stylesheet" href="/css/food/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/css/food/style.css" type="text/css"> 
 </head>
-<script>
-var selectChange = function(value){
+<script type="text/javascript">
+
+var price;
+var quantity;
+
+function init () {
+	price = document.cartList.price.value;
+	quantity = document.cartList.quantity.value;
+	document.cartList.sum.value = price;
+	change();
+}
+
+function add () {
+	hm = document.cartList.quantity;
+	sum = document.cartList.sum;
+	hm.value ++ ;
+
+	sum.value = parseInt(hm.value) * price;
+}
+
+function del () {
+	hm = document.cartList.quantity;
+	sum = document.cartList.sum;
+		if (hm.value > 1) {
+			hm.value -- ;
+			sum.value = parseInt(hm.value) * price;
+		}
+}
+
+function change () {
+	hm = document.cartList.quantity;
+	sum = document.cartList.sum;
+
+		if (hm.value < 0) {
+			hm.value = 0;
+		}
+	sum.value = parseInt(hm.value) * price;
+}  
+
+
+
+
+/* var selectChange = function(value){
 	console.log(value);
 	$("#changeInput").val(value).submit;
-		
-    location.href="${path}/order/cartUpdate.do";
 	
+	var sum = 0.0;
+	var total = 0.0;
+    var price = document.getElementById("totalPrice").value;
+    console.log(price);
+    var amount = (value*price);
+    console.log(amount);
+    //sum+=amount;
+	$("#totalPrice").val(amount).submit;
+      
+    $(this).find('.shoping__cart__total').text(''+amount);
+    //sumTotal();
 	
 }
 var cartSeq = document.cartList.cartSeq.value;
@@ -74,156 +124,18 @@ function sumTotal(){
 		  //$(this).find('#sum_p_price').text(''+totalPrice);
 		 // $("#sum_p_price").html(totalPrice + " 원");
 		 $("#sum_p_price").val(totalPrice);
-}
+} */
 		 
 
 </script>
-<body>
+<body onload="init();">
+ 	<!-- Header Section Begin -->
+    <jsp:include page="/WEB-INF/jsp/food/sub/FoodMainHeader.jsp"/> 
+    <!-- Header Section End -->
 <!-- 금액 총 합계  -->
 
-    <!-- Page Preloder -->
-    <div id="preloder">
-        <div class="loader"></div>
-    </div>
+    
 
-    <!-- Humberger Begin -->
-    <div class="humberger__menu__overlay"></div>
-    <div class="humberger__menu__wrapper">
-        <div class="humberger__menu__logo">
-            <a href="#"><img src="img/logo.png" alt=""></a>
-        </div>
-        <div class="humberger__menu__cart">
-            <ul>
-                <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-                <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
-            </ul>
-            <div class="header__cart__price">item: <span>$150.00</span></div>
-        </div>
-        <div class="humberger__menu__widget">
-            <div class="header__top__right__language">
-                <img src="img/language.png" alt="">
-                <div>English</div>
-                <span class="arrow_carrot-down"></span>
-                <ul>
-                    <li><a href="#">Korean</a></li>
-                    <li><a href="#">English</a></li>
-                </ul>
-            </div>
-            <div class="header__top__right__auth">
-                <a href="#"><i class="fa fa-user"></i> Login</a>
-            </div>
-        </div>
-        <nav class="humberger__menu__nav mobile-menu">
-            <ul>
-                <li class="active"><a href="./index.html">Home</a></li>
-                <li><a href="./shop-grid.html">Shop</a></li>
-                <li><a href="#">Pages</a>
-                    <ul class="header__menu__dropdown">
-                        <li><a href="./shop-details.html">Shop Details</a></li>
-                        <li><a href="./shoping-cart.html">Shoping Cart</a></li>
-                        <li><a href="./checkout.html">Check Out</a></li>
-                        <li><a href="./blog-details.html">Blog Details</a></li>
-                    </ul>
-                </li>
-                <li><a href="./blog.html">Blog</a></li>
-                <li><a href="./contact.html">Contact</a></li>
-            </ul>
-        </nav>
-        <div id="mobile-menu-wrap"></div>
-        <div class="header__top__right__social">
-            <a href="#"><i class="fa fa-facebook"></i></a>
-            <a href="#"><i class="fa fa-twitter"></i></a>
-            <a href="#"><i class="fa fa-linkedin"></i></a>
-            <a href="#"><i class="fa fa-pinterest-p"></i></a>
-        </div>
-        <div class="humberger__menu__contact">
-            <ul>
-                <li><i class="fa fa-envelope"></i> hello@colorlib.com</li>
-                <li>Free Shipping for all Order of $99</li>
-            </ul>
-        </div>
-    </div>
-    <!-- Humberger End -->
-
-    <!-- Header Section Begin -->
-    <header class="header">
-        <div class="header__top">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="header__top__left">
-                            <ul>
-                                <li><i class="fa fa-envelope"></i> hello@colorlib.com</li>
-                                <li>Free Shipping for all Order of $99</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="header__top__right">
-                            <div class="header__top__right__social">
-                                <a href="#"><i class="fa fa-facebook"></i></a>
-                                <a href="#"><i class="fa fa-twitter"></i></a>
-                                <a href="#"><i class="fa fa-linkedin"></i></a>
-                                <a href="#"><i class="fa fa-pinterest-p"></i></a>
-                            </div>
-                            <div class="header__top__right__language">
-                                <img src="img/language.png" alt="">
-                                <div>English</div>
-                                <span class="arrow_carrot-down"></span>
-                                <ul>
-                                    <li><a href="#">Korean</a></li>
-                                    <li><a href="#">English</a></li>
-                                </ul>
-                            </div>
-                            <div class="header__top__right__auth">
-                                <a href="#"><i class="fa fa-user"></i> Login</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3">
-                    <div class="header__logo">
-                        <a href="./index.html"><img src="img/logo.png" alt=""></a>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <nav class="header__menu">
-                        <ul>
-                            <li><a href="./index.html">Home</a></li>
-                            <li class="active"><a href="./shop-grid.html">Shop</a></li>
-                            <li><a href="#">Pages</a>
-                                <ul class="header__menu__dropdown">
-                                    <li><a href="./shop-details.html">Shop Details</a></li>
-                                    <li><a href="./shoping-cart.html">Shoping Cart</a></li>
-                                    <li><a href="./checkout.html">Check Out</a></li>
-                                    <li><a href="./blog-details.html">Blog Details</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="./blog.html">Blog</a></li>
-                            <li><a href="./contact.html">Contact</a></li>
-                        </ul>
-                    </nav>
-                </div>
-                <div class="col-lg-3">
-                    <div class="header__cart">
-                        <ul>
-                            <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
-                        </ul>
-                        <div class="header__cart__price">item: <span>$150.00</span></div>
-                    </div>
-                </div>
-            </div>
-            <div class="humberger__open">
-                <i class="fa fa-bars"></i>
-            </div>
-        </div>
-    </header>
-    <!-- Header Section End -->
 
     <!-- Hero Section Begin -->
     <section class="hero hero-normal">
@@ -301,7 +213,8 @@ function sumTotal(){
     <!-- Shoping Cart Section Begin -->
     <form name="cartList" id="cartList" method="post" class="orderform" action="/order/ChckOut.do">  
 <%-- 		<input name="pageIndex" type="hidden" value="<c:out value='${searchVO.pageIndex}'/>" />
- --%>		<input name="cartSeq" type="hidden" value="${searchVO.cartSeq}">
+--%>	<input name="cartSeq" type="hidden" value="${searchVO.cartSeq}">
+		
 		
     <section class="shoping-cart spad">
         <div class="container">
@@ -335,25 +248,24 @@ function sumTotal(){
                                      	<input type="hidden" name="price" id="price" value="${cartList.proPrice}"/> 
                                     </td>
                                     <td class="shoping__cart__quantity">
-                                    	<select id="changeInput" name="qytChange" onchange="selectChange(this.value);">
+  <%--                                    	<select id="changeInput" name="qytChange" onchange="selectChange(this.value);">
 											<c:forEach var="count" begin="1" end="${cartList.cartStock > 5 ? 5 : cartList.cartStock}">
 											<option>${count}</option>
 											</c:forEach>
 										</select> 
-										<input type="button" title="수량변경" name="changeInput" onclick="" value="확인" />																																
-<%-- 									<button type= "submit" class="primary-btn cart-btn cart-btn-right" id="btnUpdate">수량변경</button>
+									<button type= "submit" class="primary-btn cart-btn cart-btn-right" id="btnUpdate">수량변경</button>
    									<input type="hidden" name = changeInput value="<c:out value="${count}"/>" >
-    									<a href="<c:url value='/order/cartUpdate.do'/>?cartStock=this.value">수량변경</a>
+    								<a href="<c:url value='/order/cartUpdate.do'/>?cartStock=this.value">수량변경</a>
  --%>                                     	
-                                    <!-- <div class="pro-qty">    
-                                     <input type="text" name="quantity" id= "quantity" value="1" size="3">                                                                          
-                                    </div> -->
+                                     <div class="pro-qty">    
+                                     <input type="text" name="quantity" id= "quantity" value="1" size="3" onchange="change();">                                                                          
+                                    </div>
                                     </td>
                                     <td class="shoping__cart__total" >
                                         <fmt:formatNumber pattern="###,###,###"
-											value="${cartList.proPrice * cartList.cartStock}" />
-										<input type="hidden" name="totalPrice" id="totalPrice" value="${cartList.proPrice * cartList.cartStock}"/>
-                                    </td>
+											value="${cartList.proPrice }" />
+ 										<input type="hidden" name="sum" id="sum" />
+                                     </td>
                                     <td class="shoping__cart__item__close" id="delete_${cartList.cartSeq}_btn"
 										data-cartSeq="${cartList.cartSeq}">
                                         <span class="icon_close"></span>
@@ -372,12 +284,17 @@ function sumTotal(){
             <div class="row">
                 <div class="col-lg-12">
                     <div class="shoping__cart__btns">
-                        <button class="primary-btn cart-btn" onclick="location.href='../index.do'">CONTINUE SHOPPING</button>
-                        <!-- <script type="text/javascript">
-								$(".primary-btn cart-btn").click(function() {
-									document.location.replace="food/FoodMain.jsp";
-								});
-						</script> -->
+                        <button class="primary-btn cart-btn" onclick="hrefLink()">CONTINUE SHOPPING</button>
+                         <script type="text/javascript">
+                         link = '/cmm/main/mainPage.do'; 
+                         function hrefLink() { location.href = link; } 
+                         function replaceLink() { location.replace(link); }
+
+
+								/* $(".primary-btn cart-btn").click(function() {
+									document.location.replace="/cmm/main/mainPage.do";
+								}); */
+						</script> 
 
                     </div>
                 </div>
@@ -416,74 +333,7 @@ function sumTotal(){
     </form>
  
     <!-- Shoping Cart Section End -->
-
-    <!-- Footer Section Begin -->
-    <footer class="footer spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3 col-md-6 col-sm-6">
-                    <div class="footer__about">
-                        <div class="footer__about__logo">
-                            <a href="./index.html"><img src="img/logo.png" alt=""></a>
-                        </div>
-                        <ul>
-                            <li>Address: 60-49 Road 11378 New York</li>
-                            <li>Phone: +65 11.188.888</li>
-                            <li>Email: hello@colorlib.com</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-6 offset-lg-1">
-                    <div class="footer__widget">
-                        <h6>Useful Links</h6>
-                        <ul>
-                            <li><a href="#">About Us</a></li>
-                            <li><a href="#">About Our Shop</a></li>
-                            <li><a href="#">Secure Shopping</a></li>
-                            <li><a href="#">Delivery infomation</a></li>
-                            <li><a href="#">Privacy Policy</a></li>
-                            <li><a href="#">Our Sitemap</a></li>
-                        </ul>
-                        <ul>
-                            <li><a href="#">Who We Are</a></li>
-                            <li><a href="#">Our Services</a></li>
-                            <li><a href="#">Projects</a></li>
-                            <li><a href="#">Contact</a></li>
-                            <li><a href="#">Innovation</a></li>
-                            <li><a href="#">Testimonials</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-12">
-                    <div class="footer__widget">
-                        <h6>Join Our Newsletter Now</h6>
-                        <p>Get E-mail updates about our latest shop and special offers.</p>
-                        <form action="#">
-                            <input type="text" placeholder="Enter your mail">
-                            <button type="submit" class="site-btn">Subscribe</button>
-                        </form>
-                        <div class="footer__widget__social">
-                            <a href="#"><i class="fa fa-facebook"></i></a>
-                            <a href="#"><i class="fa fa-instagram"></i></a>
-                            <a href="#"><i class="fa fa-twitter"></i></a>
-                            <a href="#"><i class="fa fa-pinterest"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="footer__copyright">
-                        <div class="footer__copyright__text"><p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p></div>
-                        <div class="footer__copyright__payment"><img src="img/payment-item.png" alt=""></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-    <!-- Footer Section End -->
+    
 
        <!-- Js Plugins -->
     <script src="/js/jquery-3.3.1.min.js"></script>
@@ -497,7 +347,9 @@ function sumTotal(){
 
 
 
-
+ <!-- Footer Section Begin -->
+    <jsp:include page="/WEB-INF/jsp/food/sub/FoodMainFooter.jsp"/> 
+    <!-- Footer Section End -->
 </body>
 
 </html>

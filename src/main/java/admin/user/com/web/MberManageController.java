@@ -104,7 +104,7 @@ public class MberManageController {
 	@RequestMapping(value = "user/com/userSignup.do")
 	public String userTypeView() throws Exception {
 		
-		return "user/UserTypeView";
+		return "food/user/UserTypeView";
 	}
 
 	@RequestMapping(value = "user/com/userSbscrbRegist.do")
@@ -114,7 +114,7 @@ public class MberManageController {
 		model.addAttribute("memGubun", memGubun);
 
 		
-		return "user/UserSbscrbRegist";
+		return "food/user/UserSbscrbRegist";
 	}
 	
 
@@ -125,13 +125,13 @@ public class MberManageController {
 			 new RegisterRequestValidator().validate(regReq, errors);
 
 		        if(errors.hasErrors()) {
-		    		return "user/UserSbscrbRegist";
+		    		return "food/user/UserSbscrbRegist";
 		        }
 		        try {
 		        	mberManageService.insertMber(regReq);
 		        } catch (AlreadyExistingEmailException e) {
 		            errors.rejectValue("emailId", "duplicate", "이미 가입된 이메일입니다.");
-		    		return "user/UserSbscrbRegist";
+		    		return "food/user/UserSbscrbRegist";
 		        }
 			//Exception 없이 진행시 등록 성공메시지
 			model.addAttribute("resultMsg", "success.common.insert");
@@ -146,7 +146,7 @@ public class MberManageController {
 		//List<?> member = mberManageService.selectMberList(mberManageVO);
 
 		model.addAttribute("resultList", member);
-		return "user/UserSuccesView";
+		return "food/user/UserSuccesView";
  
 	}
 /*

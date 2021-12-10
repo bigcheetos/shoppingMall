@@ -32,7 +32,18 @@
 	<li><a href="#LINK" onclick="javascript:fn_main_headPageMove('11','main/sample_menu/EgovAboutSite')" >사이트관리</a></li>
     <li><a href="#LINK" onclick="javascript:fn_main_headPageMove('21','main/sample_menu/EgovProductInfo')" >회원관리</a></li>
     <li><a href="#LINK" onclick="javascript:fn_main_headPageMove('31','main/sample_menu/EgovDownload')" >상품관리</a></li>
-    <li><a href="#LINK" onclick="javascript:fn_main_headPageAction('42','cop/smt/sim/EgovIndvdlSchdulManageWeekList.do')" >주문관리</a></li>
+    <li><a href="#LINK" onclick="javascript:fn_main_headPageAction('41','cop/smt/sim/EgovIndvdlSchdulManageWeekList.do')" >주문관리</a></li>
+    <li><a href="#LINK" onclick="javascript:fn_main_headPageMove('61','/cmm/main/management/productManagement.do')" >관리</a></li>
+         	
+                 <li><a href="/cmm/main/management/productManagement.do">상품</a></li>
+                 <li><a href="/cmm/main/management/productRegist.do">상품등록</a></li>
+                 <li><a href="/cmm/main/management/stockManagement.do">재고</a></li>
+                 <li><a href="/cmm/main/management/stockIoManagement.do">입출고</a></li>
+                 <li><a href="/cmm/main/management/productOptionManagement.do">옵션</a></li>
+                 <li><a href="/cmm/main/management/productCategoryManagement.do">카테고리</a></li>
+                 <li><a href="/cmm/main/management/productTypeManagement.do">유형</a></li>
+                 <li><a href="/cmm/main/management/atchFileManagement.do">파일</a></li>
+         
     <%
        LoginVO loginVO = (LoginVO)session.getAttribute("LoginVO"); 
        if(loginVO != null){ 
