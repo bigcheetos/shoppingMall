@@ -12,29 +12,13 @@
             <div class="row">
                 <div class="col-lg-6 col-md-6">
                     <div class="header__top__left">
-                        <ul>
-                            <li><i class="fa fa-envelope"></i> hello@colorlib.com</li>
-                            <li>Free Shipping for all Order of $99</li>
-                        </ul>
+                        
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6">
                     <div class="header__top__right">
-                        <div class="header__top__right__social">
-                            <a href="#"><i class="fa fa-facebook"></i></a>
-                            <a href="#"><i class="fa fa-twitter"></i></a>
-                            <a href="#"><i class="fa fa-linkedin"></i></a>
-                            <a href="#"><i class="fa fa-pinterest-p"></i></a>
-                        </div>
-                        <div class="header__top__right__language">
-<!--                                 <img src="/images/food/language.png" alt="">
- -->                                <div>Korean</div>
-                            <span class="arrow_carrot-down"></span>
-                            <ul>
-                                <li><a href="#">Korean</a></li>
-                                <li><a href="#">English</a></li>
-                            </ul>
-                        </div>
+                        
+                       
                         <%
 						       LoginVO loginVO = (LoginVO)session.getAttribute("LoginVO"); 
 						       if(loginVO == null){ 
@@ -50,24 +34,19 @@
                             <% }else { %>
 						    <c:set var="loginName" value="<%= loginVO.getMemName()%>"/>
 						    <div id="header_loginname">
-						        <a href="#LINK" ><c:out value="${loginName}"/> 님</a>
+						        <a href="#LINK" ><c:out value="${loginName}"/> 님 어서오세요</a>
 						    </div>
 						    
 						     <ul class="login_bg_area">
 						        <li class="righttop_bgleft">&nbsp;</li>
 						        <li class="righttop_bgmiddle"><a href="<c:url value='/uat/uia/actionLogout.do'/>">로그아웃</a></li>
-						    </ul>
-						       
-                         
-                         
-					<%-- 	    <%
-						       if(loginVO.getMemName() == "관리자"){ 
+						    </ul>						                                                        
+					 	    <%
+						       if(loginVO.getMemName().contains("관리자") ){ 
 						    	%>
  						    <div class="header_loginconnection"> 관리자로 로그인하셨습니다.</div>
- 						    <div><a href="#LINK" ><i class="fas fa-user-cog"></i></a></div>
- 						     <% } %> 
-                          --%>
-                         
+ 						    <div><a href="/cmm/main/adminMain.do" ><i class="fas fa-user-cog"></i></a></div>
+ 						     <% } %>                                                 
                         </div>
                         <% } %> 
                     </div>

@@ -39,13 +39,16 @@
         <li class="righttop_bgleft">&nbsp;</li>
         <li class="righttop_bgmiddle"><a href="<c:url value='/uat/uia/LoginUsr.do'/>">로그인</a></li>
         <li class="righttop_bgright">&nbsp;</li>
-    </ul>
-    <% }else { %>
+    </ul>     
+    
+    <% }else{ %>
     <c:set var="loginName" value="<%= loginVO.getMemName()%>"/>
     <div id="header_loginname">
         <a href="#LINK" onclick="alert('개인정보 확인 등의 링크 제공'); return false;"><c:out value="${loginName}"/> 님</a>
     </div>
-    <div class="header_loginconnection"> 관리자로 로그인하셨습니다.</div>
+   <c:if test="">
+   
+   </c:if>
     <ul class="login_bg_area">
         <li class="righttop_bgleft">&nbsp;</li>
         <li class="righttop_bgmiddle"><a href="<c:url value='/uat/uia/actionLogout.do'/>">로그아웃</a></li>
